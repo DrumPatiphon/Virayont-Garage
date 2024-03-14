@@ -1,0 +1,64 @@
+
+<div fxLayoutAlign="center center" fxFlexFill class="main div">
+    <mat-card fxFlex="50" >
+
+      <mat-toolbar color="primary" fxLayoutAlign="center center">
+        เข้าสู่ระบบ
+      </mat-toolbar>
+
+      <mat-tab-group mat-stretch-tabs class="example-stretched-tabs" >
+        <mat-tab label="ล็อกอิน">
+          <br />
+
+          <form fxFlexAlight="stretch" fxLayout="column" class="login-form" >
+            <div class="form-floating" >
+              <input class="form-control" id="floatingInput" placeholder="เบอร์โทรศํพท์">
+              <label for="floatingInput">เบอร์โทรศํพท์</label>
+            </div>
+            <br />
+
+            <button class="btn btn-primary auto p-3" routerLink="/cus-detail">เรียกดู</button>
+          </form>
+        </mat-tab>
+
+
+    <mat-tab label="สมัครสมาชิก">
+      <form fxFlexAlight="stretch" fxLayout="column" class="login-form">
+        <br />
+        <div class="input-group input-group-default">
+          <span class="input-group-text" id="inputGroup-sizing-default">เบอร์โทรศํพท์</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br />
+        <div class="input-group input-group-default">
+          <span class="input-group-text" id="inputGroup-sizing-default">ชื่อ</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br />
+        <div class="input-group input-group-default">
+          <span class="input-group-text" id="inputGroup-sizing-default">นามสกุล</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br />
+        <div class="input-group input-group-default">
+          <span class="input-group-text" id="inputGroup-sizing-default">บริษัท(ถ้ามี)</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br />
+        <div class="input-group input-group-default">
+          <span class="input-group-text" id="inputGroup-sizing-default">ที่อยู่</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br />
+
+        <button class="btn btn-primary auto p-3" type="submit">สมัครสมาชิก</button>
+
+          
+      </form>
+    </mat-tab>
+    </mat-tab-group>
+    </mat-card>
+    
+
+</div>
+

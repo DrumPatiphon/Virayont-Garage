@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+
+  <div class="card text">
+    <div class="card-header fw-bold fs-4 " >
+      VIRAYONT GARAGE 
+    </div>
+    <div class="position-absolute top-0 end-0">
+      <a  class="btn btn-primary" routerLink="/spare" >อะไหล่</a>
+    </div>
+
+<!-- Outsideframe -->
+  
+    
+  </div>
+
+<!-- Insideframe -->
+  
+  <div class="card text-center" >
+    <p class="card-title" class="fs-2 "> สถานะพนักงาน </p>
+    
+    <form [formGroup]="Employeeform">
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">ชื่อ</th>
+          <th scope="col">ตำแหน่ง</th>
+          <th scope="col">สภานะทำงาน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">01</th>
+          <td>นาย .............</td>
+          <td>ช่างไดนาโม</td>
+          <td>
+            <button type="button" class="btn btn-success">เข้างาน</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">02</th>
+          <td>นาย .............</td>
+          <td>ช่างไดนาโม</td>
+          <td>
+            <button type="button" class="btn btn-success">เข้างาน</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">03</th>
+          <td>นาย .............</td>
+          <td>ช่างไดนาโม</td>
+          <td>
+            <button type="button" class="btn btn-success" >เข้างาน</button>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+      </form>
+      <br/>
+        
+      <button type="button" class="btn btn-primary "> บันทึก </button>
+
+        
+    
+  </div>  
+  
+
+  
+  
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
