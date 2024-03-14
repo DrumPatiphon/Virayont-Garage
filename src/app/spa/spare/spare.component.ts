@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ApiService, Sparepart } from './api.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validator, Validators } from '@angular/forms';
-import { FormUtilService } from '../service/form-util-service';
+import { FormUtilService } from 'src/app/service/form-util-service';
 
 @Component({
   selector: 'app-spare',

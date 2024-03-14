@@ -2467,11 +2467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Hobby\\Virayont Garage\\project\\test\\test.csproj",
+      "projectUniqueName": "D:\\Hobby\\Virayont Garage\\test\\test.csproj",
       "projectName": "test",
-      "projectPath": "D:\\Hobby\\Virayont Garage\\project\\test\\test.csproj",
+      "projectPath": "D:\\Hobby\\Virayont Garage\\test\\test.csproj",
       "packagesPath": "C:\\Users\\Dzdrum\\.nuget\\packages\\",
-      "outputPath": "D:\\Hobby\\Virayont Garage\\project\\test\\obj\\",
+      "outputPath": "D:\\Hobby\\Virayont Garage\\test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dzdrum\\AppData\\Roaming\\NuGet\\NuGet.Config",

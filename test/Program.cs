@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using test.Models;
 
 var builder = WebApplication.CreateBuilder(args);
