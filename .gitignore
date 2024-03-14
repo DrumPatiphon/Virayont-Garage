@@ -131,3 +131,5 @@ dist
 
 # angular
 .angular/cache/
+.vs/test/FileContentIndex/b80946cd-7f6d-41c0-9c45-7f770a8c0701.vsidx
+.vs/test/FileContentIndex/9321d547-f1bf-4266-8777-b623696930cd.vsidx
