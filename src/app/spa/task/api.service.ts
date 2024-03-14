@@ -38,16 +38,16 @@ export interface PeriodicElement {
 })
 export class ApiService {
    
-private apiUrl = 'https://localhost:7072/api/';
+private apiUrl = 'https://localhost:44309/api/';
 
 constructor(private http: HttpClient) {}
 
     getSparetask():Observable<Spare4Task[]> {
-    return this.http.get<Spare4Task[]>('https://localhost:7072/api/Spare4Task');
+    return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');
     }
 
     getDbtask():Observable<Dbtask []> {
-    return this.http.get<Dbtask[]>('https://localhost:7072/api/Dbtask ');
+    return this.http.get<Dbtask[]>(this.apiUrl + 'Dbtask ');
     }
 
     

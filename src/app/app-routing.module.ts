@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CusComponent } from './cus/cus.component';
-import { EmpComponent } from './emp/emp.component';
-import { EmpDetailComponent } from './emp-detail/emp-detail.component';
-import { CusDetailComponent } from './cus-detail/cus-detail.component';
-import { SpareComponent } from './spare/spare.component';
-import { TaskComponent } from './task/task.component';
-import { TaskDetailComponent } from './task/task-detail.component';
+import { CusComponent } from './spa/cus/cus.component';
+import { EmpComponent } from './spa/emp/emp.component';
+import { EmpDetailComponent } from './spa/emp-detail/emp-detail.component';
+import { CusDetailComponent } from './spa/cus-detail/cus-detail.component';
+import { SpareComponent } from './spa/spare/spare.component';
+import { TaskComponent } from './spa/task/task.component';
+import { TaskDetailComponent } from './spa/task/task-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
