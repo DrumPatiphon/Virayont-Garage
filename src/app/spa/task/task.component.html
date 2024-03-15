@@ -5,13 +5,21 @@
         <div class="card-body">
           <h5 class="card-title">ค้นหา</h5>
           <form [formGroup]="searchForm">
-            <label for="customerId" class="form-label"> ลูกค้า </label>
+            <label for="customerId" class="formcontrol-label"> ลูกค้า </label>
             <div class="form-group col-lg-3 col-md-6">
                 <app-select-input 
                 [options]="options" 
                 formControlName="customerId" 
                 (valueChange)="onValueChange($event)">
                 </app-select-input>
+                <!-- <ng-select
+                  [items]="options" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  [(ngModel)]="selectedValue" 
+                  (change)="onValueChange($event)"
+                  formControlName="customerId">
+                </ng-select> -->
             </div>
           </form>
         </div>

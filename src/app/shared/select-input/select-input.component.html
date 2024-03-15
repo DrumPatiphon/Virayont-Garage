@@ -1,8 +1,6 @@
-<!-- <div class="select-wrapper"> -->
-    <select class="form-control" #selectElement [(ngModel)]="selectedValue" (ngModelChange)="onSelectChange($event)">
-        <option *ngFor="let option of options" [value]="option.value">
-            {{ option.text }}
-        </option>
-    </select>
-    <!-- <label class="label-arrow" (click)="selectElement.click()"> > </label> -->
-<!-- </div> -->
+<select class="form-select" #selectElement [(ngModel)]="selectedValue" (ngModelChange)="onSelectChange($event)">
+    <option *ngFor="let option of options" [value]="option.value">
+        {{ option.text }}
+    </option>
+</select>
+

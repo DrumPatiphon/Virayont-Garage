@@ -37,6 +37,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class TaskComponent implements OnInit{
   searchForm: UntypedFormGroup;
+  selectedValue: string = '';
   dataSource :PeriodicElement[] =ELEMENT_DATA;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   options: any[] = [

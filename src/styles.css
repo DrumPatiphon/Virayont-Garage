@@ -6,3 +6,10 @@ body {
     margin: 0;
     --bs-body-font-family: 'Prompt', sans-serif;
 }
+
+.formcontrol-label{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    font-size: small;
+    color: grey;
+}
