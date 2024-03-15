@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { PeriodicElement } from "./api.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -27,6 +27,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
 ];
 
+
+
 @Component({
     selector: 'app-task',
     templateUrl: './task.component.html',
@@ -34,16 +36,39 @@ const ELEMENT_DATA: PeriodicElement[] = [
   })
 
 export class TaskComponent implements OnInit{
+  searchForm: UntypedFormGroup;
   dataSource :PeriodicElement[] =ELEMENT_DATA;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  options: any[] = [
+    { value: 1, text: 'Option 1' },
+    { value: 2, text: 'Option 2' },
+    { value: 3, text: 'Option 3' }
+  ];
   currentPage = 1;
   itemsPerPage = 10;
     constructor ( 
-        private fb : FormBuilder,
-     ) {}
+        private fb : UntypedFormBuilder,
+     ) {this.searchForm = this.fb.group({});}
       
     ngOnInit(): void {
+      this.createForm();
+    }
 
+    createForm() {
+      this.searchForm = this.fb.group({
+        customerId: [null], // Initialize with null value
+        docStatus: [null],
+        sDocDate: [null],
+        eDocDate: [null],
+        sDocNo: [null],
+        eDocno: [null],
+        licenseName: [null],
+      });
+    }
+
+    onValueChange(newValue: any) {
+      console.log('Selected value:', newValue);
+      this.searchForm.controls['customerId'].setValue(newValue);
     }
   
 }
