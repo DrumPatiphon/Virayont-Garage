@@ -31,7 +31,18 @@ export interface PeriodicElement {
     position: number;
     weight: number;
     symbol: string;
+}
+
+export interface TaskData 
+ {
+    seq: number,
+    taskNo: string,
+    taskDate: string,
+    cusName: string,
+    taskAmt: number,
+    status: string
   }
+
 
 @Injectable({
     providedIn: 'root',

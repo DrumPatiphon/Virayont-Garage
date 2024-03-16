@@ -1,25 +1,85 @@
-<h5 class="program-title">ค้นหารายการซ่อม</h5>
+<h5 class="program-title"> {{'ค้นหารายการซ่อม'}} </h5>
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">ค้นหา</h5>
+          <h5 class="card-title">{{'ค้นหา'}}</h5>
           <form [formGroup]="searchForm">
-            <label for="customerId" class="formcontrol-label"> ลูกค้า </label>
-            <div class="form-group col-lg-3 col-md-6">
-                <app-select-input 
-                [options]="options" 
-                formControlName="customerId" 
-                (valueChange)="onValueChange($event)">
-                </app-select-input>
-                <!-- <ng-select
-                  [items]="options" 
-                  bindLabel="text" 
-                  bindValue="value" 
-                  [(ngModel)]="selectedValue" 
-                  (change)="onValueChange($event)"
-                  formControlName="customerId">
-                </ng-select> -->
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
+                    <ng-select
+                      placeholder="กรุณาเลือก"
+                      [items]="options" 
+                      bindLabel="text" 
+                      bindValue="value" 
+                      formControlName="customerId">
+                    </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <label class="formcontrol-label"> {{'เลขทะเบียน'}} </label>
+                  <input type="text" class="form-control" formControlName="licenseName">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{ 'ตั้งแต่วันที่เอกสาร'}} </label>
+                    <ng-select
+                      placeholder="กรุณาเลือก"
+                      [items]="options" 
+                      bindLabel="text" 
+                      bindValue="value" 
+                      formControlName="sDocDate">
+                    </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                  <label class="formcontrol-label">{{ 'ถึงวันที่เอกสาร'}}</label>
+                    <ng-select
+                      placeholder="กรุณาเลือก"
+                      [items]="options" 
+                      bindLabel="text" 
+                      bindValue="value" 
+                      formControlName="eDocDate">
+                    </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
+                    <ng-select
+                      placeholder="กรุณาเลือก"
+                      [items]="options" 
+                      bindLabel="text" 
+                      bindValue="value" 
+                      formControlName="sDocDate">
+                    </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{ 'ถึงเลขที่เอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="eDocDate">
+                  </ng-select>
+              </div>
+            </div>
+            <div class="form-row pt-3">
+              <div class="form-group col-md-12 col-xs-12 text-center">
+                <button class="btn btn-primary me-2" (click)="searchFunction()"><mat-icon class="icon-center">search</mat-icon>
+                  {{ 'ค้นหา' }}</button>
+                <button class="btn btn btn-outline-dark" (click)="clear();"><mat-icon class="icon-center"> clear_all</mat-icon>
+                  {{ 'ล้างข้อมูล' }}</button>
+              </div>
             </div>
           </form>
         </div>
@@ -31,34 +91,50 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">รายการซ่อม</h5>
+          <h5 class="card-title">{{ 'รายการซ่อม' }}</h5>
           <div class="app-table">
             <app-table [dataSource]="dataSource" [pageSizeOptions]="[10, 15, 20]">
-              <app-table-column name="position" cellClass="text-center" [width]="50">
-                <ng-container matColumnDef="position">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
+              <app-table-column name="seq" cellClass="text-center" [width]="50" [headerText]="'ลำดับ'">
+                <ng-container matColumnDef="seq">
+                  <th mat-header-cell *matHeaderCellDef>  </th>
                   <td mat-cell *matCellDef="let element"> {{ element.position }} </td>
                 </ng-container>
               </app-table-column>
             
-              <app-table-column name="name" cellClass="text-left" [width]="500">
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
+              <app-table-column name="taskNo" cellClass="text-center" [width]="250" [headerText]="'เลขที่เอกสาร'">
+                <ng-container matColumnDef="taskNo">
+                  <th mat-header-cell *matHeaderCellDef> </th>
                   <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
                 </ng-container>
               </app-table-column>
             
-              <app-table-column name="weight" cellClass="text-right"  [width]="150">
-                <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef> Weight </th>
+              <app-table-column name="taskDate" cellClass="text-center" [width]="150" [headerText]="'วันที่เอกสาร'">
+                <ng-container matColumnDef="taskDate">
+                  <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element"> {{ element.weight }} </td>
                 </ng-container>
               </app-table-column>
             
-              <app-table-column name="symbol" cellClass="text-center" [width]="150">
-                <ng-container matColumnDef="symbol">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{ element.symbol }} </td>
+              <app-table-column name="cusName" cellClass="text-left" [width]="250"[headerText]="'ชื่อลูกค้า'">
+                <ng-container matColumnDef="cusName">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"> {{ element.symbol }}</td>
+                </ng-container>
+              </app-table-column>
+
+              <app-table-column name="taskAmt" cellClass="text-right" [width]="150"[headerText]="'จำนวนเงินสุทธิ'">
+                <ng-container matColumnDef="taskAmt">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"> {{ element.symbol | number : '0.2-2' }} </td>
+                </ng-container>
+              </app-table-column>
+
+              <app-table-column name="status" cellClass="text-center" [width]="150"[headerText]="'สถานะเอกสาร'">
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <div class="status-border">
+                    <td mat-cell *matCellDef="let element"> {{ element.symbol }} </td>
+                  </div>
                 </ng-container>
               </app-table-column>
             </app-table>

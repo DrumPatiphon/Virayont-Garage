@@ -19,8 +19,8 @@ import { TaskComponent } from './spa/task/task.component';
 import { TaskDetailComponent } from './spa/task/task-detail.component';
 import { AppTableComponent } from './shared/app-table/app-table.component';
 import { AppTableColumnComponent } from './shared/app-table-column/app-table-column.component';
-import { SelectInputComponent } from './shared/select-input/select-input.component';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -37,7 +37,6 @@ import { FormsModule } from '@angular/forms';
     TaskDetailComponent,
     AppTableComponent,
     AppTableColumnComponent,
-    SelectInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +46,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
