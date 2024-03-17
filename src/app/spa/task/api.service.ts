@@ -31,7 +31,18 @@ export interface PeriodicElement {
     position: number;
     weight: number;
     symbol: string;
+}
+
+export interface TaskData 
+ {
+    seq: number,
+    taskNo: string,
+    taskDate: string,
+    cusName: string,
+    taskAmt: number,
+    status: string,
   }
+
 
 @Injectable({
     providedIn: 'root',
@@ -41,6 +52,10 @@ export class ApiService {
 private apiUrl = 'https://localhost:44309/api/';
 
 constructor(private http: HttpClient) {}
+
+    getMasterData(){
+        return this.http.get<any>(this.apiUrl + 'task/MasterData');
+    }
 
     getSparetask():Observable<Spare4Task[]> {
     return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');

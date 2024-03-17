@@ -19,6 +19,8 @@ import { TaskComponent } from './spa/task/task.component';
 import { TaskDetailComponent } from './spa/task/task-detail.component';
 import { AppTableComponent } from './shared/app-table/app-table.component';
 import { AppTableColumnComponent } from './shared/app-table-column/app-table-column.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { AppTableColumnComponent } from './shared/app-table-column/app-table-col
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

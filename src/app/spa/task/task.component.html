@@ -1,70 +1,204 @@
-<!-- <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
+<h5 class="program-title"> {{'ค้นหารายการซ่อม'}} </h5>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{'ค้นหา'}}</h5>
+          <form [formGroup]="searchForm">
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
+                    <ng-select
+                      placeholder="กรุณาเลือก"
+                      [items]="masterData.customerData" 
+                      bindLabel="text" 
+                      bindValue="value" 
+                      formControlName="customerId">
+                    </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <label class="formcontrol-label"> {{'เลขทะเบียน'}} </label>
+                  <input type="text" class="form-control" formControlName="licenseName">
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{ 'ตั้งแต่วันที่เอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="sDocDate">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{ 'ถึงวันที่เอกสาร'}}</label>
+                <ng-select
+                  placeholder="กรุณาเลือก"
+                  [items]="options" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  formControlName="eDocDate">
+                </ng-select>
+              </div> -->
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="sDocNo">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{ 'ถึงเลขที่เอกสาร'}} </label>
+                  <ng-select
+                    placeholder="กรุณาเลือก"
+                    [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="eDocNo">
+                  </ng-select>
+              </div>
+            </div>
+            <div class="form-row pt-3">
+              <div class="form-group col-md-12 col-xs-12 text-center">
+                <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()"><mat-icon class="icon-center">search</mat-icon>
+                  {{ 'ค้นหา' }}</button>
+                <button class="btn btn btn-outline-dark" (click)="clear();"><mat-icon class="icon-center"> clear_all</mat-icon>
+                  {{ 'ล้างข้อมูล' }}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-lg-10 col-md-10">
+              <h5 class="card-title">{{ 'รายการซ่อม' }}</h5>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary" (click)="addFunction()" >
+                <mat-icon class="icon-center">person_add</mat-icon> {{ 'เพิ่มเอกสาร' }}
+              </button>
+            </div>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+          </div>
+          <div class="app-table">
+            <!-- <app-table [dataSource]="dataSource" [pageSizeOptions]="[10, 15, 20]">
+              <app-table-column name="seq" cellClass="text-center" [width]="50" [headerText]="'ลำดับ'">
+                <ng-container matColumnDef="seq">
+                  <th mat-header-cell *matHeaderCellDef>  </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.position }} </td>
+                </ng-container>
+              </app-table-column>
+            
+              <app-table-column name="taskNo" cellClass="text-center" [width]="250" [headerText]="'เลขที่เอกสาร'">
+                <ng-container matColumnDef="taskNo">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+                </ng-container>
+              </app-table-column>
+            
+              <app-table-column name="taskDate" cellClass="text-center" [width]="150" [headerText]="'วันที่เอกสาร'">
+                <ng-container matColumnDef="taskDate">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"> {{ element.weight }} </td>
+                </ng-container>
+              </app-table-column>
+            
+              <app-table-column name="cusName" cellClass="text-left" [width]="250"[headerText]="'ชื่อลูกค้า'">
+                <ng-container matColumnDef="cusName">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"> {{ element.symbol }}</td>
+                </ng-container>
+              </app-table-column>
 
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
+              <app-table-column name="taskAmt" cellClass="text-right" [width]="150"[headerText]="'จำนวนเงินสุทธิ'">
+                <ng-container matColumnDef="taskAmt">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"> {{ element.taskAmt | number : '0.2-2' }} </td>
+                </ng-container>
+              </app-table-column>
 
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
-  </mat-paginator>
-</div> -->
-
-<!-- <app-table [dataSource]="dataSource">
-  <app-table-column name="position" [width]="100"></app-table-column>
-  <app-table-column name="name" [width]="200"></app-table-column>
-  <app-table-column name="weight" [width]="120"></app-table-column>
-  <app-table-column name="symbol" [width]="100"></app-table-column>
-</app-table> -->
-
-<app-table [dataSource]="dataSource" [pageSizeOptions]="[10, 15, 20]">
-  <app-table-column name="position" cellClass="text-center" [width]="50">
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{ element.position }} </td>
-    </ng-container>
-  </app-table-column>
-
-  <app-table-column name="name" cellClass="text-left" [width]="500">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-    </ng-container>
-  </app-table-column>
-
-  <app-table-column name="weight" cellClass="text-right"  [width]="150">
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{ element.weight }} </td>
-    </ng-container>
-  </app-table-column>
-
-  <app-table-column name="symbol" cellClass="text-center" [width]="150">
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{ element.symbol }} </td>
-    </ng-container>
-  </app-table-column>
-</app-table>
-
+              <app-table-column name="status" cellClass="text-center" [width]="150"[headerText]="'สถานะเอกสาร'">
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.taskAmt }}
+                    </td>
+                </ng-container>
+              </app-table-column>
+            </app-table> -->
+            <table class="table table-striped app-table">
+              <thead>
+                <tr>
+                  <th class="text-center" [style.width.px]="70">Seq</th>
+                  <th class="text-center" [style.width.px]="200">Task No</th>
+                  <th class="text-center" [style.width.px]="150">Task Date</th>
+                  <th class="text-center" [style.width.px]="200">Customer Name</th>
+                  <th class="text-center" [style.width.px]="150">Task Amount</th>
+                  <th class="text-center" [style.width.px]="150">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of pagedData">
+                  <td class="text-center">
+                    {{ task.seq }}
+                  </td>
+                  <td class="text-center">
+                    <a [routerLink]="['detail', task.taskNo]" [state]="{ taskNo: task.taskNo }">{{ task.taskNo }}</a>
+                    <!-- {{ task.taskNo }} -->
+                  </td>
+                  <td class="text-center">
+                    {{ task.taskDate }}
+                  </td>
+                  <td>
+                    {{ task.cusName }}
+                  </td>
+                  <td class="text-right">
+                    {{ task.taskAmt | number : '0.2-2'}}
+                  </td>
+                  <td class="text-center">
+                    <div class="status-center" [ngClass]="{
+                           'status-border-saved': task.status === 'SAVED',
+                           'status-border-pending': task.status === 'PENDING',
+                           'status-border-complete': task.status === 'COMPLETE',
+                           'status-border-cancel': task.status === 'CANCELLED'
+                         }">
+                      {{ task.status }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator 
+               [length]="taskdata.length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    

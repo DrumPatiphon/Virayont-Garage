@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'cus-detail', component: CusDetailComponent }, 
   { path: 'task', component: TaskComponent }, 
   { path: 'task/detail', component: TaskDetailComponent },
+  { path: 'task/detail/:taskNo', component: TaskDetailComponent },
 ];
 
 @NgModule({
