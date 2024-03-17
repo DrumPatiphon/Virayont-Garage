@@ -4,6 +4,8 @@ import { PeriodicElement, Spare4Task , TaskData} from "./api.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { distinctUntilChanged, takeUntil } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ApiService} from './api.service';
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -61,8 +63,11 @@ const taskData: TaskData[] = [
 
 export class TaskComponent implements OnInit{
   searchForm: UntypedFormGroup;
-  dataSource :any[] = taskData;
+  taskdata :any[] = taskData;
   displayedColumns: string[] = ['seq', 'taskNo', 'taskDate', 'cusName', 'taskAmt', 'status'];
+  masterData = {
+    customerData:[] = []
+  }
   options: any[] = [
     { value: 1, text: 'Option 1' },
     { value: 2, text: 'Option 2' },
@@ -70,13 +75,35 @@ export class TaskComponent implements OnInit{
   ];
   currentPage = 1;
   itemsPerPage = 10;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pagedData: any[] = taskData;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize: number = 10;
+
+  // Define other component properties
+  dataSource = new MatTableDataSource<TaskData>();
     constructor ( 
         private fb : UntypedFormBuilder,
-     ) {this.searchForm = this.fb.group({});}
+        private route: ActivatedRoute,
+        private router : Router,
+        private se : ApiService,
+     ) {
+      this.searchForm = this.fb.group({});
+    }
       
     ngOnInit(): void {
       this.createForm();
       this.installEvent();
+      this.se.getMasterData().subscribe({
+        next: (response: any) => {
+          this.masterData = response;
+        },
+        error: (error: any) => {
+          console.error('Error:', error);
+        }
+      });
+      this.pagedData = this.taskdata.slice(0, this.pageSize);
     }
 
     createForm() {
@@ -86,7 +113,7 @@ export class TaskComponent implements OnInit{
         sDocDate: null,
         eDocDate: null,
         sDocNo: null,
-        eDocno: null,
+        eDocNo: null,
         licenseName: null,
       });
     }
@@ -123,6 +150,16 @@ export class TaskComponent implements OnInit{
         licenseName: null,
       });
       this.searchFunction();
+    }
+
+    addFunction() {
+      this.router.navigate(['/task/detail']);
+    }
+
+    onPageChange(event: any) {
+      const startIndex = event.pageIndex * event.pageSize;
+      const endIndex = startIndex + event.pageSize;
+      this.pagedData = this.taskdata.slice(startIndex, endIndex);
     }
   
 }

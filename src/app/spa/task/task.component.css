@@ -1,29 +1,6 @@
-
-app-table {
-    display: inline-block;
-    font-family: 'Prompt', sans-serif;
-    font-weight: 300;
-    font-size: small;
-    width: 100%; 
-}
-
-.program-title{
-    font-family: 'Prompt', sans-serif;
-    font-weight: 500;
-    margin: 25px 25px 5px 10px;
-}
-
-.card-title{
-    font-family: 'Prompt', sans-serif;
-    font-weight: 500;
-    font-size: medium;
-}
-
-.card{
-    margin: 5px 25px 5px 10px;
-}
-
 body{
     font-family: 'Prompt', sans-serif;
     cursor: default;
 }
+
+

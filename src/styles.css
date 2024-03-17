@@ -6,6 +6,7 @@ html, body {
 body {
     margin: 0;
     --bs-body-font-family: 'Prompt', sans-serif;
+    --bs-body-font-size: small;
 }
 
 .formcontrol-label{
@@ -23,9 +24,63 @@ body {
     padding-top: 5px;
 }
 
-.status-border {
-    border: 1px solid #eb5151; /* Example border style */
-    background-color: #eb7777; /* Example background color */
-    padding: 5px; /* Adjust padding as needed */
-    border-radius: 5px; /* Optional: add border radius for rounded corners */
+.text-right {
+    text-align: right;
+}
+
+.status-center {
+    text-align: center;
+    margin: auto;
+    display: inline-block;
+}
+
+.status-border-saved, .status-border-pending, 
+.status-border-complete, .status-border-cancel {
+    border: none;
+    padding: 5px !important;
+    border-radius: 5px !important;
+    width: 200px;
+}
+.status-border-saved {
+    background-color: #cce5ff !important;
+}
+.status-border-pending {
+    background-color: #ffd195 !important;
+}
+.status-border-complete {
+    background-color: #495057 !important;
+    color: white!important;
+}
+.status-border-cancel {
+    background-color: #b36969 !important;
+    color: white!important;
+}
+
+.add-btn{
+    position: relative;  
+    text-align: right; 
+}
+
+
+.app-table {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    font-size: small;
+    width: 100%; 
+}
+
+.program-title{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+    margin: 25px 25px 5px 25px;
+}
+
+.card-title{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+    font-size: medium;
+}
+
+.card{
+    margin: 5px 25px 5px 25px;
 }

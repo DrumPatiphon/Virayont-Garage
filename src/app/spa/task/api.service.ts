@@ -40,7 +40,7 @@ export interface TaskData
     taskDate: string,
     cusName: string,
     taskAmt: number,
-    status: string
+    status: string,
   }
 
 
@@ -52,6 +52,10 @@ export class ApiService {
 private apiUrl = 'https://localhost:44309/api/';
 
 constructor(private http: HttpClient) {}
+
+    getMasterData(){
+        return this.http.get<any>(this.apiUrl + 'task/MasterData');
+    }
 
     getSparetask():Observable<Spare4Task[]> {
     return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');
