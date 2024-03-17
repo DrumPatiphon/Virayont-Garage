@@ -10,6 +10,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { MatTableModule } from '@angular/material/table';
     MatGridListModule,
     MatPaginatorModule,
     MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class MaterialModule{ }

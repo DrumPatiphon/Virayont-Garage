@@ -28,7 +28,8 @@ export class AppTableComponent implements OnInit, AfterContentInit, AfterViewIni
       this.columns = this.columnRefs.map(columnRef => ({
         name: columnRef.name,
         width: columnRef.width,
-        cellClass: columnRef.cellClass // Assign custom cell class from columnRef
+        cellClass: columnRef.cellClass,
+        headerText: columnRef.headerText
       }));
 
       // Set column widths
@@ -70,6 +71,11 @@ export class AppTableComponent implements OnInit, AfterContentInit, AfterViewIni
   getCellClasses(columnName: string): string {
     const column = this.columns.find(col => col.name === columnName);
     return column ? (column.cellClass || '') : '';
+  }
+
+  getColumnHeaderText(column: string): string {
+    const columnRef = this.columnRefs.find(ref => ref.name === column);
+    return columnRef ? (columnRef.headerText || columnRef.name) : column;
   }
 }
 

@@ -1,8 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+html, body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    --bs-body-font-family: 'Prompt', sans-serif;
+    --bs-body-font-size: small;
+}
 
-body{
-    margin: 0px;
+.formcontrol-label{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    font-size: small;
+    color: grey;
+}
+
+.form-control {
+    border: 1px solid #CCCCCC !important;
+}
+
+.icon-center {
+    padding-top: 5px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.status-center {
+    text-align: center;
+    margin: auto;
+    display: inline-block;
+}
+
+.status-border-saved, .status-border-pending, 
+.status-border-complete, .status-border-cancel {
+    border: none;
+    padding: 5px !important;
+    border-radius: 5px !important;
+    width: 200px;
+}
+.status-border-saved {
+    background-color: #cce5ff !important;
+}
+.status-border-pending {
+    background-color: #ffd195 !important;
+}
+.status-border-complete {
+    background-color: #495057 !important;
+    color: white!important;
+}
+.status-border-cancel {
+    background-color: #b36969 !important;
+    color: white!important;
+}
+
+.add-btn{
+    position: relative;  
+    text-align: right; 
+}
+
+
+.app-table {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    font-size: small;
+    width: 100%; 
+}
+
+.program-title{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+    margin: 25px 25px 5px 25px;
+}
+
+.card-title{
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+    font-size: medium;
+}
+
+.card{
+    margin: 5px 25px 5px 25px;
 }

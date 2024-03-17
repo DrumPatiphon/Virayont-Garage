@@ -5,3 +5,13 @@
 .text-right {
   text-align: right;
 }
+
+.mat-elevation-z8 {
+    box-shadow: none; /* Remove the shadow effect */
+}
+
+/* Optional: If you want to remove the shadow effect from the cells as well */
+.mat-row,
+.mat-header-row {
+    box-shadow: none;
+}
