@@ -1,6 +1,6 @@
 import { Component ,OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, UntypedFormGroup } from '@angular/forms';
-import { ApiService, Spare4Task ,Dbtask} from './api.service';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { ApiService, Spare4Task ,DbTask, TaskDetail} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -67,12 +67,6 @@ export class TaskDetailComponent implements OnInit{
     }
 
     createForm() {
-      const spareTaskControls = {
-        detail_id: null,
-        task_id: null,
-        spare_id: null,
-      };
-    
       const dbTaskControls = {
         task_id: null,
         vehicle_id: null,
@@ -87,8 +81,7 @@ export class TaskDetailComponent implements OnInit{
         all_complete: null,
       };
     
-      this.SpareTaskForm = this.fb.group(spareTaskControls);
-      this.DbtaskForm = this.fb.group(dbTaskControls);
+      this.dbTaskForm = this.fb.group(dbTaskControls);
     }
 
 // ------------------------------------------------------------------------------------

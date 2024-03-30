@@ -10,7 +10,7 @@ export interface Spare4Task {
     spare_id: Number,    
 }
 
-export interface Dbtask {
+export interface DbTask {
 
     task_id: Number,
     vehicle_id: Number,
@@ -23,7 +23,20 @@ export interface Dbtask {
     Repair_Status2: Boolean,
     Repair_Status3: Boolean,
     all_complete: Boolean,
+    taskDetail: TaskDetail[],
         
+}
+
+export interface TaskDetail {
+    task_id: Number,
+    task_detail_id: number,
+    seq: number,
+    spare_id: number,
+    spare_desc: string,
+    detail_qty: Number,
+    detail_unit_price: Number,
+    detail_amt: Number,
+    rowState: String,
 }
 
 export interface PeriodicElement {
@@ -61,8 +74,8 @@ constructor(private http: HttpClient) {}
     return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');
     }
 
-    getDbtask():Observable<Dbtask []> {
-    return this.http.get<Dbtask[]>(this.apiUrl + 'Dbtask ');
+    getDbtask():Observable<DbTask []> {
+    return this.http.get<DbTask[]>(this.apiUrl + 'Dbtask ');
     }
 
     
