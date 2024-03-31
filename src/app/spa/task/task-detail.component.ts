@@ -1,5 +1,5 @@
 import { Component ,OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService, Spare4Task ,Dbtask} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TaskDetailComponent implements OnInit{
 
+    // searchform: UntypedFormGroup;
     SpareTaskForm! : FormGroup;
     DbtaskForm! : FormGroup;
 

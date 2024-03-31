@@ -10,6 +10,7 @@ import { ApiService, Employee } from './api.service';
 export class EmpDetailComponent  implements OnInit{
 
   Employeeform! : FormGroup;
+  router: any;
 
   constructor ( 
     private fb : FormBuilder,
@@ -45,6 +46,11 @@ export class EmpDetailComponent  implements OnInit{
     
     
   }
+  
+  addFunction() {
+    this.router.navigate(['/spare']);
+  }
+  
  //test
   createForm() {
     this.Employeeform = this.fb.group({
