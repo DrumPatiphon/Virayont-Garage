@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using test.Models;
 
 namespace test.Controllers.TaskController
@@ -26,23 +23,28 @@ namespace test.Controllers.TaskController
     [HttpGet]
     public async Task<MasterData> GetMasterData()
     {
+      CancellationToken cancellationToken = default(CancellationToken);
       MasterData masterData = new MasterData();
-      masterData.CustomerData = await _context.QueryAsync(GetCustomerData());
+      masterData.CustomerData = await GetCustomerData();
 
       return masterData;
     }
 
-    private string GetCustomerData()
+    private async Task<IEnumerable<dynamic>> GetCustomerData()
     {
-      StringBuilder sql = new StringBuilder();
-      sql.AppendLine(" SELECT  ");
-      sql.AppendLine(" customer_id                                                  AS \"value\",       ");
-      sql.AppendLine(" CONCAT(c.customer_id,' : ',c.first_name , ' ', c.last_name ) AS \"text\",        ");
-      sql.AppendLine(" c.company_name	                                              AS \"companyName\", ");
-      sql.AppendLine(" c.address		                                                AS \"address\",     ");
-      sql.AppendLine(" c.phone_number	                                              AS \"phoneNumber\"  ");
-      sql.AppendLine(" FROM public.customer c  ");
-      return sql.ToString();
+      var customers = await (from c in _context.Set<Customer>()
+                             select new 
+                             {
+                               Value = c.customer_id,
+                               Text = string.Concat(c.customer_id, " : ", c.first_name, " ", c.last_name),
+                               CompanyName = c.company_name,
+                               Address = c.address,
+                               PhoneNumber = c.phone_number
+                             }).ToListAsync();
+
+      return customers;
     }
+
+
   }
 }

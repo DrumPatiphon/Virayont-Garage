@@ -77,6 +77,9 @@
           </div><br>
 
           <div class="app-table">
+            <button class="btn btn-primary" (click)="addTaskDetail();">
+            <i class="fas fa-plus-circle"></i> {{ 'Add'}}
+          </button>
             <table class="table table-striped app-table">
               <thead>
                 <tr>
@@ -89,37 +92,25 @@
                 </tr>
               </thead>
 
-              <!-- <tbody>
-                <tr *ngFor="let task of pagedData">
+              <tbody>
+                <tr *ngFor="let row of dbTask.taskDetail">
                   <td class="text-center">
-                    {{ task.seq }}
-                  </td>
-
-                  <td class="text-center">
-                    <a [routerLink]="['detail', task.taskNo]" [state]="{ taskNo: task.taskNo }">{{ task.taskNo }}</a>
-                    {{ task.taskNo }}
+                    {{ row.seq }}
                   </td>
                   <td class="text-center">
-                    {{ task.taskDate }}
-                  </td>
-                  <td>
-                    {{ task.cusName }}
-                  </td>
-                  <td class="text-right">
-                    {{ task.taskAmt | number : '0.2-2'}}
-                  </td>
-                  <td class="text-center">
-                    <div class="status-center" [ngClass]="{
-                           'status-border-saved': task.status === 'SAVED',
-                           'status-border-pending': task.status === 'PENDING',
-                           'status-border-complete': task.status === 'COMPLETE',
-                           'status-border-cancel': task.status === 'CANCELLED'
-                         }">
-                      {{ task.status }}
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <label class="formcontrol-label"> {{'รหัสอะไหล่'}} </label>
+                      <ng-select
+                        placeholder="กรุณาเลือก"
+                        [items]="options" 
+                        bindLabel="text" 
+                        bindValue="value" 
+                        formControlName="spare_id">
+                      </ng-select>
                     </div>
                   </td>
                 </tr>
-              </tbody> -->
+              </tbody>
             </table>
             <!-- <mat-paginator 
                [length]="taskdata.length"

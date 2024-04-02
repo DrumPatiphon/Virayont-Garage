@@ -2,13 +2,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, catchError, throwError } from 'rxjs';
+import { UntypedFormGroup } from "@angular/forms";
 
-export interface Spare4Task {
+// export interface Spare4Task {
 
-    detail_id: Number,
-    task_id: Number,
-    spare_id: Number,    
-}
+//     detail_id: Number,
+//     task_id: Number,
+//     spare_id: Number,    
+// }
 
 export interface DbTask {
 
@@ -23,20 +24,20 @@ export interface DbTask {
     Repair_Status2: Boolean,
     Repair_Status3: Boolean,
     all_complete: Boolean,
-    taskDetail: TaskDetail[],
-        
+    taskDetail: TaskDetail[],  
 }
 
 export interface TaskDetail {
-    task_id: Number,
-    task_detail_id: number,
-    seq: number,
-    spare_id: number,
-    spare_desc: string,
-    detail_qty: Number,
-    detail_unit_price: Number,
-    detail_amt: Number,
-    rowState: String,
+    task_id: number | null;
+    task_detail_id: number | null;
+    seq: number | null;
+    spare_id: number | null;
+    spare_desc: string | null;
+    detail_qty: number | null;
+    detail_unit_price: number | null;
+    detail_amt: number | null;
+    form?: UntypedFormGroup | undefined;
+    rowState: string;
 }
 
 export interface PeriodicElement {
@@ -70,13 +71,13 @@ constructor(private http: HttpClient) {}
         return this.http.get<any>(this.apiUrl + 'task/MasterData');
     }
 
-    getSparetask():Observable<Spare4Task[]> {
-    return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');
-    }
+    // getSparetask():Observable<Spare4Task[]> {
+    // return this.http.get<Spare4Task[]>(this.apiUrl + 'Spare4Task');
+    // }
 
-    getDbtask():Observable<DbTask []> {
-    return this.http.get<DbTask[]>(this.apiUrl + 'Dbtask ');
-    }
+    // getDbtask():Observable<Dbtask []> {
+    // return this.http.get<Dbtask[]>(this.apiUrl + 'Dbtask ');
+    // }
 
     
     

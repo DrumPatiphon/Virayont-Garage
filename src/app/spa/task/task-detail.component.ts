@@ -1,6 +1,6 @@
 import { Component ,OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { ApiService, Spare4Task ,DbTask, TaskDetail} from './api.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ApiService ,DbTask, TaskDetail} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,10 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TaskDetailComponent implements OnInit{
 
-    // searchform: UntypedFormGroup;
-    SpareTaskForm! : FormGroup;
-    DbtaskForm! : FormGroup;
-
+    dbTaskForm! : FormGroup;
+    dbTask : DbTask = {} as DbTask;
+    taskDetailDelete: TaskDetail[] = [] as TaskDetail[];
+    options: any[] = [
+      { value: 1, text: 'Option 1' },
+      { value: 2, text: 'Option 2' },
+      { value: 3, text: 'Option 3' }
+    ];
     constructor ( 
       private fb : FormBuilder,
       private se : ApiService,
@@ -22,53 +26,28 @@ export class TaskDetailComponent implements OnInit{
     ) {}
 
     taskNo: string | undefined;
-    SpareTask: Spare4Task [] = [];
-    Dbtask: Dbtask [] =[]; 
     ngOnInit(): void {
       this.taskNo = this.route.snapshot.paramMap.get('taskNo') || '';
-      console.log(this.taskNo)
-      // this.se.getSparetask().subscribe((data) =>{ 
-      //   console.log(data)
-      //   this.SpareTask = data;
-      // })
-      // this.se.getDbtask().subscribe((data) =>{ 
-      //   console.log(data)
-      //   this.Dbtask = data;
-      // })
-
       this.createForm();
-      // this.se.getSparetask().subscribe((data) =>{
-      //   console.log("data :",data)
-      // this.SpareTask = data;
-      // this.SpareTaskForm.controls['detail_id'].setValue(data[0].detail_id )
-      // this.SpareTaskForm.controls['task_id'].setValue(data[0].task_id )
-      // this.SpareTaskForm.controls['spare_id'].setValue(data[0].spare_id )
-      
-      // })
+      this.rebuildForm();
+    }
 
-      // this.se.getDbtask().subscribe((data) =>{
-      // this.Dbtask = data;
-      // this.DbtaskForm.controls['task_id'].setValue(data[0].task_id )
-      // this.DbtaskForm.controls['vehicle_id'].setValue(data[0].vehicle_id )
-      // this.DbtaskForm.controls['date'].setValue(data[0].date )
-      // this.DbtaskForm.controls['price'].setValue(data[0].price )
-      // this.DbtaskForm.controls['employee_id'].setValue(data[0].employee_id )
-      // this.DbtaskForm.controls['Detail'].setValue(data[0].Detail )
-      // this.DbtaskForm.controls['appointment'].setValue(data[0].appointment )
-      // this.DbtaskForm.controls['Repair_Status1'].setValue(data[0].Repair_Status1 )
-      // this.DbtaskForm.controls['Repair_Status2'].setValue(data[0].Repair_Status2 )
-      // this.DbtaskForm.controls['Repair_Status3'].setValue(data[0].Repair_Status3 )
-      // this.DbtaskForm.controls['all_complete'].setValue(data[0].all_complete )
-      
-        
-      // })
+    rebuildForm(): void{
+      this.taskDetailDelete = [];
 
+      if(this.taskNo){
 
+      }else{
+        this.dbTask.taskDetail = [];
+      }
+
+      this.dbTaskForm.markAsPristine();
     }
 
     createForm() {
       const dbTaskControls = {
         task_id: null,
+        task_no: null,
         vehicle_id: null,
         date: null,
         price: null,
@@ -82,6 +61,51 @@ export class TaskDetailComponent implements OnInit{
       };
     
       this.dbTaskForm = this.fb.group(dbTaskControls);
+    }
+
+    addTaskDetail() {
+      const taskDetail: TaskDetail = {
+        task_id: null,
+        task_detail_id: null,
+        seq: this.dbTask.taskDetail.length + 1,
+        spare_id: null,
+        spare_desc: null,
+        detail_qty: null,
+        detail_unit_price: null,
+        detail_amt: null,
+        rowState: 'Add',
+      };
+      taskDetail.form = this.createTaskDetailForm(taskDetail);
+      this.dbTask.taskDetail = this.dbTask.taskDetail.concat(taskDetail);
+      console.log("this.dbTask.taskDetail",this.dbTask.taskDetail);
+      this.dbTaskForm.markAsDirty();
+    }
+
+    createTaskDetailForm(taskDetail: TaskDetail) {
+      const fg = this.fb.group({
+        task_id: [taskDetail.task_id],
+        task_detail_id: [taskDetail.task_detail_id],
+        seq: [taskDetail.seq],
+        spare_id: [taskDetail.spare_id, [Validators.required]],
+        spare_desc: [taskDetail.spare_desc],
+        detail_qty: [taskDetail.detail_qty, [Validators.required]],
+        detail_unit_price: [taskDetail.detail_unit_price, [Validators.required]],
+        detail_amt: [taskDetail.detail_amt],
+        rowState: [taskDetail.rowState],
+      });
+
+      fg.patchValue(taskDetail, { emitEvent: false });
+  
+      if (this.dbTaskForm.controls['task_no'].value == 'AUTO') {
+        taskDetail.rowState = 'Add';
+      }
+  
+      fg.valueChanges.subscribe((controls) => {
+        if (taskDetail.rowState === 'Normal') {
+          taskDetail.rowState = 'Edit';
+        }
+      });
+      return fg;
     }
 
 // ------------------------------------------------------------------------------------
