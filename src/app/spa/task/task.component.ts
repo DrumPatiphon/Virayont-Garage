@@ -64,7 +64,8 @@ export class TaskComponent implements OnInit{
   taskdata :any[] = taskData;
   displayedColumns: string[] = ['seq', 'taskNo', 'taskDate', 'cusName', 'taskAmt', 'status'];
   masterData = {
-    customerData:[] = []
+    customerData:[] = [],
+    status:[] = [],
   }
   options: any[] = [
     { value: 1, text: 'Option 1' },
