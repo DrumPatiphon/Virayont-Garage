@@ -23,7 +23,6 @@ namespace test.Controllers.TaskController
     [HttpGet]
     public async Task<MasterData> GetMasterData()
     {
-      CancellationToken cancellationToken = default(CancellationToken);
       MasterData masterData = new MasterData();
       masterData.CustomerData = await GetCustomerData();
 

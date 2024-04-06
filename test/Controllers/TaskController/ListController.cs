@@ -1,12 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using test.Models;
+using static test.Controllers.TaskController.MasterDataController;
 
 namespace test.Controllers.TaskController
 {
+  [Route("api/task/list/[controller]")]
+  [ApiController]
   public class ListController : Controller
   {
-    public IActionResult Index()
+    private readonly DataContext _context;
+    public ListController(DataContext context)
     {
-      return View();
+      _context = context;
+    }
+
+    [HttpGet]
+    public async Task<dynamic> GetTaskList()
+    {
+      return null;
     }
   }
 }
