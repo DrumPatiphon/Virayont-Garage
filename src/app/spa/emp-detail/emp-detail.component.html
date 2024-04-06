@@ -3,57 +3,14 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="form-row pt-3">
-
-          </div>
-          <h5 class="card-title">{{'ค้นหารายการซ่อม'}}</h5><br>
-          <form >   
-            <!-- [formGroup]="searchform" -->
-            <div class="row">
-              <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'ชื่อพนักงาน'}}</label>
-                <!-- <ng-select
-                  placeholder="กรุณาเลือก"
-                  [items]="masterData.customerData" 
-                  bindLabel="text" 
-                  bindValue="value" 
-                  formControlName="customerId">
-                </ng-select> -->
-              </div>
-              <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เลขทะเบียน'}}</label>
-                  <!-- <ng-select
-                    placeholder="กรุณาเลือก"
-                    [items]="masterData.customerData" 
-                    bindLabel="text" 
-                    bindValue="value" 
-                    formControlName="customerId">
-                  </ng-select> -->
-              </div>
-              <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
-                  <!-- <ng-select
-                    placeholder="กรุณาเลือก"
-                    [items]="masterData.customerData" 
-                    bindLabel="text" 
-                    bindValue="value" 
-                    formControlName="customerId">
-                  </ng-select> -->
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
           <div class="row">
             <div class="form-group col-lg-10 col-md-10">
-              <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
+              <h5 class="card-title">{{'รายชื่อพนักงาน'}}</h5>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary" routerLink="/emp-pdetail" ><mat-icon class="icon-center">add</mat-icon>
+                 {{ 'เพิ่มเอกสาร' }}
+              </button>
             </div>
           </div><br>
 
@@ -62,11 +19,9 @@
               <thead>
                 <tr>
                   <th class="text-center" [style.width.px]="70">ลำดับ</th>
-                  <!-- <th class="text-center" [style.width.px]="150">วันที่</th> -->
-                  <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
-                  <th class="text-center" [style.width.px]="70">จำนวน</th>
-                  <th class="text-center" [style.width.px]="80">ราคา</th>
-                  <th class="text-center" [style.width.px]="100">หมายเหตุ</th>
+                  <th class="text-center" [style.width.px]="200">ชื่อ-นาสกุล</th>
+                  <th class="text-center" [style.width.px]="80">เงินเดือน</th>
+                  <th class="text-center" [style.width.px]="80">ตำแหน่ง</th>
                 </tr>
               </thead>
 
