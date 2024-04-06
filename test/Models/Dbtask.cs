@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace test.Models
 {
@@ -6,15 +6,17 @@ namespace test.Models
     {
         [Key]
         public int task_id { get; set; }
-        public int? vehicle_id { get; set; }
-        public DateTime? date { get; set; }
-        public int? price { get; set; }
-        public int? employee_id { get; set; }
-        public string? Detail { get; set; }
-        public DateTime? appointment { get; set; }
-        public bool? Repair_Status1 { get; set; }
-        public bool? Repair_Status2 { get; set; }
-        public bool? Repair_Status3 { get; set; }
-        public bool? all_complete { get; set; }
+        public string? task_no { get; set; }
+        public string? license_desc { get; set; }
+        public int? province_id { get; set; }
+        public int? customer_id { get; set; }
+        public string? customer_address { get; set; }
+        public string? customer_phone { get; set; }
+        public int? task_amt { get; set; }
+        public string? remark { get; set; }
+        public string? status { get; set; }
+        public int? create_by { get; set; }
+        public DateTime? create_date { get; set; }
+        public DateTime? update_date { get; set; }
     }
 }

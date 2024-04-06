@@ -12,6 +12,7 @@ namespace test.Controllers.TaskController
     {
       public IEnumerable<dynamic> CustomerData { get; set; }
       public IEnumerable<dynamic> Status { get; set; }
+      public IEnumerable<dynamic> TaskNo { get; set; }
     }
 
     private readonly DataContext _context;
@@ -27,6 +28,8 @@ namespace test.Controllers.TaskController
       MasterData masterData = new MasterData();
       masterData.CustomerData = await GetCustomerData();
       masterData.Status = await GetStatus();
+      masterData.TaskNo = await GetTaskNo();
+
 
       return masterData;
     }
@@ -55,6 +58,17 @@ namespace test.Controllers.TaskController
                             Text = s.status_desc
                           }).ToListAsync();
       return status;
+    }
+
+    private async Task<IEnumerable<dynamic>> GetTaskNo()
+    {
+      var dbtask = await (from s in _context.Set<Dbtask>()
+                          select new
+                          {
+                            Value = s.task_id,
+                            Text = s.task_no
+                          }).ToListAsync();
+      return dbtask;
     }
 
 
