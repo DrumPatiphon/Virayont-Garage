@@ -1,11 +1,9 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { PeriodicElement, Spare4Task , TaskData} from "./api.service";
-import { MatTableDataSource } from "@angular/material/table";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatPaginator } from "@angular/material/paginator";
-import { distinctUntilChanged, takeUntil } from "rxjs";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiService} from './api.service';
+import { ApiService, PeriodicElement, TaskData } from "./api.service";
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
