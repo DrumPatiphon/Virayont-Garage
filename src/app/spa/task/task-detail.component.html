@@ -1,3 +1,11 @@
+<div class="form-group col-lg-12 col-md-12 add-btn">
+  <button class="btn btn-primary me-2 pe-3" ><mat-icon class="icon-center">done</mat-icon>
+     {{ 'บันทึก' }}
+  </button>
+  <button class="btn btn-danger" ><mat-icon class="icon-center">clear</mat-icon>
+    {{ 'ยกเลิก' }}
+ </button>
+</div>
 <h5 class="program-title"> {{'รายละเอียดการซ่อม'}} </h5>
   <div class="row">
     <div class="col">
@@ -7,21 +15,12 @@
             <div class="form-group col-lg-10 col-md-10 ">
               <h5 class="card-title">{{'ข้อมูล'}}</h5>
             </div>
-            <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary me-2 pe-3" ><mat-icon class="icon-center">done</mat-icon>
-                 {{ 'บันทึก' }}
-              </button>
-              <button class="btn btn-danger" ><mat-icon class="icon-center">clear</mat-icon>
-                {{ 'ยกเลิก' }}
-             </button>
-            </div>
           </div>
-          <form >   
-            
+          <form [formGroup]="dbTaskForm">   
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันที่เอกสาร'}}</label>
@@ -29,11 +28,11 @@
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
-                  <ng-select placeholder="กรุณาเลือก"
-                  [items]="masterData.status" 
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="status">
+                    formControlName="docStatus" -->
                   </ng-select>
               </div>
             </div>
@@ -41,11 +40,11 @@
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
-                  <ng-select placeholder="กรุณาเลือก"
-                  [items]="masterData.customerData" 
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="customer_id">
+                    formControlName="docStatus" -->
                   </ng-select>
               </div>
               <div class="form-group col-lg-3 col-md-6">
@@ -76,11 +75,11 @@
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'จังหวัด'}} </label>
-                  <ng-select placeholder="กรุณาเลือก"
-                  [items]="masterData.Province" 
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="province_id">
+                    formControlName="docStatus" -->
                   </ng-select>
               </div>
 
@@ -90,11 +89,11 @@
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
-                  <ng-select placeholder="กรุณาเลือก"
-                  [items]="masterData.Employee" 
-                  bindLabel="text" 
-                  bindValue="value" 
-                  formControlName="employee_id">
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus" -->
                   </ng-select>
               </div>
             </div>

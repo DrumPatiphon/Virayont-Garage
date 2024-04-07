@@ -66,7 +66,6 @@ export class TaskComponent implements OnInit{
   masterData = {
     customerData:[] = [],
     status: [] = [],
-    
   }
   options: any[] = [
     { value: 1, text: 'Option 1' },
