@@ -138,3 +138,6 @@ test/obj/Debug/
 .vs/test/FileContentIndex/9321d547-f1bf-4266-8777-b623696930cd.vsidx
 
 .vs
+test/bin/Debug/net6.0/test.dll
+test/bin/Debug/net6.0/test.exe
+test/bin/Debug/net6.0/test.pdb
