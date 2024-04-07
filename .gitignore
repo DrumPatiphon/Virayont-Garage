@@ -133,3 +133,9 @@ dist
 .angular/cache/
 test/obj/Debug/
 .vs/test
+.vs/ProjectEvaluation/test.metadata.v7.bin
+.vs/ProjectEvaluation/test.projects.v7.bin
+test/test.csproj.user
+test/bin/Debug/net6.0/test.dll
+test/bin/Debug/net6.0/test.exe
+test/bin/Debug/net6.0/test.pdb

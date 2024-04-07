@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data;
+using System.Dynamic;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace test.Models
 {
@@ -17,11 +21,7 @@ namespace test.Models
       options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
     }
 
-    internal Task<IEnumerable<dynamic>> QueryAsync(string v)
-    {
-      throw new NotImplementedException();
-    }
-
+    //private DbSet<T> Set<T>() where T : class;
     public DbSet<Customer> customer { get; set; }
     public DbSet<Employee> employee { get; set; }
     public DbSet<Spare_part> spare_part { get; set; }
@@ -30,5 +30,6 @@ namespace test.Models
     public DbSet<Spare_type> spare_type { get; set; }
     public DbSet<Dbtask> dbtask { get; set; }
     public DbSet<Vehicle> vehicle { get; set; }
+    public DbSet<Status> status { get; set; }
   }
 }
