@@ -13,6 +13,8 @@ namespace test.Controllers.TaskController
       public IEnumerable<dynamic> CustomerData { get; set; }
       public IEnumerable<dynamic> Status { get; set; }
       public IEnumerable<dynamic> TaskNo { get; set; }
+      public IEnumerable<dynamic> Province { get; set; }
+      public IEnumerable<dynamic> Employee { get; set; }
     }
 
     private readonly DataContext _context;
@@ -29,6 +31,8 @@ namespace test.Controllers.TaskController
       masterData.CustomerData = await GetCustomerData();
       masterData.Status = await GetStatus();
       masterData.TaskNo = await GetTaskNo();
+      masterData.Province = await GetProvince();
+      masterData.Employee = await GetEmployee();
 
 
       return masterData;
@@ -65,12 +69,33 @@ namespace test.Controllers.TaskController
       var dbtask = await (from s in _context.Set<Dbtask>()
                           select new
                           {
-                            Value = s.task_id,
+                            Value = s.task_no,
                             Text = s.task_no
                           }).ToListAsync();
       return dbtask;
     }
 
+    private async Task<IEnumerable<dynamic>> GetProvince()
+    {
+      var province = await (from s in _context.Set<Province>()
+                            select new
+                            {
+                              Value = s.province_id,
+                              Text = s.province_name
+                            }).ToListAsync();
+      return province;
+    }
+
+    private async Task<IEnumerable<dynamic>> GetEmployee()
+    {
+      var employee = await (from s in _context.Set<Employee>()
+                            select new
+                            {
+                              Value = s.employee_id,
+                              Text = string.Concat(s.employee_id, " : ", s.empfirst_name, " ", s.emplast_name),
+                            }).ToListAsync();
+      return employee;
+    }
 
   }
 }
