@@ -139,3 +139,7 @@ test/test.csproj.user
 test/bin/Debug/net6.0/test.dll
 test/bin/Debug/net6.0/test.exe
 test/bin/Debug/net6.0/test.pdb
+test/obj/project.assets.json
+test/obj/project.nuget.cache
+test/obj/test.csproj.nuget.dgspec.json
+test/obj/test.csproj.nuget.g.props
