@@ -13,6 +13,14 @@ export class TaskDetailComponent implements OnInit{
     dbTaskForm! : FormGroup;
     dbTask : DbTask = {} as DbTask;
     taskDetailDelete: TaskDetail[] = [] as TaskDetail[];
+    masterData = {
+      customerData:[] = [],
+      status: [] = [],
+      Employee: [] = [],
+      Province: [] = [],
+      
+    }
+
     options: any[] = [
       { value: 1, text: 'Option 1' },
       { value: 2, text: 'Option 2' },
@@ -51,6 +59,7 @@ export class TaskDetailComponent implements OnInit{
         vehicle_id: null,
         date: null,
         price: null,
+        customer_id: null,
         employee_id: null,
         Detail: null,
         appointment: null,
@@ -58,6 +67,8 @@ export class TaskDetailComponent implements OnInit{
         Repair_Status2: null,
         Repair_Status3: null,
         all_complete: null,
+        status: null,
+        province_id: null,
       };
     
       this.dbTaskForm = this.fb.group(dbTaskControls);
