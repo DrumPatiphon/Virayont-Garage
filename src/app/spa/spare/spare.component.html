@@ -1,156 +1,50 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-  
-
-  <div class="card text">
-    <div class="card-header fw-bold fs-4" >
-      VIRAYONT GARAGE
-    </div>
-    <div class="position-absolute top-0 end-0">
-      <a  class="btn btn-primary" routerLink="/task" >รายละเอียดรายการ</a>
-    </div>
-    
-
-    <div class="card-body">
-      <p class="card-title" class="fs-5">อะไหล่ </p>
-      
-      <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            รหัสอะไหล่
-            <input type="text"  >
+ <h5 class="program-title"> {{'อะไหล่'}} </h5>
+ 
+ <div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{'ค้นหา'}}</h5>
+        <form >
+          <!-- [formGroup]="searchForm" -->
+          <div class="row">
+            <div class="form-group col-lg-3 col-md-6">
+              <label class="formcontrol-label"> {{'ID อะไหล่'}} </label>
+              <input type="text" class="form-control" >
+            </div>
+            <div class="form-group col-lg-3 col-md-6">
+              <label class="formcontrol-label"> {{'ชื่ออะไหล่'}} </label>
+                <input type="text" class="form-control" >
+            </div>
+            <div class="form-group col-lg-3 col-md-6">
+              <label class="formcontrol-label"> {{ 'ประเภทอะไหล่'}} </label>
+                <ng-select
+                  placeholder="กรุณาเลือก">
+                  <!-- [items]="options" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  formControlName="eDocNo" -->
+                </ng-select>
+            </div>
           </div>
-          <div class="col">
-            ชื่ออะไหล่
-            <input type="text"  >
+         
+          <div class="form-row pt-3">
+            <div class="form-group col-md-12 col-xs-12 text-center">
+              <button class="btn btn-primary me-2 pe-3" click=""><mat-icon class="icon-center">search</mat-icon>
+                {{ 'ค้นหา' }}</button>
+              <button class="btn btn btn-outline-dark" click=""><mat-icon class="icon-center"> clear_all</mat-icon>
+                {{ 'ล้างข้อมูล' }}</button>
+            </div>
           </div>
-          <div class="col">
-            จำนวน
-            <input type="text"  >
-            
-          </div>
-        </div>
-
-          <div class="mx-auto p-4" >
-            <button type="button" class="btn btn-info"> เพิ่ม </button>
-          </div> 
+        </form>
       </div>
     </div>
-    
   </div>
-
-
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">ชื่ออะไหล่</th>
-        <th scope="col">ราคา</th>
-        <th scope="col">จำนวน/ชิ้น</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">0001</th>
-        <td>แบทเตอรี่ X</td>
-        <td>600</td>
-        <td>6</td>
-      </tr>
-      <tr>
-        <th scope="row">1010</th>
-        <td>แบทเตอรี่ M</td>
-        <td>800</td>
-        <td>4</td>
-      </tr>
-      <tr>
-        <th scope="row">1110</th>
-        <td>แบทเตอรี่ L</td>
-        <td>1200</td>
-        <td>3</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-</body>
-</html>
-
-
-
- -->
-
-
- <h5 class="program-title"> {{'รายละเอียดการซ่อม'}} </h5>
- <!-- <div class="row">
-   <div class="col">
-     <div class="card">
-       <div class="card-body">
-         <div class="form-row pt-3"> -->
-
-         <!-- </div>
-         <h5 class="card-title">{{'ข้อมูล'}}</h5><br>
-         <form >    -->
-           <!-- [formGroup]="searchform" -->
-           <!-- <div class="row">
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
-                 <input type="text" class="form-control" >
-             </div>
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'นามสกุล'}}</label>
-                 <input type="text" class="form-control" >
-             </div>
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
-                 <input type="text" class="form-control" >
-             </div>
-           </div>
-
-           <div class="row">
-             <div class="form-group col-lg-6 col-md-6">
-               <label class="formcontrol-label">{{'บริษัท'}}</label>
-               <input type="text" class="form-control" >
-             </div>
-             <div class="form-group col-lg-6 col-md-6">
-               <label class="formcontrol-label">{{'ที่อยู่'}}</label>
-               <input type="text" class="form-control" >
-             </div>
-           </div>
-
-           <div class="row">
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
-                 <input type="text" class="form-control" >
-             </div>
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label>
-                 <input type="text" class="form-control" >
-             </div>
-             <div class="form-group col-lg-3 col-md-6">
-               <label class="formcontrol-label">{{'วันนัดรับ'}}</label>
-                 <input type="text" class="form-control">
-             </div>
-           </div>
-
-           <div class="row">
-             <div class="form-group col-lg-12 col-md-12">
-               <label class="formcontrol-label">หมายเหตุ</label>
-               <textarea class="form-control " rows="4" placeholder="หมายเหตุเพิ่มเติม"></textarea>
-             </div>
-           </div>
-         </form>
-       </div>
-     </div>
-   </div>
- </div> -->
-
+</div>
+ 
+ 
+ 
+ 
  <div class="row">
    <div class="col">
      <div class="card">
@@ -159,9 +53,12 @@
            <div class="form-group col-lg-10 col-md-10">
              <h5 class="card-title">{{'ข้อมูลอะไหล่'}}</h5>
            </div>
+           <div class="form-group col-lg-2 col-md-2 add-btn">
+            <button class="btn btn-primary" routerLink="/spare-detail" ><mat-icon class="icon-center">add</mat-icon>
+               {{ 'เพิ่มเอกสาร' }}
+            </button>
+          </div>
          </div><br>
-
-
          <div class="app-table">
            <table class="table table-striped app-table">
              <thead>
@@ -170,15 +67,51 @@
                  <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                  <th class="text-center" [style.width.px]="70">จำนวน</th>
                  <th class="text-center" [style.width.px]="80">ราคา</th>
-                 <th class="text-center" [style.width.px]="250">หมายเหตุ</th>
+                 <th class="text-center" [style.width.px]="100">หมายเหตุ</th>
                </tr>
+               <!-- <tbody>
+                <tr *ngFor="let task of pagedData">
+                  <td class="text-center">
+                    {{ task.seq }}
+                  </td>
+                  <td class="text-center">
+                    <a [routerLink]="['detail', task.taskNo]" [state]="{ taskNo: task.taskNo }">{{ task.taskNo }}</a>
+                    {{ task.taskNo }}
+                  </td>
+                  <td class="text-center">
+                    {{ task.taskDate }}
+                  </td>
+                  <td>
+                    {{ task.cusName }}
+                  </td>
+                  <td class="text-right">
+                    {{ task.taskAmt | number : '0.2-2'}}
+                  </td>
+                  <td class="text-center">
+                    <div class="status-center" [ngClass]="{
+                           'status-border-saved': task.status === 'SAVED',
+                           'status-border-pending': task.status === 'PENDING',
+                           'status-border-complete': task.status === 'COMPLETE',
+                           'status-border-cancel': task.status === 'CANCELLED'
+                         }">
+                      {{ task.status }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody> -->
              </thead>
            </table>
+           <!-- <mat-paginator 
+               [length]="taskdata.length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChange($event)">
+            </mat-paginator> -->
          </div>
        </div>
      </div>
    </div>
- </div>
+  </div>
 
 
 

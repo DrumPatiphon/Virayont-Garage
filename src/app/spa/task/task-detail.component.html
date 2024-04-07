@@ -3,13 +3,51 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="form-row pt-3">
-
+          <div class="row ">
+            <div class="form-group col-lg-10 col-md-10 ">
+              <h5 class="card-title">{{'ข้อมูล'}}</h5>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary me-2 pe-3" ><mat-icon class="icon-center">done</mat-icon>
+                 {{ 'บันทึก' }}
+              </button>
+              <button class="btn btn-danger" ><mat-icon class="icon-center">clear</mat-icon>
+                {{ 'ยกเลิก' }}
+             </button>
+            </div>
           </div>
-          <h5 class="card-title">{{'ข้อมูล'}}</h5><br>
           <form >   
             <!-- [formGroup]="searchform" -->
             <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
+                  <input type="text" class="form-control" >
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'วันที่เอกสาร'}}</label>
+                  <input type="text" class="form-control" >
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus" -->
+                  </ng-select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus" -->
+                  </ng-select>
+              </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
                   <input type="text" class="form-control" >
@@ -37,13 +75,30 @@
 
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'จังหวัด'}} </label>
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus" -->
+                  </ng-select>
+              </div>
+
+              <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
                   <input type="text" class="form-control" >
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'ชื่อพนักงาน'}}</label>
-                  <input type="text" class="form-control">
+                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
+                  <ng-select placeholder="กรุณาเลือก">
+                    <!-- [items]="options" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="docStatus" -->
+                  </ng-select>
               </div>
+            </div>
+            <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label>
                   <input type="text" class="form-control" >
@@ -53,6 +108,7 @@
                   <input type="text" class="form-control">
               </div>
             </div>
+
 
             <div class="row">
               <div class="form-group col-lg-12 col-md-12">
@@ -74,6 +130,11 @@
             <div class="form-group col-lg-10 col-md-10">
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary" ><mat-icon class="icon-center">add</mat-icon>
+                 {{ 'เพิ่ม' }}
+              </button>
+            </div>
           </div><br>
 
           <div class="app-table">
@@ -84,7 +145,6 @@
               <thead>
                 <tr>
                   <th class="text-center" [style.width.px]="70">ลำดับ</th>
-                  <!-- <th class="text-center" [style.width.px]="150">วันที่</th> -->
                   <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                   <th class="text-center" [style.width.px]="70">จำนวน</th>
                   <th class="text-center" [style.width.px]="80">ราคา</th>
