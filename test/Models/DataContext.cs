@@ -31,5 +31,6 @@ namespace test.Models
     public DbSet<Dbtask> dbtask { get; set; }
     public DbSet<Vehicle> vehicle { get; set; }
     public DbSet<Status> status { get; set; }
+    public DbSet<Province> province { get; set; }
   }
 }

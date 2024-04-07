@@ -16,9 +16,8 @@ export class TaskDetailComponent implements OnInit{
     masterData = {
       customerData:[] = [],
       status: [] = [],
-      Employee: [] = [],
-      Province: [] = [],
-      
+      employee: [] = [],
+      province: [] = [],
     }
 
     options: any[] = [

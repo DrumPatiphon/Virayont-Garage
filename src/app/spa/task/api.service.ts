@@ -63,7 +63,7 @@ export interface TaskData
 })
 export class ApiService {
    
-private apiUrl = 'https://localhost:7072/api/';
+private apiUrl = 'https://localhost:44309/api/';
 
 constructor(private http: HttpClient) {}
 
