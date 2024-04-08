@@ -15,6 +15,7 @@ namespace test.Controllers.TaskController
       public IEnumerable<dynamic> TaskNo { get; set; }
       public IEnumerable<dynamic> Province { get; set; }
       public IEnumerable<dynamic> Employee { get; set; }
+      public IEnumerable<dynamic> SpareData { get; set; }
     }
 
     private readonly DataContext _context;
@@ -33,6 +34,7 @@ namespace test.Controllers.TaskController
       masterData.TaskNo = await GetTaskNo();
       masterData.Province = await GetProvince();
       masterData.Employee = await GetEmployee();
+      masterData.SpareData = await GetSpareData();
 
 
       return masterData;
@@ -45,6 +47,8 @@ namespace test.Controllers.TaskController
                              {
                                Value = c.customer_id,
                                Text = string.Concat(c.customer_id, " : ", c.first_name, " ", c.last_name),
+                               FirstName = c.first_name,
+                               LastName = c.last_name,
                                CompanyName = c.company_name,
                                Address = c.address,
                                PhoneNumber = c.phone_number
@@ -56,6 +60,7 @@ namespace test.Controllers.TaskController
     private async Task<IEnumerable<dynamic>> GetStatus()
     {
       var status = await (from s in _context.Set<Status>()
+                          orderby s.status_id
                           select new
                           {
                             Value = s.status_id,
@@ -66,33 +71,48 @@ namespace test.Controllers.TaskController
 
     private async Task<IEnumerable<dynamic>> GetTaskNo()
     {
-      var dbtask = await (from s in _context.Set<Dbtask>()
+      var dbtask = await (from t in _context.Set<Dbtask>()
                           select new
                           {
-                            Value = s.task_no,
-                            Text = s.task_no
+                            Value = t.task_no,
+                            Text = t.task_no
                           }).ToListAsync();
       return dbtask;
     }
 
     private async Task<IEnumerable<dynamic>> GetProvince()
     {
-      var province = await (from s in _context.Set<Province>()
+      var province = await (from p in _context.Set<Province>()
                             select new
                             {
-                              Value = s.province_id,
-                              Text = s.province_name
+                              Value = p.province_id,
+                              Text = p.province_name
                             }).ToListAsync();
       return province;
     }
 
     private async Task<IEnumerable<dynamic>> GetEmployee()
     {
-      var employee = await (from s in _context.Set<Employee>()
+      var employee = await (from e in _context.Set<Employee>()
                             select new
                             {
-                              Value = s.employee_id,
-                              Text = string.Concat(s.employee_id, " : ", s.empfirst_name, " ", s.emplast_name),
+                              Value = e.employee_id,
+                              Text = string.Concat(e.employee_id, " : ", e.empfirst_name, " ", e.emplast_name),
+                            }).ToListAsync();
+      return employee;
+    }
+
+    private async Task<IEnumerable<dynamic>> GetSpareData()
+    {
+      var employee = await (from s in _context.Set<SparePart>()
+                            orderby s.spare_id
+                            select new
+                            {
+                              Value = s.spare_id,
+                              Text = string.Concat(s.spare_id, " : ", s.spare_name),
+                              SpareName = s.spare_name,
+                              SparePrice = s.spare_price,
+                              SpareQty = s.quantity,
                             }).ToListAsync();
       return employee;
     }

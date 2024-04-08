@@ -24,9 +24,9 @@ namespace test.Models
     //private DbSet<T> Set<T>() where T : class;
     public DbSet<Customer> customer { get; set; }
     public DbSet<Employee> employee { get; set; }
-    public DbSet<Spare_part> spare_part { get; set; }
+    public DbSet<SparePart> spare_part { get; set; }
     public DbSet<Department> department { get; set; }
-    public DbSet<Spare4Task> Spare4Task { get; set; }
+    public DbSet<TaskDetail> task_detail { get; set; }
     public DbSet<Spare_type> spare_type { get; set; }
     public DbSet<Dbtask> dbtask { get; set; }
     public DbSet<Vehicle> vehicle { get; set; }
