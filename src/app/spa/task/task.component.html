@@ -65,7 +65,7 @@
                 <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
-                    [items]="options" 
+                    [items]="masterData.taskNo" 
                     bindLabel="text" 
                     bindValue="value" 
                     formControlName="sDocNo">
@@ -75,7 +75,7 @@
                 <label class="formcontrol-label"> {{ 'ถึงเลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
-                    [items]="options" 
+                    [items]="masterData.taskNo" 
                     bindLabel="text" 
                     bindValue="value" 
                     formControlName="eDocNo">

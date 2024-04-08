@@ -1,17 +1,19 @@
-<div class="form-group col-lg-12 col-md-12 add-btn">
-  <button class="btn btn-primary me-2 pe-3" ><mat-icon class="icon-center">done</mat-icon>
-     {{ 'บันทึก' }}
-  </button>
-  <button class="btn btn-danger" ><mat-icon class="icon-center">clear</mat-icon>
-    {{ 'ยกเลิก' }}
- </button>
-</div>
 <h5 class="program-title"> {{'รายละเอียดการซ่อม'}} </h5>
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="card-body">
           <div class="row ">
+            <div class="form-group col-lg-12 col-md-12 add-btn">
+              <button class="btn btn-primary me-2 pe-3" (click)="save('Save')">
+                <mat-icon class="icon-center">done</mat-icon>
+                 {{ 'บันทึก' }}
+              </button>
+              <button class="btn btn-danger" (click)="save('Cancel')">
+                <mat-icon class="icon-center">clear</mat-icon>
+                {{ 'ยกเลิก' }}
+             </button>
+            </div>
             <div class="form-group col-lg-10 col-md-10 ">
               <h5 class="card-title">{{'ข้อมูล'}}</h5>
             </div>
@@ -20,19 +22,20 @@
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control text-center doc-no" formControlName="task_no">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันที่เอกสาร'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control text-center" formControlName="task_date">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
-                  <ng-select placeholder="กรุณาเลือก">
-                    <!-- [items]="options" 
+                  <ng-select 
+                    placeholder="กรุณาเลือก"      
+                    [items]="masterData.status" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="docStatus" -->
+                    formControlName="status">
                   </ng-select>
               </div>
             </div>
@@ -40,79 +43,82 @@
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
-                  <ng-select placeholder="กรุณาเลือก">
-                    <!-- [items]="options" 
+                  <ng-select                   
+                    placeholder="กรุณาเลือก"      
+                    [items]="masterData.customerData" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="docStatus" -->
+                    formControlName="customer_id">
                   </ng-select>
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control" formControlName="customer_name">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'นามสกุล'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control" formControlName="customer_lastname">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control" formControlName="customer_phone">
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-lg-6 col-md-6">
                 <label class="formcontrol-label">{{'บริษัท'}}</label>
-                <input type="text" class="form-control" >
+                <input type="text" class="form-control" formControlName="customer_company">
               </div>
               <div class="form-group col-lg-6 col-md-6">
                 <label class="formcontrol-label">{{'ที่อยู่'}}</label>
-                <input type="text" class="form-control" >
+                <input type="text" class="form-control" formControlName="customer_address">
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{'จังหวัด'}} </label>
-                  <ng-select placeholder="กรุณาเลือก">
-                    <!-- [items]="options" 
-                    bindLabel="text" 
-                    bindValue="value" 
-                    formControlName="docStatus" -->
-                  </ng-select>
-              </div>
-
-              <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
                   <input type="text" class="form-control" >
               </div>
               <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'จังหวัด'}} </label>
+                  <ng-select placeholder="กรุณาเลือก"                    
+                  [items]="masterData.province" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  formControlName="province_id">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
-                  <ng-select placeholder="กรุณาเลือก">
-                    <!-- [items]="options" 
+                  <ng-select placeholder="กรุณาเลือก"
+                    [items]="masterData.employee" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="docStatus" -->
+                    formControlName="employee_id">
                   </ng-select>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control text-center" formControlName="start_work_date">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันนัดรับ'}}</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control text-center" formControlName="appointment_date">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'มูลค่าการซ่อม'}}</label>
+                  <input type="text" class="form-control text-right" formControlName="task_amt">
               </div>
             </div>
-
 
             <div class="row">
               <div class="form-group col-lg-12 col-md-12">
                 <label class="formcontrol-label">หมายเหตุ</label>
-                <textarea class="form-control " rows="4" placeholder="หมายเหตุเพิ่มเติม"></textarea>
+                <textarea class="form-control form-textarea" rows="3" placeholder="หมายเหตุเพิ่มเติม" formControlName="remark"></textarea>
               </div>
             </div>
           </form>
@@ -130,49 +136,81 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" ><mat-icon class="icon-center">add</mat-icon>
+              <button class="btn btn-primary" (click)="addTaskDetail();">
+                <mat-icon class="icon-center">add</mat-icon>
                  {{ 'เพิ่ม' }}
               </button>
             </div>
           </div><br>
 
           <div class="app-table">
-            <button class="btn btn-primary" (click)="addTaskDetail();">
-            <i class="fas fa-plus-circle"></i> {{ 'Add'}}
-          </button>
             <table class="table table-striped app-table">
               <thead>
                 <tr>
                   <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                  <th class="text-center" [style.width.px]="150">รหัสอะไหล่</th>
                   <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
+                  <th class="text-center" [style.width.px]="200">รายละเอียดอะไหล่</th>
                   <th class="text-center" [style.width.px]="70">จำนวน</th>
                   <th class="text-center" [style.width.px]="80">ราคา</th>
                   <th class="text-center" [style.width.px]="100">ราคารวม</th>
+                  <th class="text-center" [style.width.px]="100">ลบ</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr *ngFor="let row of dbTask.taskDetail">
-                  <td class="text-center">
+                <tr *ngFor="let row of dbTask.taskDetail; let rowIndex = index">
+                  <td class="text-center center">
                     {{ row.seq }}
                   </td>
-                  <td class="text-center">
-                    <div *ngIf="row.form" [formGroup]="row.form">
-                      <label class="formcontrol-label"> {{'รหัสอะไหล่'}} </label>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form" class="spare-id">
                       <ng-select
                         placeholder="กรุณาเลือก"
-                        [items]="options" 
+                        [items]="masterData.spareData" 
                         bindLabel="text" 
                         bindValue="value" 
                         formControlName="spare_id">
                       </ng-select>
                     </div>
                   </td>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control" formControlName="spare_desc">
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control" formControlName="detail_description">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_qty">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_unit_price">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_amt">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form" class="pt-1">
+                      <button (click)="removeTaskDetail(row, rowIndex)" class="btn btn-outline-danger btn-sm">
+                      <!-- <i class="far fa-trash-alt"></i> -->ลบ
+                    </button>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
             <!-- <mat-paginator 
-               [length]="taskdata.length"
+               [length]=" dbTask.taskDetail.length"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
                (page)="onPageChange($event)">
