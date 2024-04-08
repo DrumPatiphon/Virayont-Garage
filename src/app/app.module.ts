@@ -25,6 +25,9 @@ import { SpareDetailComponent } from './spa/spare/spare-detail/spare-detail.comp
 import { EmpPdetailComponent } from './spa/emp-detail/emp-pdetail/emp-pdetail.component';
 import { AdminComponent } from './spa/admin/admin.component';
 import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { BaseService } from './shared/base-service/base-service.component';
 
 
 @NgModule({
@@ -54,9 +57,11 @@ import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.co
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgbModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [BaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

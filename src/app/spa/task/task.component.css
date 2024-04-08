@@ -3,4 +3,20 @@ body{
     cursor: default;
 }
 
+.form-icon{
+    font-size: 10px;
+}
 
+.form-textarea{
+    font-family: 'Prompt', sans-serif;
+    font-size: 13px;
+}
+
+.center{
+    padding-top: 17px;
+}
+
+.doc-no{
+    background-color: #0B5ED7;
+    color:white;
+}
