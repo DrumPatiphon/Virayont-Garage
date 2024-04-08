@@ -1,170 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-  
-
-  <div class="card text">
-    <div class="card-header fw-bold fs-4 " >
-      VIRAYONT GARAGE 
-    </div>
-    
-
-<!-- Fsframe -->
-    <div class="card-body" class="login-form">
-      <p class="card-title" class="fs-5 "> รายละเอียดการซ่อม </p>
-      
-        <div class=" text-center">
-        <div class="container w-50 p-2">
-          <div class="col p-2  "  >
-            ID รายละเอียดการซ่อม 
+<h5 class="program-title"> {{'รายละเอียดการซ่อม'}} </h5>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row ">
+            <div class="form-group col-lg-12 col-md-12 add-btn">
+              <button class="btn btn-primary me-2 pe-3" (click)="save('Save')">
+                <mat-icon class="icon-center">done</mat-icon>
+                 {{ 'บันทึก' }}
+              </button>
+              <button class="btn btn-danger" (click)="save('Cancel')">
+                <mat-icon class="icon-center">clear</mat-icon>
+                {{ 'ยกเลิก' }}
+             </button>
+            </div>
+            <div class="form-group col-lg-10 col-md-10 ">
+              <h5 class="card-title">{{'ข้อมูล'}}</h5>
+            </div>
           </div>
-          <div class="input-group   " >
-            <input type="text" class="form-control" placeholder="ID " aria-label="ID " aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">ค้นหา</button>
-          </div>
+          <form [formGroup]="dbTaskForm">   
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
+                  <input type="text" class="form-control text-center doc-no" formControlName="task_no">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'วันที่เอกสาร'}}</label>
+                  <input type="text" class="form-control text-center" formControlName="task_date">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
+                  <ng-select 
+                    placeholder="กรุณาเลือก"      
+                    [items]="masterData.status" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="status">
+                  </ng-select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'ลูกค้า'}} </label>
+                  <ng-select                   
+                    placeholder="กรุณาเลือก"      
+                    [items]="masterData.customerData" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="customer_id">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
+                  <input type="text" class="form-control" formControlName="customer_name">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'นามสกุล'}}</label>
+                  <input type="text" class="form-control" formControlName="customer_lastname">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
+                  <input type="text" class="form-control" formControlName="customer_phone">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-6 col-md-6">
+                <label class="formcontrol-label">{{'บริษัท'}}</label>
+                <input type="text" class="form-control" formControlName="customer_company">
+              </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <label class="formcontrol-label">{{'ที่อยู่'}}</label>
+                <input type="text" class="form-control" formControlName="customer_address">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
+                  <input type="text" class="form-control" >
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'จังหวัด'}} </label>
+                  <ng-select placeholder="กรุณาเลือก"                    
+                  [items]="masterData.province" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  formControlName="province_id">
+                  </ng-select>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
+                  <ng-select placeholder="กรุณาเลือก"
+                    [items]="masterData.employee" 
+                    bindLabel="text" 
+                    bindValue="value" 
+                    formControlName="employee_id">
+                  </ng-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label>
+                  <input type="text" class="form-control text-center" formControlName="start_work_date">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'วันนัดรับ'}}</label>
+                  <input type="text" class="form-control text-center" formControlName="appointment_date">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'มูลค่าการซ่อม'}}</label>
+                  <input type="text" class="form-control text-right" formControlName="task_amt">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-12 col-md-12">
+                <label class="formcontrol-label">หมายเหตุ</label>
+                <textarea class="form-control form-textarea" rows="3" placeholder="หมายเหตุเพิ่มเติม" formControlName="remark"></textarea>
+              </div>
+            </div>
+          </form>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 
-<!-- Secframe -->
-  <div class="card" >
-    <div class="card-body">
-      <h1 class="card-title" class="text-center">รายละเอียดการซ่อม</h1>
-
-      <div class="container ">
-        <div class="row ">
-          <div class="col">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">รถ</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-lg-10 col-md-10">
+              <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
-          </div>
-
-          <div class="col">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">ทะเบียน</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary" (click)="addTaskDetail();">
+                <mat-icon class="icon-center">add</mat-icon>
+                 {{ 'เพิ่ม' }}
+              </button>
             </div>
-          </div>
-          
+          </div><br>
 
+          <div class="app-table">
+            <table class="table table-striped app-table">
+              <thead>
+                <tr>
+                  <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                  <th class="text-center" [style.width.px]="150">รหัสอะไหล่</th>
+                  <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
+                  <th class="text-center" [style.width.px]="200">รายละเอียดอะไหล่</th>
+                  <th class="text-center" [style.width.px]="70">จำนวน</th>
+                  <th class="text-center" [style.width.px]="80">ราคา</th>
+                  <th class="text-center" [style.width.px]="100">ราคารวม</th>
+                  <th class="text-center" [style.width.px]="100">ลบ</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let row of dbTask.taskDetail; let rowIndex = index">
+                  <td class="text-center center">
+                    {{ row.seq }}
+                  </td>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form" class="spare-id">
+                      <ng-select
+                        placeholder="กรุณาเลือก"
+                        [items]="masterData.spareData" 
+                        bindLabel="text" 
+                        bindValue="value" 
+                        formControlName="spare_id">
+                      </ng-select>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control" formControlName="spare_desc">
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control" formControlName="detail_description">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_qty">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_unit_price">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="detail_amt">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form" class="pt-1">
+                      <button (click)="removeTaskDetail(row, rowIndex)" class="btn btn-outline-danger btn-sm">
+                      <!-- <i class="far fa-trash-alt"></i> -->ลบ
+                    </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <mat-paginator 
+               [length]=" dbTask.taskDetail.length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChange($event)">
+            </mat-paginator> -->
+          </div>
         </div>
-        <div class="row "> 
-          <div class="col">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">วันที่เข้าอู่</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">วันนัดรับ</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-          </div><br/>
-          <div class="input-group flex-nowrap">
-            <span class="input-group-text" id="inputGroup-sizing-default">รายละเอียดการซ่อม</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-          </div>
-
-      </div> 
-      <div class=" text-center">
-        <div class="mx-auto p-4" >
-            <button type="button" class="btn btn-info"> เพิ่ม </button>
-         </div> 
       </div>
     </div>
-   </div>   
-
-
-
-
-<!-- Thframe -->
-  <div class="card" >
-    <p class="card-title" class="fs-5 "> รายการซ่อม </p>
-
-    <form fxFlexAlight="stretch" fxLayout="column" class="login-form">
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">1</span>
-        <span class="input-group-text">ID อะไหล่ </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <span class="input-group-text">จำนวน </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">ยืนยัน</button>
-      </div>
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">2</span>
-        <span class="input-group-text">ID อะไหล่ </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <span class="input-group-text">จำนวน </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">ยืนยัน</button>
-      </div>
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">3</span>
-        <span class="input-group-text">ID อะไหล่ </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <span class="input-group-text">จำนวน </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">ยืนยัน</button>
-      </div>
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">4</span>
-        <span class="input-group-text">ID อะไหล่ </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <span class="input-group-text">จำนวน </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">ยืนยัน</button>
-      </div>
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">5</span>
-        <span class="input-group-text">ID อะไหล่ </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <span class="input-group-text">จำนวน </span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">ยืนยัน</button>
-      </div>
-      <br />
-      <div class="input-group input-group-default">
-        <span class="input-group-text" id="inputGroup-sizing-default">ค่าบริการ</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-      </div>
-      <br />
-      <div class=" text-center">
-        <div class="mx-auto p-4" >
-            <button type="button" class="btn btn-info"> ยืนยัน </button>
-         </div> 
-      </div>
-
-        
-    </form>
-  </div>  
   </div>
-
-  
-  
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-

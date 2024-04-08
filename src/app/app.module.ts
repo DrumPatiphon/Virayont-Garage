@@ -21,6 +21,13 @@ import { AppTableComponent } from './shared/app-table/app-table.component';
 import { AppTableColumnComponent } from './shared/app-table-column/app-table-column.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SpareDetailComponent } from './spa/spare/spare-detail/spare-detail.component';
+import { EmpPdetailComponent } from './spa/emp-detail/emp-pdetail/emp-pdetail.component';
+import { AdminComponent } from './spa/admin/admin.component';
+import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { BaseService } from './shared/base-service/base-service.component';
 
 
 @NgModule({
@@ -37,6 +44,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     TaskDetailComponent,
     AppTableComponent,
     AppTableColumnComponent,
+    SpareDetailComponent,
+    EmpPdetailComponent,
+    AdminComponent,
+    CusPdetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,9 +57,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgbModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [BaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
