@@ -65,7 +65,7 @@
                 <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
-                    [items]="options" 
+                    [items]="masterData.taskNo" 
                     bindLabel="text" 
                     bindValue="value" 
                     formControlName="sDocNo">
@@ -75,7 +75,7 @@
                 <label class="formcontrol-label"> {{ 'ถึงเลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
-                    [items]="options" 
+                    [items]="masterData.taskNo" 
                     bindLabel="text" 
                     bindValue="value" 
                     formControlName="eDocNo">
@@ -169,12 +169,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let task of pagedData">
+                <tr *ngFor="let task of pagedData; let rowIndex = index">
                   <td class="text-center">
-                    {{ task.seq }}
+                    {{ rowIndex + 1 }}
                   </td>
                   <td class="text-center">
-                    <a [routerLink]="['detail', task.taskNo]" [state]="{ taskNo: task.taskNo }">{{ task.taskNo }}</a>
+                    <a [routerLink]="['detail', task.taskId]" [state]="{ taskId: task.taskId }">{{ task.taskNo }}</a>
                     <!-- {{ task.taskNo }} -->
                   </td>
                   <td class="text-center">
@@ -189,11 +189,11 @@
                   <td class="text-center">
                     <div class="status-center" [ngClass]="{
                            'status-border-saved': task.status === 'SAVED',
-                           'status-border-pending': task.status === 'PENDING',
-                           'status-border-complete': task.status === 'COMPLETE',
+                           'status-border-in-progress': task.status === 'IN_PROGRESS',
+                           'status-border-complete': task.status === 'COMPLETED',
                            'status-border-cancel': task.status === 'CANCELLED'
                          }">
-                      {{ task.status }}
+                      {{ task.statusDesc }}
                     </div>
                   </td>
                 </tr>

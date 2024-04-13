@@ -34,7 +34,7 @@ body {
     display: inline-block;
 }
 
-.status-border-saved, .status-border-pending, 
+.status-border-saved, .status-border-in-progress, 
 .status-border-complete, .status-border-cancel {
     border: none;
     padding: 5px !important;
@@ -44,7 +44,7 @@ body {
 .status-border-saved {
     background-color: #cce5ff !important;
 }
-.status-border-pending {
+.status-border-in-progress {
     background-color: #ffd195 !important;
 }
 .status-border-complete {
