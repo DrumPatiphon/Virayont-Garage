@@ -47,7 +47,7 @@
                   <td class="text-center">
                     <div class="status-center" [ngClass]="{
                            'status-border-saved': task.status === 'SAVED',
-                           'status-border-pending': task.status === 'PENDING',
+                           'status-border-in-progress': task.status === 'IN_PROGRESS',
                            'status-border-complete': task.status === 'COMPLETE',
                            'status-border-cancel': task.status === 'CANCELLED'
                          }">
