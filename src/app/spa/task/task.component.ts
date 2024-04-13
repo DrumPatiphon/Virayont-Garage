@@ -5,25 +5,25 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService, PeriodicElement, TaskData } from "./api.service";
 
-const taskData: TaskData[] = [
-  {"seq":1,"taskNo":"TN20240001","taskDate":"2024-03-16","cusName":"John Doe","taskAmt":1000.50,"status":"SAVED"},
-  {"seq":2,"taskNo":"TN20240002","taskDate":"2024-03-15","cusName":"Jane Smith","taskAmt":750.25,"status":"PENDING"},
-  {"seq":3,"taskNo":"TN20240003","taskDate":"2024-03-14","cusName":"Alice Johnson","taskAmt":1200.75,"status":"COMPLETE"},
-  {"seq":4,"taskNo":"TN20240004","taskDate":"2024-03-13","cusName":"Bob Brown","taskAmt":850.00,"status":"CANCELLED"},
-  {"seq":5,"taskNo":"TN20240005","taskDate":"2024-03-12","cusName":"Emily Davis","taskAmt":950.80,"status":"SAVED"},
-  {"seq":6,"taskNo":"TN20240006","taskDate":"2024-03-11","cusName":"Michael Wilson","taskAmt":1100.30,"status":"PENDING"},
-  {"seq":7,"taskNo":"TN20240007","taskDate":"2024-03-10","cusName":"Olivia Martinez","taskAmt":1300.40,"status":"COMPLETE"},
-  {"seq":8,"taskNo":"TN20240008","taskDate":"2024-03-09","cusName":"William Anderson","taskAmt":800.60,"status":"CANCELLED"},
-  {"seq":9,"taskNo":"TN20240009","taskDate":"2024-03-08","cusName":"Sophia Taylor","taskAmt":950.75,"status":"SAVED"},
-  {"seq":10,"taskNo":"TN20240010","taskDate":"2024-03-07","cusName":"James Thomas","taskAmt":1050.90,"status":"PENDING"},
-  {"seq":11,"taskNo":"TN20240011","taskDate":"2024-03-06","cusName":"Charlotte Clark","taskAmt":1150.10,"status":"COMPLETE"},
-  {"seq":12,"taskNo":"TN20240012","taskDate":"2024-03-05","cusName":"Daniel Rodriguez","taskAmt":870.40,"status":"CANCELLED"},
-  {"seq":13,"taskNo":"TN20240013","taskDate":"2024-03-04","cusName":"Mia Lewis","taskAmt":980.20,"status":"SAVED"},
-  {"seq":14,"taskNo":"TN20240014","taskDate":"2024-03-03","cusName":"Benjamin Walker","taskAmt":1020.70,"status":"PENDING"},
-  {"seq":15,"taskNo":"TN20240015","taskDate":"2024-03-02","cusName":"Amelia Hall","taskAmt":1230.80,"status":"COMPLETE"},
-  {"seq":16,"taskNo":"TN20240016","taskDate":"2024-03-01","cusName":"Ethan Young","taskAmt":890.25,"status":"CANCELLED"},
-  {"seq":17,"taskNo":"TN20240017","taskDate":"2024-02-29","cusName":"Isabella Allen","taskAmt":960.50,"status":"SAVED"},
-]
+// const taskData: TaskData[] = [
+//   {"seq":1,"taskNo":"TN20240001","taskDate":"2024-03-16","cusName":"John Doe","taskAmt":1000.50,"status":"SAVED"},
+//   {"seq":2,"taskNo":"TN20240002","taskDate":"2024-03-15","cusName":"Jane Smith","taskAmt":750.25,"status":"PENDING"},
+//   {"seq":3,"taskNo":"TN20240003","taskDate":"2024-03-14","cusName":"Alice Johnson","taskAmt":1200.75,"status":"COMPLETE"},
+//   {"seq":4,"taskNo":"TN20240004","taskDate":"2024-03-13","cusName":"Bob Brown","taskAmt":850.00,"status":"CANCELLED"},
+//   {"seq":5,"taskNo":"TN20240005","taskDate":"2024-03-12","cusName":"Emily Davis","taskAmt":950.80,"status":"SAVED"},
+//   {"seq":6,"taskNo":"TN20240006","taskDate":"2024-03-11","cusName":"Michael Wilson","taskAmt":1100.30,"status":"PENDING"},
+//   {"seq":7,"taskNo":"TN20240007","taskDate":"2024-03-10","cusName":"Olivia Martinez","taskAmt":1300.40,"status":"COMPLETE"},
+//   {"seq":8,"taskNo":"TN20240008","taskDate":"2024-03-09","cusName":"William Anderson","taskAmt":800.60,"status":"CANCELLED"},
+//   {"seq":9,"taskNo":"TN20240009","taskDate":"2024-03-08","cusName":"Sophia Taylor","taskAmt":950.75,"status":"SAVED"},
+//   {"seq":10,"taskNo":"TN20240010","taskDate":"2024-03-07","cusName":"James Thomas","taskAmt":1050.90,"status":"PENDING"},
+//   {"seq":11,"taskNo":"TN20240011","taskDate":"2024-03-06","cusName":"Charlotte Clark","taskAmt":1150.10,"status":"COMPLETE"},
+//   {"seq":12,"taskNo":"TN20240012","taskDate":"2024-03-05","cusName":"Daniel Rodriguez","taskAmt":870.40,"status":"CANCELLED"},
+//   {"seq":13,"taskNo":"TN20240013","taskDate":"2024-03-04","cusName":"Mia Lewis","taskAmt":980.20,"status":"SAVED"},
+//   {"seq":14,"taskNo":"TN20240014","taskDate":"2024-03-03","cusName":"Benjamin Walker","taskAmt":1020.70,"status":"PENDING"},
+//   {"seq":15,"taskNo":"TN20240015","taskDate":"2024-03-02","cusName":"Amelia Hall","taskAmt":1230.80,"status":"COMPLETE"},
+//   {"seq":16,"taskNo":"TN20240016","taskDate":"2024-03-01","cusName":"Ethan Young","taskAmt":890.25,"status":"CANCELLED"},
+//   {"seq":17,"taskNo":"TN20240017","taskDate":"2024-02-29","cusName":"Isabella Allen","taskAmt":960.50,"status":"SAVED"},
+// ]
 
 @Component({
     selector: 'app-task',
@@ -33,7 +33,7 @@ const taskData: TaskData[] = [
 
 export class TaskComponent implements OnInit{
   searchForm: UntypedFormGroup;
-  taskdata :any[] = taskData;
+  taskdata :any[] = [];
   masterData = {
     customerData:[] = [],
     status: [] = [],
@@ -48,8 +48,8 @@ export class TaskComponent implements OnInit{
   itemsPerPage = 10;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  pagedData: any[] = taskData;
-  dataSource = new MatTableDataSource<TaskData>();
+  pagedData: any[] = [];
+  dataSource = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageSize: number = 10;
   
@@ -73,7 +73,7 @@ export class TaskComponent implements OnInit{
           console.error('Error:', error);
         }
       });
-      this.pagedData = this.taskdata.slice(0, this.pageSize);
+      this.rebuildForm();
     }
 
     createForm() {
@@ -94,19 +94,24 @@ export class TaskComponent implements OnInit{
       })
     }
 
+    rebuildForm(){
+      this.searchFunction();
+    }
+
     searchFunction() {
       // this.page.index = 0;
-      // this.search();
+      this.search();
     }
   
     search() {
-      // this.po.findpoHead(this.searchForm.value)
-      // .subscribe(res => {
-      //   this.poHeads = res.rows;
-      //   this.page.totalElements = res.count;
-      //   const status = (this.poHeads.map(row => row.status));
-      //   this.rebuildForm();
-      // });
+      this.se.findSearchList(this.searchForm.value)
+      .subscribe(res => {
+        this.taskdata = res;
+        this.pagedData = this.taskdata;
+        this.pagedData = this.taskdata.slice(0, this.pageSize);
+        // const status = (this.poHeads.map(row => row.status));
+        // this.rebuildForm();
+      });
     }
 
     clear(){

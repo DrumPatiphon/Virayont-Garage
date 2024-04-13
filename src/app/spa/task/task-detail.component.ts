@@ -37,9 +37,10 @@ export class TaskDetailComponent implements OnInit{
       private router: Router,
     ) {}
 
-    taskNo: string | undefined;
+    taskId: number | null = null;
     ngOnInit(): void {
-      this.taskNo = this.route.snapshot.paramMap.get('taskNo') || '';
+      const taskIdParam = this.route.snapshot.paramMap.get('taskId');
+      this.taskId = taskIdParam ? +taskIdParam : null;
       this.se.getMasterData().subscribe({
         next: (response: any) => {
           this.masterData = response;
@@ -57,8 +58,16 @@ export class TaskDetailComponent implements OnInit{
     rebuildForm(): void{
       this.taskDetailDelete = [];
 
-      if(this.taskNo){
-
+      if(this.taskId){
+        const controls = this.dbTaskForm.controls
+        // if(this.dbTask == null){
+          this.se.findDbTaskByKey(this.taskId).subscribe(res => {
+            this.dbTask = res.dbTask;
+            this.dbTask.taskDetail = res.taskDetail;
+            this.dbTaskForm.patchValue(this.dbTask, { emitEvent: false });
+            this.dbTask.taskDetail.forEach(value => {value.form = this.createTaskDetailForm(value)});
+          });
+        // }
       }else{
         this.dbTask.taskDetail = [];
         if(this.masterData.status.length > 0){
@@ -117,7 +126,7 @@ export class TaskDetailComponent implements OnInit{
     addTaskDetail() {
       const taskDetail: TaskDetail = {
         task_id: 0,
-        task_detail_id: 0,
+        detail_id: null,
         seq: this.dbTask.taskDetail.length + 1,
         spare_id: null,
         spare_desc: null,
@@ -136,7 +145,7 @@ export class TaskDetailComponent implements OnInit{
     createTaskDetailForm(taskDetail: TaskDetail) {
       const fg = this.fb.group({
         task_id: [taskDetail.task_id],
-        task_detail_id: [taskDetail.task_detail_id],
+        detail_id: [taskDetail.detail_id],
         seq: [taskDetail.seq],
         spare_id: [taskDetail.spare_id, [Validators.required]],
         spare_desc: [taskDetail.spare_desc],
@@ -236,9 +245,10 @@ export class TaskDetailComponent implements OnInit{
                        action,
             )
             .pipe(
-            switchMap(result => this.se.findDbTaskByKey(result.task_id))
+            switchMap(result => this.se.findDbTaskByKey(result))
           ).subscribe((result: any) => {
             this.dbTask = result;
+            console.log("result",result);
             this.rebuildForm();
           });
       // }

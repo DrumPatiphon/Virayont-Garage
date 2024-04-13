@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Data;
 using System.Dynamic;
 using System.Runtime.InteropServices.ObjectiveC;
+using Microsoft.Extensions.Options;
 
 namespace test.Models
 {
@@ -19,9 +20,12 @@ namespace test.Models
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
       options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+
+      // Add logging to the DbContext options
+      options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+          .EnableSensitiveDataLogging(); // Optional: Enables logging of parameters with values
     }
 
-    //private DbSet<T> Set<T>() where T : class;
     public DbSet<Customer> customer { get; set; }
     public DbSet<Employee> employee { get; set; }
     public DbSet<SparePart> spare_part { get; set; }
@@ -32,5 +36,15 @@ namespace test.Models
     public DbSet<Vehicle> vehicle { get; set; }
     public DbSet<Status> status { get; set; }
     public DbSet<Province> province { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      modelBuilder.Entity<TaskDetail>()
+          .HasKey(t => t.detail_id);
+
+      modelBuilder.Entity<TaskDetail>()
+          .Property(t => t.detail_id)
+          .ValueGeneratedOnAdd();
+    }
   }
 }
