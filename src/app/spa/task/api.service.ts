@@ -16,20 +16,20 @@ export interface DbTask {
     task_amt : Number
     remark : string;
     status : string;
-    start_work_date : Date;
-    appointment_date : Date;
-    task_date : Date;
+    start_work_date? : Date;
+    appointment_date? : Date;
+    task_date? : Date;
     employee_id : number;
     taskDetail: TaskDetail[],  
 }
 
 export interface TaskDetail {
     task_id?: number | null;
-    task_detail_id: number | null;
+    detail_id?: number | null;
     seq: number | null;
     spare_id: number | null;
-    spare_desc: string | null;
-    detail_description: string | null;
+    spare_desc?: string | null;
+    detail_description?: string | null;
     detail_qty: number | null;
     detail_unit_price: number | null;
     detail_amt: number | null;
@@ -69,8 +69,19 @@ constructor(
         return this.http.get<any>(this.apiUrl + 'task/MasterData');
     }
 
+    findSearchList(search : any){
+        const filter: { [key: string]: any } = {};
+        for (const key in search) {
+          if (search.hasOwnProperty(key) && search[key] !== null) {
+            filter[key] = search[key];
+          }
+        }
+        return this.http.get<any[]>(this.apiUrl + 'task/List', { params: filter });
+    }
+
     findDbTaskByKey(taskId : number) {
-        return this.http.get<DbTask>('podt19/detail', { params: { taskId } });
+        // return this.http.get<DbTask>(`${this.apiUrl}task/Detail`, { params: { taskId: taskId.toString() } });
+        return this.http.get<any>(`${this.apiUrl}task/Detail/${taskId}`);
     } 
 
     save(poIrHead: DbTask, 
@@ -80,9 +91,9 @@ constructor(
         ) {
            const actionObj = {'action' : action};
            const dbTaskFormDTO = Object.assign({}, poIrHead, poIrHeadForm, actionObj);
-           dbTaskFormDTO.task_date = new Date(dbTaskFormDTO.task_date);
-           dbTaskFormDTO.start_work_date = new Date(dbTaskFormDTO.start_work_date);
-           dbTaskFormDTO.appointment_date = new Date(dbTaskFormDTO.appointment_date);
+           dbTaskFormDTO.task_date =  dbTaskFormDTO.task_date == null ? undefined : this.convertDate(dbTaskFormDTO.task_date.toString());
+           dbTaskFormDTO.start_work_date = dbTaskFormDTO.start_work_date == null ? undefined :  this.convertDate(dbTaskFormDTO.start_work_date.toString());
+           dbTaskFormDTO.appointment_date = dbTaskFormDTO.appointment_date == null ? undefined :  this.convertDate(dbTaskFormDTO.appointment_date.toString());
            dbTaskFormDTO.taskDetail = this.baseService.prepareSaveList(dbTaskFormDTO.taskDetail, taskDetailDelete);
 
        console.log("dbTaskFormDTO :",dbTaskFormDTO);
@@ -91,6 +102,15 @@ constructor(
        } else {
            return this.http.post<any>(this.apiUrl + 'task/Create', dbTaskFormDTO);
        }
+   }
+
+   convertDate(dateString : string) :Date{
+    var parts = dateString.split('/');
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10) - 1; 
+    var year = parseInt(parts[2], 10);
+    var dateObject = new Date(year, month - 1, day);
+    return dateObject;
    }
 }
 
