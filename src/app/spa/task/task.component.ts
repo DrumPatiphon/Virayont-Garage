@@ -4,6 +4,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService, PeriodicElement, TaskData } from "./api.service";
+import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 // const taskData: TaskData[] = [
 //   {"seq":1,"taskNo":"TN20240001","taskDate":"2024-03-16","cusName":"John Doe","taskAmt":1000.50,"status":"SAVED"},
@@ -32,6 +34,11 @@ import { ApiService, PeriodicElement, TaskData } from "./api.service";
   })
 
 export class TaskComponent implements OnInit{
+
+  deleteall = faBarsStaggered
+  searchicon = faSearch
+  add = faPlus   
+
   searchForm: UntypedFormGroup;
   taskdata :any[] = [];
   masterData = {

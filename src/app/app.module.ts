@@ -28,7 +28,7 @@ import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { BaseService } from './shared/base-service/base-service.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -59,9 +59,12 @@ import { BaseService } from './shared/base-service/base-service.component';
     FormsModule,
     NgSelectModule,
     NgbModule,
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   providers: [BaseService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+}

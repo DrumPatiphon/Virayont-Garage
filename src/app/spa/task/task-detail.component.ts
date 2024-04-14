@@ -4,6 +4,7 @@ import { ApiService ,DbTask, TaskDetail} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { finalize, switchMap } from 'rxjs';
+import { faSave,faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-task',
@@ -11,6 +12,9 @@ import { finalize, switchMap } from 'rxjs';
   styleUrls: ['./task.component.css']
 })
 export class TaskDetailComponent implements OnInit{
+
+  saveicon = faSave
+  add = faPlus
 
     dbTaskForm! : FormGroup;
     dbTask : DbTask = {} as DbTask;

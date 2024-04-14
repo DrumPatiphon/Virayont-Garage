@@ -22,47 +22,52 @@
         </div>
       </div>
 
+<!------------------------------- เมนู ------------------------------->
+
       <div class="container px-4 py-5" id="hanging-icons">
         <h2 class="pb-2 border-bottom">เมนู</h2>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-          <div class="col d-flex align-items-start">
-            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 15 15">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                  </svg>
-            </div>
-            <div>
-              <h3 class="fs-2 text-body-emphasis">ล็อกอินลูกค้า</h3>
+
+        <div class="row g-5 py-5 row-cols-1 row-cols-lg-3">
+          
+          <!-- <div class="col d-flex align-items-start"> -->
+
+            <div class="mx-3">
+              <h3 class="fs-2 text-body-emphasis">
+                <fa-icon [icon]="user"></fa-icon>
+                ล็อกอินลูกค้า
+              </h3>
               <p> หน้าล็อกอินของลูกค้าใช้เข้าสู่ระบบ เพื่อใช้งานบริการของทางร้าน</p>
-              <a href="#" class="btn btn-primary" routerLink="/cus">
+              <div class="text-end">
+              <a href="#" class="btn btn-primary" style="width: 100px;" routerLink="/cus">
                 เข้าไป
               </a>
+              </div>
             </div>
-          </div>
 
+          <!-- </div> -->
 
-         
-          <div class="col d-flex align-items-start">
-            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pass-fill" viewBox="0 0 15 15">
-                    <path d="M10 0a2 2 0 1 1-4 0H3.5A1.5 1.5 0 0 0 2 1.5v13A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 12.5 0H10ZM4.5 5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1Zm0 2h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1 0-1Z"/>
-                  </svg>
-            </div>
-            <div>
-              <h3 class="fs-2 text-body-emphasis">Admin</h3>
+          <!-- <div class="col d-flex align-items-start"> -->
+            <div class="mx-3">
+
+                <h3 class="fs-2 text-body-emphasis">
+                  <fa-icon [icon]="admin"></fa-icon>
+                  Admin
+                </h3>
               <p> หน้าสำหรับตรวจสอบรายละเอียดการซ่อม</p>
-              <a href="#" class="btn btn-primary" routerLink="/admin">
+              <div class="text-end">
+              <a href="#" class="btn btn-primary" style="width: 100px;" routerLink="/admin">
                 เข้าไป
               </a>
+              </div>
+
             </div>
-          </div>
+          <!-- </div> -->
         </div>
+
       </div>
 
 
-      
-
-
+<!------------------------------- footer ------------------------------->
   <div class="container">
     <footer class="py-3 my-4">
        

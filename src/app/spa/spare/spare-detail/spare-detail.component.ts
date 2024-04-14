@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-spare-detail',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./spare-detail.component.css']
 })
 export class SpareDetailComponent {
-
+  save = faSave
+  cancel = faXmark
 }
+
