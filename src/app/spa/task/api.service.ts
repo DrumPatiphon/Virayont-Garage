@@ -20,6 +20,9 @@ export interface DbTask {
     appointment_date? : Date;
     task_date? : Date;
     employee_id : number;
+    create_date? : Date;
+    // update_date? : Date;
+    // create_by? : number;
     taskDetail: TaskDetail[],  
 }
 
@@ -37,22 +40,6 @@ export interface TaskDetail {
     rowState: string;
 }
 
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-}
-
-export interface TaskData 
- {
-    seq: number,
-    taskNo: string,
-    taskDate: string,
-    cusName: string,
-    taskAmt: number,
-    status: string,
-  }
 @Injectable({
     providedIn: 'root',
 })
@@ -91,9 +78,9 @@ constructor(
         ) {
            const actionObj = {'action' : action};
            const dbTaskFormDTO = Object.assign({}, poIrHead, poIrHeadForm, actionObj);
-           dbTaskFormDTO.task_date =  dbTaskFormDTO.task_date == null ? undefined : this.convertDate(dbTaskFormDTO.task_date.toString());
-           dbTaskFormDTO.start_work_date = dbTaskFormDTO.start_work_date == null ? undefined :  this.convertDate(dbTaskFormDTO.start_work_date.toString());
-           dbTaskFormDTO.appointment_date = dbTaskFormDTO.appointment_date == null ? undefined :  this.convertDate(dbTaskFormDTO.appointment_date.toString());
+           dbTaskFormDTO.task_date =  dbTaskFormDTO.task_date == null ? undefined : new Date(dbTaskFormDTO.task_date);
+           dbTaskFormDTO.start_work_date = dbTaskFormDTO.start_work_date == null ? undefined :  new Date(dbTaskFormDTO.start_work_date);
+           dbTaskFormDTO.appointment_date = dbTaskFormDTO.appointment_date == null ? undefined :  new Date(dbTaskFormDTO.appointment_date);
            dbTaskFormDTO.taskDetail = this.baseService.prepareSaveList(dbTaskFormDTO.taskDetail, taskDetailDelete);
 
        console.log("dbTaskFormDTO :",dbTaskFormDTO);

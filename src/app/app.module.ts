@@ -28,6 +28,7 @@ import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { BaseService } from './shared/base-service/base-service.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -59,9 +60,12 @@ import { BaseService } from './shared/base-service/base-service.component';
     FormsModule,
     NgSelectModule,
     NgbModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [BaseService],
+  providers: [
+    BaseService,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

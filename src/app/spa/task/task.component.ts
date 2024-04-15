@@ -3,7 +3,8 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiService, PeriodicElement, TaskData } from "./api.service";
+import { ApiService} from "./api.service";
+import { DatePipe } from '@angular/common';
 
 // const taskData: TaskData[] = [
 //   {"seq":1,"taskNo":"TN20240001","taskDate":"2024-03-16","cusName":"John Doe","taskAmt":1000.50,"status":"SAVED"},
@@ -58,6 +59,7 @@ export class TaskComponent implements OnInit{
         private route: ActivatedRoute,
         private router : Router,
         private se : ApiService,
+        private datePipe: DatePipe,
      ) {
       this.searchForm = this.fb.group({});
     }

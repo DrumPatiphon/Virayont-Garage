@@ -5,12 +5,12 @@
         <div class="card-body">
           <div class="row ">
             <div class="form-group col-lg-12 col-md-12 add-btn">
-              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId">
+              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="this.isDisbleStatus()">
                 <mat-icon class="icon-center">clear</mat-icon>
                 {{ 'ยกเลิก' }}
              </button>
-             <button class="btn btn-primary" (click)="save('Save')">
-              <mat-icon>done</mat-icon>
+             <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()">
+              <mat-icon class="icon-center">done</mat-icon>
                {{ 'บันทึก' }} 
             </button>
             </div>
@@ -79,7 +79,7 @@
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
-                  <input type="text" class="form-control" >
+                  <input type="text" class="form-control" formControlName="license_desc">
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label"> {{'จังหวัด'}} </label>
@@ -136,7 +136,7 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addTaskDetail();">
+              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()">
                 <mat-icon class="icon-center">add</mat-icon>
                  {{ 'เพิ่ม' }}
               </button>

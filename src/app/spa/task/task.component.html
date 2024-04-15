@@ -175,10 +175,9 @@
                   </td>
                   <td class="text-center">
                     <a [routerLink]="['detail', task.taskId]" [state]="{ taskId: task.taskId }">{{ task.taskNo }}</a>
-                    <!-- {{ task.taskNo }} -->
                   </td>
                   <td class="text-center">
-                    {{ task.taskDate }}
+                    {{ task.taskDate | date:"YYYY-MM-dd"}}
                   </td>
                   <td>
                     {{ task.cusName }}
