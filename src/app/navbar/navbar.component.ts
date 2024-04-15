@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faWrench,faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +8,5 @@ import { faWrench } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent {
   faWrench = faWrench
+  login = faArrowRightToBracket
 }
