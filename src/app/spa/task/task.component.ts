@@ -3,7 +3,8 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiService, PeriodicElement, TaskData } from "./api.service";
+import { ApiService} from "./api.service";
+import { DatePipe } from '@angular/common';
 import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -34,7 +35,6 @@ import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-i
   })
 
 export class TaskComponent implements OnInit{
-
   deleteall = faBarsStaggered
   searchicon = faSearch
   add = faPlus   
@@ -65,6 +65,7 @@ export class TaskComponent implements OnInit{
         private route: ActivatedRoute,
         private router : Router,
         private se : ApiService,
+        private datePipe: DatePipe,
      ) {
       this.searchForm = this.fb.group({});
     }

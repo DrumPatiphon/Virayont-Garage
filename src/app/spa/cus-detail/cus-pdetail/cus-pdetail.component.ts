@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faSave,faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cus-pdetail',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./cus-pdetail.component.css']
 })
 export class CusPdetailComponent {
-
+  saveIcon = faSave
+  cancelIcon = faXmark
 }

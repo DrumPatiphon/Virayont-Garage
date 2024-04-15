@@ -43,7 +43,7 @@ namespace test.Controllers.TaskController
                                 status = dt.status,
                                 statusDesc = s.status_desc,
                                 licenseName = dt.license_desc,
-                              }).ToListAsync();
+                              }).OrderByDescending(o => o.taskId).ToListAsync();
 
       if(request.CustomerId != null)
       {

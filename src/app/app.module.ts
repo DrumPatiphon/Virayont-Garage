@@ -28,6 +28,7 @@ import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { BaseService } from './shared/base-service/base-service.component';
+import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -64,9 +65,13 @@ import { RegisterComponent } from './register/register.component';
     NgSelectModule,
     NgbModule,
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
-  providers: [BaseService],
+  providers: [
+    BaseService,
+    DatePipe,
+    FontAwesomeModule,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
