@@ -9,8 +9,8 @@
                 <mat-icon class="icon-center">clear</mat-icon>
                 {{ 'ยกเลิก' }}
              </button>
-             <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()">
-              <mat-icon class="icon-center">done</mat-icon>
+             <button class="btn btn-primary" (click)="save('Save')">
+              <mat-icon>done</mat-icon>
                {{ 'บันทึก' }} 
             </button>
             </div>
@@ -136,7 +136,7 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()">
+              <button class="btn btn-primary" (click)="addTaskDetail();">
                 <mat-icon class="icon-center">add</mat-icon>
                  {{ 'เพิ่ม' }}
               </button>

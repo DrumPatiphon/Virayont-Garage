@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService, Employee } from './api.service';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-emp-detail',
@@ -8,6 +9,9 @@ import { ApiService, Employee } from './api.service';
   styleUrls: ['./emp-detail.component.css']
 })
 export class EmpDetailComponent  implements OnInit{
+
+  
+  add = faPlus
 
   Employeeform! : FormGroup;
   router: any;

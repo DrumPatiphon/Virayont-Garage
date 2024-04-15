@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 import { CusComponent } from './spa/cus/cus.component';
 import { EmpComponent } from './spa/emp/emp.component';
 import { EmpDetailComponent } from './spa/emp-detail/emp-detail.component';
@@ -15,6 +17,8 @@ import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.co
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
+  { path: 'login', component: LoginComponent }, 
+  { path: 'register', component: RegisterComponent }, 
   { path: 'home', component: HomeComponent },
   { path: 'cus', component: CusComponent },
   { path: 'emp', component: EmpComponent },

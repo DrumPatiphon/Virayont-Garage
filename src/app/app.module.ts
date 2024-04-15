@@ -29,7 +29,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { BaseService } from './shared/base-service/base-service.component';
 import { DatePipe } from '@angular/common';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { DatePipe } from '@angular/common';
     EmpPdetailComponent,
     AdminComponent,
     CusPdetailComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,11 +65,15 @@ import { DatePipe } from '@angular/common';
     NgSelectModule,
     NgbModule,
     CommonModule,
+    FontAwesomeModule,
   ],
   providers: [
     BaseService,
-    DatePipe
+    DatePipe,
+    FontAwesomeModule,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+}

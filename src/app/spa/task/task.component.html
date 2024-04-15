@@ -84,9 +84,12 @@
             </div>
             <div class="form-row pt-3">
               <div class="form-group col-md-12 col-xs-12 text-center">
-                <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()"><mat-icon class="icon-center">search</mat-icon>
-                  {{ 'ค้นหา' }}</button>
-                <button class="btn btn btn-outline-dark" (click)="clear();"><mat-icon class="icon-center"> clear_all</mat-icon>
+                <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()">
+                  <fa-icon [icon]="searchicon"></fa-icon>
+                  {{ 'ค้นหา' }}
+                </button>
+                <button class="btn btn btn-outline-dark" (click)="clear();">
+                  <fa-icon [icon]="deleteall"></fa-icon>
                   {{ 'ล้างข้อมูล' }}</button>
               </div>
             </div>
@@ -106,7 +109,8 @@
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
               <button class="btn btn-primary" (click)="addFunction()" >
-                <mat-icon class="icon-center">person_add</mat-icon> {{ 'เพิ่มเอกสาร' }}
+                <fa-icon [icon]="add"></fa-icon>
+                 {{ 'เพิ่มเอกสาร' }}
               </button>
             </div>
 

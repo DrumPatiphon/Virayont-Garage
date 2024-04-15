@@ -1,6 +1,7 @@
 import { Component ,OnInit} from '@angular/core';
 import { ApiService, Customer } from './api.service';
 import { FormBuilder , FormGroup ,Validators} from '@angular/forms';
+import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -9,6 +10,10 @@ import { FormBuilder , FormGroup ,Validators} from '@angular/forms';
   styleUrls: ['./cus-detail.component.css']
 })
 export class CusDetailComponent implements OnInit{
+
+  deleteall = faBarsStaggered
+  search = faSearch
+  add = faPlus
 
   Customerform! : FormGroup;
 
