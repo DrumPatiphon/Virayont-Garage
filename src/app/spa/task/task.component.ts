@@ -35,7 +35,6 @@ import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-i
   })
 
 export class TaskComponent implements OnInit{
-
   deleteall = faBarsStaggered
   searchicon = faSearch
   add = faPlus   
