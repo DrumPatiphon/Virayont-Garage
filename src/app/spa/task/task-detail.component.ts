@@ -45,6 +45,7 @@ export class TaskDetailComponent implements OnInit{
     ) {}
 
     taskId: number | null = null;
+
     ngOnInit(): void {
       const taskIdParam = this.route.snapshot.paramMap.get('taskId');
       this.taskId = taskIdParam ? +taskIdParam : null;
@@ -79,6 +80,7 @@ export class TaskDetailComponent implements OnInit{
             this.dbTaskForm.controls['task_date'].setValue(taskDate);
             this.dbTaskForm.controls['start_work_date'].setValue(startWorkDate);
             this.dbTaskForm.controls['appointment_date'].setValue(appointmentDate);
+            console.log(this.dbTask);
 
             if(this.isDisbleStatus()){
               this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });
@@ -97,7 +99,7 @@ export class TaskDetailComponent implements OnInit{
       this.dbTaskForm.controls['task_amt'].disable();
       this.dbTaskForm.markAsPristine();
     }
-
+    
     installEvent(){
       this.dbTaskForm.controls['customer_id'].valueChanges.subscribe(selectedValue => {
         const controls = this.dbTaskForm.controls
@@ -258,7 +260,7 @@ export class TaskDetailComponent implements OnInit{
 
     save(action: string) {
       if(action == 'Cancel'){
-        // this.onSetDetailRowState();
+        this.onSetDetailRowState();
       }
         // const forms: UntypedFormGroup[] = [this.poIrHeadForm].concat(this.poIrHead.poIrDet.map(detail => detail.form));
         // if (this.util.isFormGroupsValid(forms) && this.isDetailValid(action) && this.isAttachValid()) { 
@@ -287,9 +289,9 @@ export class TaskDetailComponent implements OnInit{
 
     isDisbleStatus():boolean{
       let disable = false;
-      if(this.dbTask.status == 'CANCELLED' || 'COMPLETED'){
-        disable = true;
-      }
+      // if(this.dbTaskForm.controls['status'].value == 'CANCELLED' || this.dbTaskForm.controls['status'].value == 'COMPLETED'){
+      //   disable = true;
+      // }
       return disable;
     }
     

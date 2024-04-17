@@ -1,26 +1,26 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { SparePartService, Sparepart } from './spare.service';
-import { UntypedFormBuilder, UntypedFormGroup, Validator, Validators } from '@angular/forms';
-import { faBarsStaggered,faSearch,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Component ,OnInit, ViewChild} from '@angular/core';
+import { CustomerService, Customer } from './customer.service';
+import { FormBuilder , FormGroup ,UntypedFormGroup,Validators} from '@angular/forms';
+import { faBarsStaggered, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-spare',
-  templateUrl: './spare.component.html',
-  styleUrls: ['./spare.component.css']
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css']
 })
-export class SpareComponent implements OnInit {
+export class CustomerComponent implements OnInit{
   deleteall = faBarsStaggered
   searchIcon = faSearch
   add = faPlus
 
   searchForm : UntypedFormGroup;
-  spareData :any[] = [];
+  customerData :any[] = [];
   masterData = {
-    spareData:[] = [],
-    spareType:[] = [],
+    customerData:[] = [],
   }
 
   currentPage = 1;
@@ -31,12 +31,13 @@ export class SpareComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageSize: number = 10;
-  
+
   constructor ( 
-    private fb : UntypedFormBuilder,
+    private fb : FormBuilder,
     private router : Router,
-    private se : SparePartService,
-) {this.searchForm = this.fb.group({});}
+    private se : CustomerService
+  ) {this.searchForm = this.fb.group({});}
+
 
   ngOnInit(): void {
     this.createForm();
@@ -53,12 +54,13 @@ export class SpareComponent implements OnInit {
 
   createForm() {
     this.searchForm = this.fb.group({
-      spareId: null,
-      spareName: null,
-      sparePrice: null,
-      quantity: null,
-      spareTypeId: null,
-    });
+      address: null,
+      companyName: null, 
+      customerId: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
+    })
   }
 
   rebuildForm(){
@@ -72,32 +74,33 @@ export class SpareComponent implements OnInit {
   search() {
     this.se.findSearchList(this.searchForm.value)
     .subscribe(res => {
-      this.spareData = res;
-      this.pagedData = this.spareData;
-      this.pagedData = this.spareData.slice(0, this.pageSize);
+      this.customerData = res;
+      this.pagedData = this.customerData;
+      this.pagedData = this.customerData.slice(0, this.pageSize);
     });
   }
 
   clear(){
     this.searchForm.patchValue({
-      spareId: null,
-      spareName: null,
-      sparePrice: null,
-      quantity: null,
-      spareTypeId: null,
+      address: null,
+      companyName: null, 
+      customerId: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
     });
     this.searchFunction();
   }
 
   addFunction() {
-    this.router.navigate(['/spare/detail']);
+    this.router.navigate(['/customer/detail']);
   }
 
   onPageChange(event: any) {
     const startIndex = event.pageIndex * event.pageSize;
     const endIndex = startIndex + event.pageSize;
-    this.pagedData = this.spareData.slice(startIndex, endIndex);
+    this.pagedData = this.customerData.slice(startIndex, endIndex);
   }
 
-  
+
 }

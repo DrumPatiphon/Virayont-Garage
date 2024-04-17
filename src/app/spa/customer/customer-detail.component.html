@@ -1,0 +1,57 @@
+<h5 class="program-title"> {{'ข้อมูลลูกค้า'}} </h5>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row ">
+            <div class="form-group col-lg-10 col-md-10 ">
+              <h5 class="card-title">{{'รายละเอียด'}}</h5>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-danger me-2 pe-3" *ngIf="this.customerId" (click)="delete('Delete')">
+                <fa-icon [icon]="deleteIcon"></fa-icon>
+                {{ 'ยกเลิก' }}
+              </button>
+              <button class="btn btn-primary" (click)="save('Save')">
+                <fa-icon [icon]="saveIcon"></fa-icon>
+                {{ 'บันทึก' }}
+             </button>
+            </div>
+          </div><br>
+          <form [formGroup]="customerForm">   
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="formcontrol-label">{{'IDลูกค้า'}}</label>
+                      <input type="text" class="form-control text-center doc-no"  formControlName="customer_str_id">
+                  </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
+                  <input type="text" class="form-control"  formControlName="first_name">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'นามสกุล'}}</label>
+                  <input type="text" class="form-control"  formControlName="last_name">
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
+                  <input type="text" class="form-control"  formControlName="phone_number">
+              </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="formcontrol-label">{{'ที่อยู่'}}</label>
+                      <input type="text" class="form-control"  formControlName="address">
+                  </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <label class="formcontrol-label">{{'ชื่อบริษัท'}}</label>
+                  <input type="text" class="form-control"  formControlName="company_name">
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 

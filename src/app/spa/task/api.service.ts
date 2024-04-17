@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, catchError, throwError } from 'rxjs';
 import { UntypedFormGroup } from "@angular/forms";
 import { BaseService } from "src/app/shared/base-service/base-service.component"; 
+import { Constants } from "src/app/shared/constants/constants";
 
 export interface DbTask {
     task_id : number;
@@ -45,12 +46,11 @@ export interface TaskDetail {
 })
 export class ApiService {
    
-private apiUrl = 'https://localhost:7072/api/';
-
-constructor(
-    private http: HttpClient,
-    private baseService: BaseService,
-) {}
+    private apiUrl = Constants.ApiRoute.Route;
+    constructor(
+        private http: HttpClient,
+        private baseService: BaseService,
+    ) {}
 
     getMasterData(){
         return this.http.get<any>(this.apiUrl + 'task/MasterData');
@@ -71,13 +71,13 @@ constructor(
         return this.http.get<any>(`${this.apiUrl}task/Detail/${taskId}`);
     } 
 
-    save(poIrHead: DbTask, 
-        poIrHeadForm: UntypedFormGroup
+    save(dbTask: DbTask, 
+        dbTaskForm: UntypedFormGroup
         ,taskDetailDelete: TaskDetail[]
         ,action: string
         ) {
            const actionObj = {'action' : action};
-           const dbTaskFormDTO = Object.assign({}, poIrHead, poIrHeadForm, actionObj);
+           const dbTaskFormDTO = Object.assign({}, dbTask, dbTaskForm, actionObj);
            dbTaskFormDTO.task_date =  dbTaskFormDTO.task_date == null ? undefined : new Date(dbTaskFormDTO.task_date);
            dbTaskFormDTO.start_work_date = dbTaskFormDTO.start_work_date == null ? undefined :  new Date(dbTaskFormDTO.start_work_date);
            dbTaskFormDTO.appointment_date = dbTaskFormDTO.appointment_date == null ? undefined :  new Date(dbTaskFormDTO.appointment_date);
@@ -89,15 +89,6 @@ constructor(
        } else {
            return this.http.post<any>(this.apiUrl + 'task/Create', dbTaskFormDTO);
        }
-   }
-
-   convertDate(dateString : string) :Date{
-    var parts = dateString.split('/');
-    var day = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10) - 1; 
-    var year = parseInt(parts[2], 10);
-    var dateObject = new Date(year, month - 1, day);
-    return dateObject;
    }
 }
 

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.NetworkInformation;
 using test.Models;
-using static test.Controllers.TaskController.Detail;
 
 namespace test.Controllers.TaskController
 {
