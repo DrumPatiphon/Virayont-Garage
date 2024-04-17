@@ -7,11 +7,11 @@ namespace test.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class CustomerController : ControllerBase
+  public class Customer_Controller : ControllerBase
   {
     private readonly DataContext _context;
 
-    public CustomerController(DataContext context)
+    public Customer_Controller(DataContext context)
     {
       this._context = context;
     }
@@ -27,7 +27,7 @@ namespace test.Controllers
       List<Customer> customer = new List<Customer>();
       if (request.customer_id != 0 && request.customer_id != null) customer = this._context.customer.Where(w => w.customer_id == request.customer_id).ToList();
       else if (!String.IsNullOrEmpty(request.phone_number)) customer = this._context.customer.Where(w => w.phone_number == request.phone_number).ToList();
-      else if (!String.IsNullOrEmpty(request.county_name)) customer = this._context.customer.Where(w => w.county_name == request.county_name).ToList();
+      //else if (!String.IsNullOrEmpty(request.county_name)) customer = this._context.customer.Where(w => w.county_name == request.county_name).ToList();
 
       else customer = this._context.customer.ToList();
 

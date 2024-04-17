@@ -1,11 +1,11 @@
-.login-form{
+/* .login-form{
     padding: 20px;
-  } 
+  }  */
 
 
 
 /* Progressbar */
-.progressbar{
+/* .progressbar{
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -50,4 +50,9 @@
 .progress-step-active{
     background-color: var(--primary-color);
     color: #f3f3f3;
-}
+} */
+
+.doc-no{
+    background-color: #0B5ED7;
+    color:white;
+  }
