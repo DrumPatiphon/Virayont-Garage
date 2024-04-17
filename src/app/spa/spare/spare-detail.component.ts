@@ -90,11 +90,7 @@ export class SpareDetailComponent implements OnInit {
     ).subscribe((result: any) => {
       this.sparePart = result;
       this.spareId = result.spare_id;
-      if(this.spareId){
-        this.rebuildForm();
-      }else{
-        this.router.navigate(['/spare']);
-      }
+      this.rebuildForm();
     });
   }
 

@@ -1,0 +1,96 @@
+<h5 class="program-title"> {{'จัดการข้อมูลลูกค้า'}} </h5>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{'ค้นหา'}}</h5>
+        <form [formGroup]="searchForm">
+          <div class="row">
+            <div class="form-group col-lg-3 col-md-6">
+              <label class="formcontrol-label"> {{'ชื่อลูกค้า'}} </label>
+              <ng-select
+                placeholder="กรุณาเลือก"
+                [items]="masterData.customerData" 
+                bindLabel="text" 
+                bindValue="value" 
+                formControlName="customerId">
+              </ng-select>
+            </div>
+            <div class="form-group col-lg-3 col-md-6">
+              <label class="formcontrol-label"> {{'เบอร์โทรศัพท์'}} </label>
+                <input type="text" class="form-control" formControlName="phoneNumber">
+            </div>
+          </div>
+         
+          <div class="form-row pt-3">
+            <div class="form-group col-md-12 col-xs-12 text-center">
+              <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()">
+                <fa-icon [icon]="searchIcon"></fa-icon>
+                {{ 'ค้นหา' }}</button>
+              <button class="btn btn btn-outline-dark" (click)="clear();">
+                <fa-icon [icon]="deleteall"></fa-icon>
+                {{ 'ล้างข้อมูล' }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-lg-10 col-md-10">
+            <h5 class="card-title">{{ 'รายการซ่อม' }}</h5>
+          </div>
+          <div class="form-group col-lg-2 col-md-2 add-btn">
+            <button class="btn btn-primary" (click)="addFunction()">
+              <fa-icon [icon]="add"></fa-icon>
+              {{ 'เพิ่มเอกสาร' }}
+            </button>
+          </div>
+
+        </div>
+        <div class="app-table">
+          <table class="table table-striped app-table">
+            <thead>
+              <tr>
+                <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                <th class="text-center" [style.width.px]="70">ID ลูกค้า</th>
+                <th class="text-center" [style.width.px]="200">ชือลูกค้า</th>
+                <th class="text-center" [style.width.px]="70">เบอร์โทรศัพท์</th>
+                <!-- <th class="text-center" [style.width.px]="100">หมายเหตุ</th> -->
+              </tr>
+               <tbody>
+              <tr *ngFor="let cus of pagedData; let rowIndex = index">
+                <td class="text-center">
+                  {{ rowIndex + 1 }}
+                </td>
+                <td class="text-center">
+                  <a [routerLink]="['detail', cus.customerId]" [state]="{ customerId: cus.customerId }">{{ cus.customerId }}</a>
+                </td>
+                <td class="text-center">
+                  {{ cus.customerName }}
+                </td>
+                <td class="text-center">
+                  {{ cus.phoneNumber }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator 
+             [length]="customerData.length"
+             [pageSize]="pageSize"
+             [pageSizeOptions]="pageSizeOptions"
+             (page)="onPageChange($event)">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
