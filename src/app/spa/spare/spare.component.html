@@ -5,35 +5,40 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{'ค้นหา'}}</h5>
-        <form >
-          <!-- [formGroup]="searchForm" -->
+        <form [formGroup]="searchForm">
           <div class="row">
             <div class="form-group col-lg-3 col-md-6">
               <label class="formcontrol-label"> {{'ID อะไหล่'}} </label>
-              <input type="text" class="form-control" >
+              <ng-select
+                placeholder="กรุณาเลือก"
+                [items]="masterData.spareData" 
+                bindLabel="text" 
+                bindValue="value" 
+                formControlName="spareId">
+              </ng-select>
             </div>
             <div class="form-group col-lg-3 col-md-6">
               <label class="formcontrol-label"> {{'ชื่ออะไหล่'}} </label>
-                <input type="text" class="form-control" >
+                <input type="text" class="form-control" formControlName = "spareName">
             </div>
             <div class="form-group col-lg-3 col-md-6">
               <label class="formcontrol-label"> {{ 'ประเภทอะไหล่'}} </label>
-                <ng-select
-                  placeholder="กรุณาเลือก">
-                  <!-- [items]="options" 
-                  bindLabel="text" 
-                  bindValue="value" 
-                  formControlName="eDocNo" -->
-                </ng-select>
+              <ng-select
+                placeholder="กรุณาเลือก"
+                [items]="masterData.spareType" 
+                bindLabel="text" 
+                bindValue="value" 
+                formControlName="spareTypeId">
+              </ng-select>
             </div>
           </div>
          
           <div class="form-row pt-3">
             <div class="form-group col-md-12 col-xs-12 text-center">
-              <button class="btn btn-primary me-2 pe-3" click="">
-                <fa-icon [icon]="search"></fa-icon>
+              <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()">
+                <fa-icon [icon]="searchIcon"></fa-icon>
                 {{ 'ค้นหา' }}</button>
-              <button class="btn btn btn-outline-dark" click="">
+              <button class="btn btn btn-outline-dark" (click)="clear();">
                 <fa-icon [icon]="deleteall"></fa-icon>
                 {{ 'ล้างข้อมูล' }}</button>
             </div>
@@ -44,9 +49,6 @@
   </div>
 </div>
  
- 
- 
- 
  <div class="row">
    <div class="col">
      <div class="card">
@@ -56,7 +58,7 @@
              <h5 class="card-title">{{'ข้อมูลอะไหล่'}}</h5>
            </div>
            <div class="form-group col-lg-2 col-md-2 add-btn">
-            <button class="btn btn-primary" routerLink="/spare-detail" >
+            <button class="btn btn-primary" (click)="addFunction()" >
               <fa-icon [icon]="add"></fa-icon>
                {{ 'เพิ่มเอกสาร' }}
             </button>
@@ -67,49 +69,37 @@
              <thead>
                <tr>
                  <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                 <th class="text-center" [style.width.px]="70">รหัสอะไหล่</th>
                  <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                  <th class="text-center" [style.width.px]="70">จำนวน</th>
-                 <th class="text-center" [style.width.px]="80">ราคา</th>
-                 <th class="text-center" [style.width.px]="100">หมายเหตุ</th>
+                 <th class="text-center" [style.width.px]="70">ราคา</th>
                </tr>
-               <!-- <tbody>
-                <tr *ngFor="let task of pagedData">
+               <tbody>
+                <tr *ngFor="let spare of pagedData; let rowIndex = index">
                   <td class="text-center">
-                    {{ task.seq }}
+                    {{ rowIndex + 1 }}
                   </td>
                   <td class="text-center">
-                    <a [routerLink]="['detail', task.taskNo]" [state]="{ taskNo: task.taskNo }">{{ task.taskNo }}</a>
-                    {{ task.taskNo }}
+                    <a [routerLink]="['detail', spare.spareId]" [state]="{ taskNo: spare.spareId }">{{ spare.spareId }}</a>
                   </td>
                   <td class="text-center">
-                    {{ task.taskDate }}
-                  </td>
-                  <td>
-                    {{ task.cusName }}
+                    {{ spare.spareName }}
                   </td>
                   <td class="text-right">
-                    {{ task.taskAmt | number : '0.2-2'}}
+                    {{ spare.quantity | number : '0.2-2'}}
                   </td>
-                  <td class="text-center">
-                    <div class="status-center" [ngClass]="{
-                           'status-border-saved': task.status === 'SAVED',
-                           'status-border-in-progress': task.status === 'IN_PROGRESS',
-                           'status-border-complete': task.status === 'COMPLETE',
-                           'status-border-cancel': task.status === 'CANCELLED'
-                         }">
-                      {{ task.status }}
-                    </div>
+                  <td class="text-right">
+                    {{ spare.sparePrice | number : '0.2-2'}}
                   </td>
                 </tr>
-              </tbody> -->
-             </thead>
+              </tbody>
            </table>
-           <!-- <mat-paginator 
-               [length]="taskdata.length"
+           <mat-paginator 
+               [length]="spareData.length"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
                (page)="onPageChange($event)">
-            </mat-paginator> -->
+            </mat-paginator>
          </div>
        </div>
      </div>

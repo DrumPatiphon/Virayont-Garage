@@ -8,11 +8,11 @@
               <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="this.isDisbleStatus()">
                 <fa-icon [icon]="cancelIcon"></fa-icon>
                 {{ 'ยกเลิก' }}
-             </button>
-             <button class="btn btn-primary" (click)="save('Save')">
-              <fa-icon [icon]="saveIcon"></fa-icon>
-               {{ 'บันทึก' }} 
-            </button>
+              </button>
+              <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()">
+               <fa-icon [icon]="saveIcon"></fa-icon>
+                {{ 'บันทึก' }} 
+              </button>
             </div>
             <div class="form-group col-lg-10 col-md-10 ">
               <h5 class="card-title">{{'ข้อมูล'}}</h5>
@@ -136,7 +136,7 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addTaskDetail();">
+              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()">
                 <fa-icon [icon]="addIcon"></fa-icon>
                  {{ 'เพิ่ม' }}
               </button>

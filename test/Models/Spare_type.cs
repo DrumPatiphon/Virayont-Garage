@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace test.Models
 {
-    public class Spare_type
+    public class SpareType
     {
         [Key]
         public int sparetype_id { get; set; }
