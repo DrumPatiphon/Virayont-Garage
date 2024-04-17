@@ -13,7 +13,8 @@ import { HomeComponent } from './home/home.component';
 // import { CusComponent } from './spa/cus/cus.component';
 // import { EmpComponent } from './spa/emp/emp.component';
 import { CustomerComponent } from './spa/customer/customer.component';
-import { EmpDetailComponent } from './spa/emp-detail/emp-detail.component';
+import { EmployeeComponent } from './spa/employee/employee.component';
+import { EmployeeDetailComponent } from './spa/employee/employee-detail.component';
 import { SpareComponent } from './spa/spare/spare.component';
 import { TaskComponent } from './spa/task/task.component';
 import { TaskDetailComponent } from './spa/task/task-detail.component';
@@ -22,7 +23,6 @@ import { AppTableColumnComponent } from './shared/app-table-column/app-table-col
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SpareDetailComponent } from './spa/spare/spare-detail.component';
-import { EmpPdetailComponent } from './spa/emp-detail/emp-pdetail/emp-pdetail.component';
 import { AdminComponent } from './spa/admin/admin.component';
 import { CustomerDetailComponent } from './spa/customer/customer-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -42,14 +42,14 @@ import { RegisterComponent } from './register/register.component';
     // EmpComponent,
     CustomerComponent,
     CustomerDetailComponent,
-    EmpDetailComponent,
+    EmployeeComponent,
+    EmployeeDetailComponent,
     SpareComponent,
     TaskComponent,
     TaskDetailComponent,
     AppTableComponent,
     AppTableColumnComponent,
     SpareDetailComponent,
-    EmpPdetailComponent,
     AdminComponent,
     LoginComponent,
     RegisterComponent,

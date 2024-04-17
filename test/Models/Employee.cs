@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace test.Models
 {
     public class Employee
     {
         [Key]
-        public int employee_id { get; set; }
+        public int? employee_id { get; set; }
         public string? empfirst_name { get; set; }
         public string? emplast_name { get; set; }
         public int? department_id { get; set; }
