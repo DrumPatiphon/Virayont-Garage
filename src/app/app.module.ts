@@ -21,7 +21,7 @@ import { AppTableComponent } from './shared/app-table/app-table.component';
 import { AppTableColumnComponent } from './shared/app-table-column/app-table-column.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { SpareDetailComponent } from './spa/spare/spare-detail/spare-detail.component';
+import { SpareDetailComponent } from './spa/spare/spare-detail.component';
 import { EmpPdetailComponent } from './spa/emp-detail/emp-pdetail/emp-pdetail.component';
 import { AdminComponent } from './spa/admin/admin.component';
 import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.component';

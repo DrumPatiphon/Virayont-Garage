@@ -11,7 +11,7 @@ import { SpareComponent } from './spa/spare/spare.component';
 import { TaskComponent } from './spa/task/task.component';
 import { TaskDetailComponent } from './spa/task/task-detail.component';
 import { EmpPdetailComponent } from './spa/emp-detail/emp-pdetail/emp-pdetail.component';
-import { SpareDetailComponent } from './spa/spare/spare-detail/spare-detail.component';
+import { SpareDetailComponent } from './spa/spare/spare-detail.component';
 import { AdminComponent } from './spa/admin/admin.component';
 import { CusPdetailComponent } from './spa/cus-detail/cus-pdetail/cus-pdetail.component';
 
@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'emp', component: EmpComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'spare', component: SpareComponent },
-  { path: 'spare-detail', component: SpareDetailComponent },
+  { path: 'spare/detail', component: SpareDetailComponent },
+  { path: 'spare/detail/:spareId', component: SpareDetailComponent },
   { path: 'emp-detail', component: EmpDetailComponent },
   { path: 'emp-pdetail', component: EmpPdetailComponent },
   { path: 'cus-detail', component: CusDetailComponent }, 

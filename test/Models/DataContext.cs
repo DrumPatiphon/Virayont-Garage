@@ -31,7 +31,7 @@ namespace test.Models
     public DbSet<SparePart> spare_part { get; set; }
     public DbSet<Department> department { get; set; }
     public DbSet<TaskDetail> task_detail { get; set; }
-    public DbSet<Spare_type> spare_type { get; set; }
+    public DbSet<SpareType> spare_type { get; set; }
     public DbSet<Dbtask> dbtask { get; set; }
     public DbSet<Vehicle> vehicle { get; set; }
     public DbSet<Status> status { get; set; }
@@ -45,6 +45,13 @@ namespace test.Models
       modelBuilder.Entity<TaskDetail>()
           .Property(t => t.detail_id)
           .ValueGeneratedOnAdd();
+
+      modelBuilder.Entity<SparePart>()
+        .HasKey(s => s.spare_id);
+
+      modelBuilder.Entity<SparePart>()
+        .Property(t => t.spare_id)
+        .ValueGeneratedOnAdd();
     }
   }
 }
