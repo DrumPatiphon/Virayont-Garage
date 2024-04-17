@@ -1,0 +1,14 @@
+html,
+body {
+  height: 100%;
+}
+
+.login-form{
+  gap: 10px;
+} 
+
+mat-card{
+  margin: 100px;
+  margin-bottom: auto;
+  padding: 20px;
+}

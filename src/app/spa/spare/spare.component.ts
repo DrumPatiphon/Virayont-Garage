@@ -1,7 +1,10 @@
-import { Component, OnInit} from '@angular/core';
-import { ApiService, Sparepart } from './api.service';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { SparePartService, Sparepart } from './spare.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validator, Validators } from '@angular/forms';
-import { FormUtilService } from 'src/app/service/form-util-service';
+import { faBarsStaggered,faSearch,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-spare',
@@ -9,59 +12,91 @@ import { FormUtilService } from 'src/app/service/form-util-service';
   styleUrls: ['./spare.component.css']
 })
 export class SpareComponent implements OnInit {
-  
-  Spareform! : UntypedFormGroup;
+  deleteall = faBarsStaggered
+  searchIcon = faSearch
+  add = faPlus
 
+  searchForm : UntypedFormGroup;
+  spareData :any[] = [];
+  masterData = {
+    spareData:[] = [],
+    spareType:[] = [],
+  }
+
+  currentPage = 1;
+  itemsPerPage = 10;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pagedData: any[] = [];
+  dataSource = new MatTableDataSource<any>();
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize: number = 10;
+  
   constructor ( 
     private fb : UntypedFormBuilder,
-    private Spa : ApiService,
-    private util : FormUtilService
-) {}
-
-    
-
-Sparepart: Sparepart [] = [] ;
+    private router : Router,
+    private se : SparePartService,
+) {this.searchForm = this.fb.group({});}
 
   ngOnInit(): void {
-     
-    this.Spa.getSpare().subscribe((data) =>{ 
-      console.log(data)
-      this.Sparepart = data;
-    })
-    console.log(this.Spareform)
-
-
     this.createForm();
-    this.Spa.getSpare().subscribe((data) =>{
-    this.Sparepart = data;
-    this.Spareform.controls['spare_id'].setValue(data[0].spare_id )
-    this.Spareform.controls['spare_name '].setValue(data[0].spare_name )
-    this.Spareform.controls['spare_price '].setValue(data[0].spare_price )
-    this.Spareform.controls['quantity '].setValue(data[0].quantity )
-    this.Spareform.controls['sparetype_id '].setValue(data[0].sparetype_id )
-    
-    
-    })
-    
+    this.se.getMasterData().subscribe({
+      next: (response: any) => {
+        this.masterData = response;
+      },
+      error: (error: any) => {
+        console.error('Error:', error);
+      }
+    });
+    this.rebuildForm();
   }
 
   createForm() {
-    this.Spareform = this.fb.group({
-      spare_id: null,
-      spare_name: [null, [Validators.required]], 
-      spare_price: null,
+    this.searchForm = this.fb.group({
+      spareId: null,
+      spareName: null,
+      sparePrice: null,
       quantity: null,
-      sparetype_id: null,
+      spareTypeId: null,
     });
   }
 
-  save(){
-    const form : UntypedFormGroup = this.Spareform
-    if(this.util.isFormGroupsValid([form])){
-      //implement Save
-    }else{
-      // warnning message (keyword: message service)
-    }
+  rebuildForm(){
+    this.searchFunction();
+  }
+
+  searchFunction() {
+    this.search();
+  }
+
+  search() {
+    this.se.findSearchList(this.searchForm.value)
+    .subscribe(res => {
+      this.spareData = res;
+      this.pagedData = this.spareData;
+      this.pagedData = this.spareData.slice(0, this.pageSize);
+    });
+  }
+
+  clear(){
+    this.searchForm.patchValue({
+      spareId: null,
+      spareName: null,
+      sparePrice: null,
+      quantity: null,
+      spareTypeId: null,
+    });
+    this.searchFunction();
+  }
+
+  addFunction() {
+    this.router.navigate(['/spare/detail']);
+  }
+
+  onPageChange(event: any) {
+    const startIndex = event.pageIndex * event.pageSize;
+    const endIndex = startIndex + event.pageSize;
+    this.pagedData = this.spareData.slice(startIndex, endIndex);
   }
 
   

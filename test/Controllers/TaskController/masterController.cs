@@ -8,6 +8,12 @@ namespace test.Controllers.TaskController
   [ApiController]
   public class MasterDataController : ControllerBase
   {
+    private readonly DataContext _context;
+
+    public MasterDataController(DataContext context)
+    {
+      _context = context;
+    }
     public class MasterData
     {
       public IEnumerable<dynamic> CustomerData { get; set; }
@@ -16,13 +22,6 @@ namespace test.Controllers.TaskController
       public IEnumerable<dynamic> Province { get; set; }
       public IEnumerable<dynamic> Employee { get; set; }
       public IEnumerable<dynamic> SpareData { get; set; }
-    }
-
-    private readonly DataContext _context;
-
-    public MasterDataController(DataContext context)
-    {
-      _context = context;
     }
 
     [HttpGet]
@@ -63,7 +62,7 @@ namespace test.Controllers.TaskController
                           orderby s.status_id
                           select new
                           {
-                            Value = s.status_id,
+                            Value = s.status_phase,
                             Text = s.status_desc
                           }).ToListAsync();
       return status;

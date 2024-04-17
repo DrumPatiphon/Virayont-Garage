@@ -4,6 +4,8 @@ import { ApiService ,DbTask, TaskDetail} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { finalize, switchMap } from 'rxjs';
+import { DatePipe } from '@angular/common';
+import { faSave,faPlus,faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-task',
@@ -11,6 +13,10 @@ import { finalize, switchMap } from 'rxjs';
   styleUrls: ['./task.component.css']
 })
 export class TaskDetailComponent implements OnInit{
+
+  saveIcon = faSave
+  cancelIcon = faXmark
+  addIcon = faPlus
 
     dbTaskForm! : FormGroup;
     dbTask : DbTask = {} as DbTask;
@@ -35,11 +41,14 @@ export class TaskDetailComponent implements OnInit{
       private se : ApiService,
       private route: ActivatedRoute,
       private router: Router,
+      private datePipe: DatePipe,
     ) {}
 
-    taskNo: string | undefined;
+    taskId: number | null = null;
+
     ngOnInit(): void {
-      this.taskNo = this.route.snapshot.paramMap.get('taskNo') || '';
+      const taskIdParam = this.route.snapshot.paramMap.get('taskId');
+      this.taskId = taskIdParam ? +taskIdParam : null;
       this.se.getMasterData().subscribe({
         next: (response: any) => {
           this.masterData = response;
@@ -48,7 +57,7 @@ export class TaskDetailComponent implements OnInit{
           console.error('Error:', error);
         }
       });
-      this.formattedDate = this.currentDate.getDate() + '/' + (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getFullYear();
+      this.formattedDate = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')?.toString();
       this.createForm();
       this.rebuildForm();
       this.installEvent();
@@ -57,8 +66,28 @@ export class TaskDetailComponent implements OnInit{
     rebuildForm(): void{
       this.taskDetailDelete = [];
 
-      if(this.taskNo){
+      if(this.taskId){
+        const controls = this.dbTaskForm.controls
+        if(this.dbTask){
+          this.se.findDbTaskByKey(this.taskId).subscribe(res => {
+            this.dbTask = res.dbTask;
+            this.dbTask.taskDetail = res.taskDetail;
+            this.dbTaskForm.patchValue(this.dbTask, { emitEvent: false });
+            this.dbTask.taskDetail.forEach(value => {value.form = this.createTaskDetailForm(value);  value.rowState = 'Normal';});
+            const taskDate = this.datePipe.transform(this.dbTask.task_date, 'yyyy-MM-dd')?.toString();
+            const startWorkDate = this.datePipe.transform(this.dbTask.start_work_date, 'yyyy-MM-dd')?.toString();
+            const appointmentDate = this.datePipe.transform(this.dbTask.appointment_date, 'yyyy-MM-dd')?.toString();
+            this.dbTaskForm.controls['task_date'].setValue(taskDate);
+            this.dbTaskForm.controls['start_work_date'].setValue(startWorkDate);
+            this.dbTaskForm.controls['appointment_date'].setValue(appointmentDate);
+            console.log(this.dbTask);
 
+            if(this.isDisbleStatus()){
+              this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });
+              this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false }));
+            }
+          });
+        }
       }else{
         this.dbTask.taskDetail = [];
         if(this.masterData.status.length > 0){
@@ -70,7 +99,7 @@ export class TaskDetailComponent implements OnInit{
       this.dbTaskForm.controls['task_amt'].disable();
       this.dbTaskForm.markAsPristine();
     }
-
+    
     installEvent(){
       this.dbTaskForm.controls['customer_id'].valueChanges.subscribe(selectedValue => {
         const controls = this.dbTaskForm.controls
@@ -89,6 +118,10 @@ export class TaskDetailComponent implements OnInit{
           controls['customer_address'].setValue(null);
         }
       });
+
+      this.dbTaskForm.controls['status'].valueChanges.subscribe(value => {
+        console.log(value);
+      });
     }
 
     createForm() {
@@ -104,6 +137,7 @@ export class TaskDetailComponent implements OnInit{
         customer_company: null,
         customer_address: null,
         employee_id: null,
+        license_desc: null,
         remark: null,
         status: null,
         province_id: null,
@@ -117,7 +151,7 @@ export class TaskDetailComponent implements OnInit{
     addTaskDetail() {
       const taskDetail: TaskDetail = {
         task_id: 0,
-        task_detail_id: 0,
+        detail_id: null,
         seq: this.dbTask.taskDetail.length + 1,
         spare_id: null,
         spare_desc: null,
@@ -136,7 +170,7 @@ export class TaskDetailComponent implements OnInit{
     createTaskDetailForm(taskDetail: TaskDetail) {
       const fg = this.fb.group({
         task_id: [taskDetail.task_id],
-        task_detail_id: [taskDetail.task_detail_id],
+        detail_id: [taskDetail.detail_id],
         seq: [taskDetail.seq],
         spare_id: [taskDetail.spare_id, [Validators.required]],
         spare_desc: [taskDetail.spare_desc],
@@ -144,7 +178,6 @@ export class TaskDetailComponent implements OnInit{
         detail_qty: [taskDetail.detail_qty, [Validators.required]],
         detail_unit_price: [taskDetail.detail_unit_price, [Validators.required]],
         detail_amt: [taskDetail.detail_amt],
-        rowState: [taskDetail.rowState],
       });
 
       fg.patchValue(taskDetail, { emitEvent: false });
@@ -156,6 +189,7 @@ export class TaskDetailComponent implements OnInit{
       fg.valueChanges.subscribe((controls) => {
         if (taskDetail.rowState === 'Normal') {
           taskDetail.rowState = 'Edit';
+          console.log("taskDetail.rowState :", taskDetail.rowState)
         }
       });
 
@@ -226,7 +260,7 @@ export class TaskDetailComponent implements OnInit{
 
     save(action: string) {
       if(action == 'Cancel'){
-        // this.onSetDetailRowState();
+        this.onSetDetailRowState();
       }
         // const forms: UntypedFormGroup[] = [this.poIrHeadForm].concat(this.poIrHead.poIrDet.map(detail => detail.form));
         // if (this.util.isFormGroupsValid(forms) && this.isDetailValid(action) && this.isAttachValid()) { 
@@ -236,9 +270,10 @@ export class TaskDetailComponent implements OnInit{
                        action,
             )
             .pipe(
-            switchMap(result => this.se.findDbTaskByKey(result.task_id))
+            switchMap(result => this.se.findDbTaskByKey(result))
           ).subscribe((result: any) => {
             this.dbTask = result;
+            this.taskId = result.dbTask.task_id;
             this.rebuildForm();
           });
       // }
@@ -250,6 +285,14 @@ export class TaskDetailComponent implements OnInit{
           res.rowState = "Edit";
         }
       });
+    }
+
+    isDisbleStatus():boolean{
+      let disable = false;
+      // if(this.dbTaskForm.controls['status'].value == 'CANCELLED' || this.dbTaskForm.controls['status'].value == 'COMPLETED'){
+      //   disable = true;
+      // }
+      return disable;
     }
     
 

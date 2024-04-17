@@ -1,0 +1,61 @@
+<h5 class="program-title"> {{'พนักงาน'}} </h5>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-lg-10 col-md-10">
+              <h5 class="card-title">{{'รายชื่อพนักงาน'}}</h5>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 add-btn">
+              <button class="btn btn-primary" (click)="addFunction()" >
+                <fa-icon [icon]="addIcon"></fa-icon>
+                 {{ 'เพิ่มพนักงาน' }}
+              </button>
+            </div>
+          </div><br>
+
+          <div class="app-table">
+            <table class="table table-striped app-table">
+              <thead>
+                <tr>
+                  <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                  <th class="text-center" [style.width.px]="150">รหัสพนักงาน</th>
+                  <th class="text-center" [style.width.px]="200">ชื่อ-นาสกุล</th>
+                  <th class="text-center" [style.width.px]="80">เงินเดือน</th>
+                  <th class="text-center" [style.width.px]="100">ตำแหน่ง</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let emp of pagedData; let rowIndex = index">
+                  <td class="text-center">
+                    {{ rowIndex + 1 }}
+                  </td>
+
+                  <td class="text-center">
+                    <a [routerLink]="['detail', emp.empId]" [state]="{ empId: emp.empId }">{{ emp.empId }}</a>
+                  </td>
+                  <td>
+                    {{ emp.empName }}
+                  </td>
+                  <td class="text-right">
+                    {{ emp.salary | number : '0.2-2'}}
+                  </td>
+                  <td class="text-center">
+                    {{ emp.position}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator 
+               [length]="empData.length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
