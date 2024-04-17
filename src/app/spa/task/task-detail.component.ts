@@ -80,7 +80,7 @@ export class TaskDetailComponent implements OnInit{
             this.dbTaskForm.controls['task_date'].setValue(taskDate);
             this.dbTaskForm.controls['start_work_date'].setValue(startWorkDate);
             this.dbTaskForm.controls['appointment_date'].setValue(appointmentDate);
-            console.log(this.dbTask);
+            this.dbTaskForm.controls['statusPhase'].setValue(this.dbTask.status);
 
             if(this.isDisbleStatus()){
               this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });
@@ -118,10 +118,6 @@ export class TaskDetailComponent implements OnInit{
           controls['customer_address'].setValue(null);
         }
       });
-
-      this.dbTaskForm.controls['status'].valueChanges.subscribe(value => {
-        console.log(value);
-      });
     }
 
     createForm() {
@@ -140,6 +136,7 @@ export class TaskDetailComponent implements OnInit{
         license_desc: null,
         remark: null,
         status: null,
+        statusPhase: null,
         province_id: null,
         start_work_date: this.formattedDate,
         appointment_date: null,
@@ -189,7 +186,6 @@ export class TaskDetailComponent implements OnInit{
       fg.valueChanges.subscribe((controls) => {
         if (taskDetail.rowState === 'Normal') {
           taskDetail.rowState = 'Edit';
-          console.log("taskDetail.rowState :", taskDetail.rowState)
         }
       });
 
@@ -289,9 +285,9 @@ export class TaskDetailComponent implements OnInit{
 
     isDisbleStatus():boolean{
       let disable = false;
-      // if(this.dbTaskForm.controls['status'].value == 'CANCELLED' || this.dbTaskForm.controls['status'].value == 'COMPLETED'){
-      //   disable = true;
-      // }
+      if(this.dbTaskForm.controls['status'].value == 'CANCELLED' || this.dbTaskForm.controls['status'].value == 'COMPLETED'){
+        disable = true;
+      }
       return disable;
     }
     

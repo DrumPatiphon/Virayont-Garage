@@ -60,19 +60,20 @@ namespace test.Controllers.TaskController
       //    .SingleOrDefaultAsync();
 
       var dbTask = await (from dt in _context.Set<Dbtask>()
-                          join c in _context.Set<Customer>() on dt.customer_id equals c.customer_id
-                          where  dt.task_id == TaskId
+                          join c in _context.Set<Customer>() on dt.customer_id equals c.customer_id into cg
+                          from lc in cg.DefaultIfEmpty()
+                          where dt.task_id == TaskId
                           select new TaskDto
                           {
                             task_id = dt.task_id,
                             task_no = dt.task_no,
                             task_date = dt.task_date,
                             task_amt = dt.task_amt,
-                            customer_id = dt.customer_id,
+                            //customer_id = dt.customer_id,
                             customer_name = dt.customer_name,
                             customer_lastname = dt.customer_lastname,
                             customer_phone = dt.customer_phone,
-                            customer_company = c.company_name,
+                            customer_company = lc.company_name,
                             customer_address = dt.customer_address,
                             employee_id = dt.employee_id,
                             license_desc = dt.license_desc,
