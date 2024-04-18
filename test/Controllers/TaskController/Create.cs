@@ -16,6 +16,7 @@ namespace test.Controllers.TaskController
 
     public class Request : Dbtask
     {
+      public string? StatusPhase { get; set; }
       public new IEnumerable<TaskDetail> TaskDetail { get; set; }
     }
 
@@ -35,7 +36,7 @@ namespace test.Controllers.TaskController
       Dbtask dbTask = new Dbtask();
       dbTask = request;
       dbTask.task_no = "TN" + "-" + formattedDate + runningDoc;
-      dbTask.status = "SAVED";
+      dbTask.status = request.StatusPhase == null? "SAVED": request.StatusPhase;
       dbTask.task_amt = request.task_amt;
 
       //for checking date type null

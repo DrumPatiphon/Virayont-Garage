@@ -19,6 +19,7 @@ namespace test.Controllers.TaskController
     public class EditRequest : Dbtask
     {
       public string Action { get; set; }
+      public string? StatusPhase { get; set; }
       public new IEnumerable<TaskDetailDto> TaskDetail { get; set; }
     }
 
@@ -36,7 +37,7 @@ namespace test.Controllers.TaskController
 
       if (EditRequest.Action == "Save")
       {
-        dbTask.status = EditRequest.status == null ? null : EditRequest.status;
+        dbTask.status = EditRequest.StatusPhase == null ? "SAVED" : EditRequest.StatusPhase;
       }
       else if (EditRequest.Action == "Cancel")
       {
