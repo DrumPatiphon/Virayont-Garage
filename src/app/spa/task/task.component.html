@@ -31,36 +31,11 @@
                   <input type="text" class="form-control" formControlName="licenseName">
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
-                  <ng-select placeholder="กรุณาเลือก">
-                    <!-- [items]="options" 
-                    bindLabel="text" 
-                    bindValue="value" 
-                    formControlName="docStatus" -->
-                  </ng-select>
+                <label class="formcontrol-label">{{'หมายเลขโทรศัพท์'}}</label>
+                <input type="text" class="form-control" formControlName="phoneNo">
               </div>
             </div>
             <div class="row">
-              <!-- <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{ 'ตั้งแต่วันที่เอกสาร'}} </label>
-                  <ng-select
-                    placeholder="กรุณาเลือก"
-                    [items]="options" 
-                    bindLabel="text" 
-                    bindValue="value" 
-                    formControlName="sDocDate">
-                  </ng-select>
-              </div>
-              <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{ 'ถึงวันที่เอกสาร'}}</label>
-                <ng-select
-                  placeholder="กรุณาเลือก"
-                  [items]="options" 
-                  bindLabel="text" 
-                  bindValue="value" 
-                  formControlName="eDocDate">
-                </ng-select>
-              </div> -->
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
                   <ng-select
@@ -81,14 +56,23 @@
                     formControlName="eDocNo">
                   </ng-select>
               </div>
+              <div class="form-group col-lg-3 col-md-6" *ngIf="user.userRole !== 'customer'">
+                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
+                <ng-select placeholder="กรุณาเลือก"
+                  [items]="masterData.employee" 
+                  bindLabel="text" 
+                  bindValue="value" 
+                  formControlName="docStatus">
+                </ng-select>
+              </div>
             </div>
             <div class="form-row pt-3">
               <div class="form-group col-md-12 col-xs-12 text-center">
-                <button class="btn btn-primary me-2 pe-3" (click)="searchFunction()">
+                <button class="btn btn-primary me-2 pe-3" (click)="search()">
                   <fa-icon [icon]="searchicon"></fa-icon>
                   {{ 'ค้นหา' }}
                 </button>
-                <button class="btn btn btn-outline-dark" (click)="clear();">
+                <button class="btn btn btn-outline-dark" (click)="clear();" *ngIf="user.userRole !== 'customer'">
                   <fa-icon [icon]="deleteall"></fa-icon>
                   {{ 'ล้างข้อมูล' }}</button>
               </div>
@@ -108,7 +92,7 @@
               <h5 class="card-title">{{ 'รายการซ่อม' }}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addFunction()" >
+              <button class="btn btn-primary" (click)="addFunction()" [hidden]="user.userRole == 'customer'">
                 <fa-icon [icon]="add"></fa-icon>
                  {{ 'เพิ่มเอกสาร' }}
               </button>
@@ -116,51 +100,6 @@
 
           </div>
           <div class="app-table">
-            <!-- <app-table [dataSource]="dataSource" [pageSizeOptions]="[10, 15, 20]">
-              <app-table-column name="seq" cellClass="text-center" [width]="50" [headerText]="'ลำดับ'">
-                <ng-container matColumnDef="seq">
-                  <th mat-header-cell *matHeaderCellDef>  </th>
-                  <td mat-cell *matCellDef="let element"> {{ element.position }} </td>
-                </ng-container>
-              </app-table-column>
-            
-              <app-table-column name="taskNo" cellClass="text-center" [width]="250" [headerText]="'เลขที่เอกสาร'">
-                <ng-container matColumnDef="taskNo">
-                  <th mat-header-cell *matHeaderCellDef> </th>
-                  <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-                </ng-container>
-              </app-table-column>
-            
-              <app-table-column name="taskDate" cellClass="text-center" [width]="150" [headerText]="'วันที่เอกสาร'">
-                <ng-container matColumnDef="taskDate">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let element"> {{ element.weight }} </td>
-                </ng-container>
-              </app-table-column>
-            
-              <app-table-column name="cusName" cellClass="text-left" [width]="250"[headerText]="'ชื่อลูกค้า'">
-                <ng-container matColumnDef="cusName">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let element"> {{ element.symbol }}</td>
-                </ng-container>
-              </app-table-column>
-
-              <app-table-column name="taskAmt" cellClass="text-right" [width]="150"[headerText]="'จำนวนเงินสุทธิ'">
-                <ng-container matColumnDef="taskAmt">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let element"> {{ element.taskAmt | number : '0.2-2' }} </td>
-                </ng-container>
-              </app-table-column>
-
-              <app-table-column name="status" cellClass="text-center" [width]="150"[headerText]="'สถานะเอกสาร'">
-                <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element">
-                      {{ element.taskAmt }}
-                    </td>
-                </ng-container>
-              </app-table-column>
-            </app-table> -->
             <table class="table table-striped app-table">
               <thead>
                 <tr>

@@ -33,6 +33,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
     AdminComponent,
     LoginComponent,
     RegisterComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

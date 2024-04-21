@@ -12,4 +12,15 @@ export class CustomValidators extends Validators{
           return null;
         };
       }
+
+    static numberOnly(): ValidatorFn {
+      return (control: AbstractControl): { [key: string]: any } | null => {
+        if (control.value) {
+          if (!/^\d+$/.test(control.value)) {
+            return { phoneNo: true };
+          }
+        }
+        return null;
+      };
+    }
 }
