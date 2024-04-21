@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { UntypedFormGroup } from "@angular/forms";
 import { BaseService } from "src/app/shared/base-service/base-service.component"; 
 import { Constants } from "src/app/shared/constants/constants";
+import { User } from "src/app/login/login.service";
 
 export interface DbTask {
     task_id : number;
@@ -39,6 +40,10 @@ export interface TaskDetail {
     detail_amt: number | null;
     form?: UntypedFormGroup | undefined;
     rowState: string;
+}
+
+export interface UserData extends User{
+
 }
 
 @Injectable({

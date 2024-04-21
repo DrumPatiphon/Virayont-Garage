@@ -1,24 +1,18 @@
-<h3 class="program-title"> {{'Menu'}} </h3>
+<h3 class="program-title"> {{'เมนู'}} </h3>
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <!-- <div class="form-row pt-3">
-
-          </div>
-          <h5 class="card-title text-center ">{{'จัดการรายการ'}}</h5><br> -->
           <form >   
-            <!-- [formGroup]="searchform" -->
             <div class="row text-center">
-
-                <div class="form-group col-lg-12  ">
+                <div class="form-group col-lg-12  " [hidden]="isCustomer() || isEmployee()">
                   <label class="formcontrol-label">{{''}}</label><br>
                   <button class="btn btn-primary me-3 pe-3 w-25" routerLink="/customer">
                     <mat-icon class="icon-center">group</mat-icon>
                     {{ 'จัดการข้อมูลลูกค้า' }}</button>
                 </div> 
             </div>
-            <div class="row text-center">
+            <div class="row text-center" [hidden]="isCustomer() || isEmployee()">
                 <div class="form-group col-lg-12 ">
                   <label class="formcontrol-label">{{''}}</label><br>
                   <button class="btn btn-primary me-3 pe-3 w-25" routerLink="/emp">
@@ -34,7 +28,7 @@
                     {{ 'จัดการข้อมูลรายละเอียดการซ่อม' }}</button>
                 </div> 
             </div>
-            <div class="row text-center">
+            <div class="row text-center" [hidden]="isCustomer()">
                 <div class="form-group col-lg-12 ">
                   <label class="formcontrol-label">{{''}}</label><br>
                   <button class="btn btn-primary me-3 pe-3 w-25" routerLink="/spare">

@@ -74,7 +74,8 @@ namespace test.Controllers.TaskController
                           select new
                           {
                             Value = t.task_no,
-                            Text = t.task_no
+                            Text = t.task_no,
+                            customerPhone = t.customer_phone,
                           }).ToListAsync();
       return dbtask;
     }

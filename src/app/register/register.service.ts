@@ -7,7 +7,6 @@ import { Constants } from "src/app/shared/constants/constants";
 import { UntypedFormGroup } from "@angular/forms";
 
 export interface Customer {
-
     address?: string;
     company_name?: string;
     customer_id?: number;
