@@ -32,6 +32,8 @@ import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { RegisterComponent } from './register/register.component';
     AdminComponent,
     LoginComponent,
     RegisterComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { RegisterComponent } from './register/register.component';
     NgbModule,
     CommonModule,
     FontAwesomeModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     BaseService,

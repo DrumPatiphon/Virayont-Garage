@@ -69,7 +69,7 @@ namespace test.Controllers.TaskController
                             task_no = dt.task_no,
                             task_date = dt.task_date,
                             task_amt = dt.task_amt,
-                            //customer_id = dt.customer_id,
+                            customer_id = lc.customer_id,
                             customer_name = dt.customer_name,
                             customer_lastname = dt.customer_lastname,
                             customer_phone = dt.customer_phone,

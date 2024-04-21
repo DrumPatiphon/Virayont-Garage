@@ -25,6 +25,7 @@ namespace test.Controllers.TaskController
       public string? SdocNo { get; set; }
       public string? EdocNo { get; set; }
       public string? LicenseName { get; set; }
+      public string? PhoneNo { get; set; }
     }
 
     [HttpGet]
@@ -43,6 +44,7 @@ namespace test.Controllers.TaskController
                                 status = dt.status,
                                 statusDesc = s.status_desc,
                                 licenseName = dt.license_desc,
+                                phoneNo = dt.customer_phone,
                               }).OrderByDescending(o => o.taskId).ToListAsync();
 
       if(request.CustomerId != null)
@@ -68,6 +70,11 @@ namespace test.Controllers.TaskController
       if (request.EdocNo != null)
       {
         listResult = listResult.Where(o => string.Compare(o.taskNo, request.SdocNo) <= 0).ToList();
+      }
+
+      if (request.PhoneNo != null)
+      {
+        listResult = listResult.Where(o => o.phoneNo == request.PhoneNo).ToList();
       }
 
 

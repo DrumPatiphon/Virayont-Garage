@@ -5,11 +5,11 @@
         <div class="card-body">
           <div class="row ">
             <div class="form-group col-lg-12 col-md-12 add-btn">
-              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="this.isDisbleStatus()">
+              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
                 <fa-icon [icon]="cancelIcon"></fa-icon>
                 {{ 'ยกเลิก' }}
               </button>
-              <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()">
+              <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
                <fa-icon [icon]="saveIcon"></fa-icon>
                 {{ 'บันทึก' }} 
               </button>
@@ -29,14 +29,18 @@
                   <input type="text" class="form-control text-center" formControlName="task_date">
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label>
+                <label class="formcontrol-label"> {{'สถานะเอกสาร'}} </label> <span class="text-danger">*</span>
                   <ng-select 
                     placeholder="กรุณาเลือก"      
                     [items]="masterData.status" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="statusPhase">
+                    formControlName="statusPhase"
+                    [ngClass]="{ 'is-invalid': isInvalid('statusPhase')}">
                   </ng-select>
+                  <div *ngIf="isInvalid('statusPhase')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
             </div>
 
@@ -52,16 +56,25 @@
                   </ng-select>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
-                  <input type="text" class="form-control" formControlName="customer_name">
+                <label class="formcontrol-label">{{'ชื่อจริง'}}</label> <span class="text-danger">*</span>
+                  <input type="text" class="form-control" formControlName="customer_name" [ngClass]="{ 'is-invalid': isInvalid('customer_name')}">
+                  <div *ngIf="isInvalid('customer_name')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'นามสกุล'}}</label>
-                  <input type="text" class="form-control" formControlName="customer_lastname">
+                <label class="formcontrol-label">{{'นามสกุล'}}</label> <span class="text-danger">*</span>
+                  <input type="text" class="form-control" formControlName="customer_lastname" [ngClass]="{ 'is-invalid': isInvalid('customer_lastname')}">
+                  <div *ngIf="isInvalid('customer_lastname')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label>
-                  <input type="text" class="form-control" formControlName="customer_phone">
+                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label> <span class="text-danger">*</span>
+                  <input type="text" class="form-control" formControlName="customer_phone" [ngClass]="{ 'is-invalid': isInvalid('customer_phone')}">
+                  <div *ngIf="isInvalid('customer_phone')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
             </div>
 
@@ -71,39 +84,56 @@
                 <input type="text" class="form-control" formControlName="customer_company">
               </div>
               <div class="form-group col-lg-6 col-md-6">
-                <label class="formcontrol-label">{{'ที่อยู่'}}</label>
-                <input type="text" class="form-control" formControlName="customer_address">
+                <label class="formcontrol-label">{{'ที่อยู่'}}</label> <span class="text-danger">*</span>
+                <input type="text" class="form-control" formControlName="customer_address" [ngClass]="{ 'is-invalid': isInvalid('customer_address')}">
+                  <div *ngIf="isInvalid('customer_address')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label>
-                  <input type="text" class="form-control" formControlName="license_desc">
+                <label class="formcontrol-label">{{'ทะเบียนรถยนต์'}}</label> <span class="text-danger">*</span>
+                  <input type="text" class="form-control" formControlName="license_desc" [ngClass]="{ 'is-invalid': isInvalid('license_desc')}">
+                  <div *ngIf="isInvalid('license_desc')" class="validate-label">
+                    กรุณาระบุข้อมูลให้ถูกต้อง
+                  </div>
               </div>
-              <div class="form-group col-lg-3 col-md-6">
+              <div class="form-group col-lg-3 col-md-6"> <span class="text-danger">*</span>
                 <label class="formcontrol-label"> {{'จังหวัด'}} </label>
                   <ng-select placeholder="กรุณาเลือก"                    
                   [items]="masterData.province" 
                   bindLabel="text" 
                   bindValue="value" 
-                  formControlName="province_id">
+                  formControlName="province_id" 
+                  [ngClass]="{ 'is-invalid': isInvalid('province_id')}">
                   </ng-select>
+                <div *ngIf="isInvalid('province_id')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label>
+                <label class="formcontrol-label"> {{'ชื่อพนักงาน'}} </label> <span class="text-danger">*</span>
                   <ng-select placeholder="กรุณาเลือก"
                     [items]="masterData.employee" 
                     bindLabel="text" 
                     bindValue="value" 
-                    formControlName="employee_id">
+                    formControlName="employee_id"
+                    [ngClass]="{ 'is-invalid': isInvalid('employee_id')}">
                   </ng-select>
+                <div *ngIf="isInvalid('employee_id')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label>
-                  <input type="text" class="form-control text-center" formControlName="start_work_date">
+                <label class="formcontrol-label">{{'วันที่เข้าอู่'}}</label> <span class="text-danger">*</span>
+                  <input type="text" class="form-control text-center" formControlName="start_work_date" [ngClass]="{ 'is-invalid': isInvalid('start_work_date')}">
+                <div *ngIf="isInvalid('start_work_date')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันนัดรับ'}}</label>
@@ -136,7 +166,7 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()">
+              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
                 <fa-icon [icon]="addIcon"></fa-icon>
                  {{ 'เพิ่ม' }}
               </button>
@@ -148,12 +178,12 @@
               <thead>
                 <tr>
                   <th class="text-center" [style.width.px]="70">ลำดับ</th>
-                  <th class="text-center" [style.width.px]="150">รหัสอะไหล่</th>
+                  <th class="text-center" [style.width.px]="150">รหัสอะไหล่ <span class="text-danger">*</span></th>
                   <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                   <th class="text-center" [style.width.px]="200">รายละเอียดอะไหล่</th>
                   <th class="text-center" [style.width.px]="70">จำนวน</th>
-                  <th class="text-center" [style.width.px]="80">ราคา</th>
-                  <th class="text-center" [style.width.px]="100">ราคารวม</th>
+                  <th class="text-center" [style.width.px]="80">ราคา <span class="text-danger">*</span></th>
+                  <th class="text-center" [style.width.px]="100">ราคารวม <span class="text-danger">*</span></th>
                   <th class="text-center" [style.width.px]="100">ลบ</th>
                 </tr>
               </thead>
@@ -170,8 +200,12 @@
                         [items]="masterData.spareData" 
                         bindLabel="text" 
                         bindValue="value" 
-                        formControlName="spare_id">
+                        formControlName="spare_id"
+                        [ngClass]="{ 'is-invalid': isInvalid('spare_id')}">
                       </ng-select>
+                      <div *ngIf="isInvalid('spare_id')" class="validate-label">
+                        กรุณาระบุข้อมูลให้ถูกต้อง
+                      </div>
                     </div>
                   </td>
                   <td class="text-left">
@@ -186,12 +220,18 @@
                   </td>
                   <td>
                     <div *ngIf="row.form" [formGroup]="row.form">
-                      <input type="text" class="form-control text-right" formControlName="detail_qty">
+                      <input type="text" class="form-control text-right" formControlName="detail_qty" [ngClass]="{ 'is-invalid': isInvalid('detail_qty')}">
+                    <div *ngIf="isInvalid('detail_qty')" class="validate-label">
+                      กรุณาระบุข้อมูลให้ถูกต้อง
+                    </div>
                     </div>
                   </td>
                   <td>
                     <div *ngIf="row.form" [formGroup]="row.form">
-                      <input type="text" class="form-control text-right" formControlName="detail_unit_price">
+                      <input type="text" class="form-control text-right" formControlName="detail_unit_price" [ngClass]="{ 'is-invalid': isInvalid('detail_unit_price')}">
+                    <div *ngIf="isInvalid('detail_unit_price')" class="validate-label">
+                      กรุณาระบุข้อมูลให้ถูกต้อง
+                    </div>
                     </div>
                   </td>
                   <td>
@@ -201,7 +241,7 @@
                   </td>
                   <td>
                     <div *ngIf="row.form" [formGroup]="row.form" class="pt-1">
-                      <button (click)="removeTaskDetail(row, rowIndex)" class="btn btn-outline-danger btn-sm">
+                      <button (click)="removeTaskDetail(row, rowIndex)" class="btn btn-outline-danger btn-sm" [disabled]="isDisbleStatus() || isCustomer()">
                       <!-- <i class="far fa-trash-alt"></i> -->ลบ
                     </button>
                     </div>

@@ -11,9 +11,17 @@
     <a mat-button routerLink="/home" style="text-decoration: none;">
         <mat-icon >home</mat-icon>หน้าแรก
     </a>
-    <a mat-button routerLink="/login" style="text-decoration: none;">
+    <a mat-button routerLink="/admin" style="text-decoration: none;" *ngIf="user != null">
+        <fa-icon [icon]="menuIcon"></fa-icon>
+        เมนู
+    </a>
+    <a mat-button routerLink="/login" style="text-decoration: none;" *ngIf="user == null">
         <fa-icon [icon]="login"></fa-icon>
         เข้าสู่ระบบ
+    </a>
+    <a mat-button (click)="logOut();" style="text-decoration: none;" *ngIf="user != null">
+        <fa-icon [icon]="logOutIcon"></fa-icon>
+        ออกจากระบบ
     </a>
     <!-- <a mat-button routerLink="/login" style="text-decoration: none;"><mat-icon >engineering</mat-icon>พนักงาน</a> -->
     <!-- <a mat-button routerLink="/spare" style="text-decoration: none;"><mat-icon >list</mat-icon>อะไหล่</a> -->
