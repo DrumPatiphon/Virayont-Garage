@@ -25,27 +25,57 @@
                 <input type="text" class="form-control doc-no text-center" formControlName ="employee_str_id">
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'ชื่อจริง'}}</label>
-                <input type="text" class="form-control" formControlName ="empfirst_name">
+                <label class="formcontrol-label">{{'ชื่อจริง'}}</label> <span class="text-danger">*</span> 
+                <input type="text" class="form-control" formControlName ="empfirst_name" 
+                  [ngClass]="{ 'is-invalid': isInvalid('empfirst_name')}">
+                <div *ngIf="isInvalid('empfirst_name')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'นามสกุล'}}</label>
-                <input type="text" class="form-control" formControlName ="emplast_name">
+                <label class="formcontrol-label">{{'นามสกุล'}}</label> <span class="text-danger">*</span>
+                <input type="text" class="form-control" formControlName ="emplast_name" 
+                  [ngClass]="{ 'is-invalid': isInvalid('emplast_name')}">
+                <div *ngIf="isInvalid('emplast_name')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เงินเดือน'}}</label>
-                <input type="text" class="form-control" formControlName ="salary">
+                <label class="formcontrol-label">{{'เบอร์โทรศัพท์'}}</label> <span class="text-danger">*</span>
+                <input type="text" class="form-control" formControlName ="empphone_number" 
+                  [ngClass]="{ 'is-invalid': isInvalid('empphone_number')}">
+                <div *ngIf="isInvalid('empphone_number')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-12 col-md-12">
+                <label class="formcontrol-label">ที่อยู่</label>
+                <textarea class="form-control form-textarea" rows="3" formControlName="empaddress"></textarea>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label"> {{'ตำแหน่ง'}} </label>
-                  <ng-select placeholder="กรุณาเลือก"                    
+                <label class="formcontrol-label"> {{'ตำแหน่ง'}} </label> <span class="text-danger">*</span>
+                <ng-select placeholder="กรุณาเลือก"                    
                   [items]="masterData.positionData" 
                   bindLabel="text" 
                   bindValue="value" 
-                  formControlName="department_id">
-                  </ng-select>
+                  formControlName="department_id" 
+                  [ngClass]="{ 'is-invalid': isInvalid('department_id')}">
+                </ng-select>
+                <div *ngIf="isInvalid('department_id')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label class="formcontrol-label">{{'เงินเดือน'}}</label>
+                <input type="text" class="form-control" formControlName ="salary" 
+                  [ngClass]="{ 'is-invalid': isInvalid('salary')}">
+                <div *ngIf="isInvalid('salary')" class="validate-label">
+                  กรุณาระบุข้อมูลให้ถูกต้อง
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6 form-check mt-4 fs-5">
                 <input class="form-check-input" type="checkbox" formControlName ="work_status">

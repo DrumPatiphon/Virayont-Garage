@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SparePartService, Sparepart } from './spare.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { UserData } from '../task/api.service';
+import { CustomValidators } from 'src/app/shared/Validators/custom.validators';
 
 @Component({
   selector: 'app-spare-detail',
@@ -18,6 +22,7 @@ export class SpareDetailComponent implements OnInit {
   sparePartForm! : FormGroup;
   sparePart : Sparepart = {} as Sparepart;
   spareId: number | null = null;
+  user: UserData = {} as UserData;
   masterData = {
     spareType:[] = [],
   }
@@ -27,9 +32,15 @@ export class SpareDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router : Router,
     private se : SparePartService,
+    private authService: AuthService,
+    private ms: ToastrService,
   ) {}
 
   ngOnInit(): void {
+    this.user = this.authService.getCurrentUser();
+    if(!this.user || this.user.userRole == 'customer'){
+      this.router.navigate(['/login']);
+    }
     const spareIdParam = this.route.snapshot.paramMap.get('spareId');
     this.spareId = spareIdParam ? +spareIdParam : null;
     this.se.getMasterData().subscribe({
@@ -49,10 +60,10 @@ export class SpareDetailComponent implements OnInit {
     this.sparePartForm = this.fb.group({
       spare_id: null,
       spare_str_id: "AUTO",
-      spare_name: null,
-      spare_price: null,
-      quantity: null,
-      sparetype_id: null,
+      spare_name: [null,[Validators.required]],
+      spare_price: [null,[CustomValidators.numberOnly()]],
+      quantity: [null,[Validators.required, CustomValidators.numberOnly()]],
+      sparetype_id: [null,[Validators.required]],
     });
   }
 
@@ -79,19 +90,22 @@ export class SpareDetailComponent implements OnInit {
   }
 
   save(action: string) { 
-    const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
-    this.sparePartForm.controls['quantity'].setValue(qty);
-    this.se.save(this.sparePart,
-                 this.sparePartForm.getRawValue(),
-                 action,
-      )
-      .pipe(
-      switchMap(result => this.se.findSpareByKey(result))
-    ).subscribe((result: any) => {
-      this.sparePart = result;
-      this.spareId = result.spare_id;
-      this.rebuildForm();
-    });
+    if(this.isFormValid(this.sparePartForm)){
+      const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
+      this.sparePartForm.controls['quantity'].setValue(qty);
+      this.se.save(this.sparePart,
+                   this.sparePartForm.getRawValue(),
+                   action,
+        )
+        .pipe(
+        switchMap(result => this.se.findSpareByKey(result))
+      ).subscribe((result: any) => {
+        this.sparePart = result;
+        this.spareId = result.spare_id;
+        this.rebuildForm();
+      });
+      this.ms.success('บันทึกสำเร็จ');
+    }
   }
 
   delete(action: string){
@@ -102,10 +116,38 @@ export class SpareDetailComponent implements OnInit {
                  action,
     ).subscribe(res => {
       if(res){
+        this.ms.success('ลบข้อมูลสำเร็จ');
         this.router.navigate(['/spare']);
       }
     })
+  }
 
+  isFormValid(formGroup: FormGroup): boolean {
+    let isValid = true;
+
+    Object.values(formGroup.controls).forEach(control => {
+      if (control instanceof FormGroup) {
+        if (!this.isFormValid(control)) {
+          isValid = false;
+        }
+      } else {
+        control.markAsTouched();
+        if (control.invalid) {
+          isValid = false;
+        }
+      }
+    });
+
+    if(!isValid){
+      this.ms.error('กรุณาตรวจสอบข้อมูลให้ถูกต้อง');
+    }
+
+    return isValid;
+  }
+
+  isInvalid(controlName: string){
+    const control = this.sparePartForm.get(controlName);
+    return control ? control.touched && control.invalid : false;
   }
 
 
