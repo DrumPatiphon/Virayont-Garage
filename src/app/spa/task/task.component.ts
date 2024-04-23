@@ -54,6 +54,7 @@ export class TaskComponent implements OnInit{
       if(!this.user){
         this.router.navigate(['/login']);
       }
+      console.log(this.user)
       this.createForm();
       this.installEvent();
       this.se.getMasterData().subscribe({
