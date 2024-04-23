@@ -1,58 +1,11 @@
-/* .login-form{
-    padding: 20px;
-  }  */
-
-
-
-/* Progressbar */
-/* .progressbar{
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0;
-}
-
-.progressbar::before{
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 4px;
-    width: 100px;
-    background-color: #dfdfdf;
-    z-index: -1;
-}
-
-.progress-step{
-    width: 2.1875rem;
-    height: 2.1875rem;
-    background-color: #dfdfdf;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.progress-step::before{
-    counter-increment: step;
-    content: counter(step);
-    
-}
-
-.progress-step::after{
-    content: attr(data-title);
-    position: absolute;
-    top: calc(100% + 0.75rem);
-    font-size: 0.85rem
-    color #666;
-}
-
-.progress-step-active{
-    background-color: var(--primary-color);
-    color: #f3f3f3;
-} */
 
 .doc-no{
     background-color: #0B5ED7;
     color:white;
-  }
+}
+
+.validate-label{
+    color: red;
+    font-size: smaller;
+    padding-left: 5px;
+}
