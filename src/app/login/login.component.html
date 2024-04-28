@@ -1,0 +1,38 @@
+<div fxLayoutAlign="center">
+  
+  <mat-card fxFlex="30">
+      <h4 class="text-center py-3">เข้าสู่ระบบ</h4>
+
+      <form fxFlexAlight="stretch" fxLayout="column" class="login-form" [formGroup]="loginForm">
+        <div style="display: flex; justify-content: flex-end;">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" formControlName="empCheckBox">
+            <label class="form-check-label" for="flexSwitchCheckDefault">พนักงาน</label>
+          </div>
+        </div>
+        <div class="form-floating">
+          <input  class="form-control" id="floatingInput" placeholder="เบอร์โทรศํพท์" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': isInvalid('phoneNumber') }">
+          <label for="floatingInput">เบอร์โทรศัพท์</label>
+          <div *ngIf="isInvalid('phoneNumber')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+        <div class="form-floating" *ngIf="loginForm.controls['empCheckBox'].value">
+          <input type="password" class="form-control" id="floatingInput" placeholder="รหัสผ่าน" formControlName="password" [ngClass]="{ 'is-invalid': isInvalid('password') }">
+          <label for="floatingInput"> รหัสผ่าน </label>
+          <div *ngIf="isInvalid('password')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+      </form>
+
+      <a href="#" class="text-center" style="margin-top: 20px;"  routerLink="/register" *ngIf="!loginForm.controls['empCheckBox'].value">
+        สมัครสมาชิก
+      </a>
+      <button class="btn btn-primary" style="margin-top: 20px;" (click)="login();">
+        เข้าสู่ระบบ
+      </button>
+  </mat-card>
+
+</div>
+

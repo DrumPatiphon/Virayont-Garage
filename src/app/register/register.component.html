@@ -1,0 +1,46 @@
+<div fxLayoutAlign="center">
+  
+  <mat-card class="col-lg-3 col-md-6">
+      <h4 class="text-center py-3">สมัครสมาชิก</h4>
+
+      <form fxFlexAlight="stretch" fxLayout="column" class="login-form" [formGroup]="registerForm">
+        <div class="form-floating">
+          <input type="text" class="form-control" formControlName="phone_number" placeholder="เบอร์โทรศัพท์" [ngClass]="{ 'is-invalid': isInvalid('phone_number') }">   
+          <label for="floatingInput">เบอร์โทรศัพท์</label>
+          <div *ngIf="isInvalid('phone_number')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+        <div class="form-floating">
+          <input  class="form-control" formControlName="first_name" placeholder="ชื่อ" [ngClass]="{ 'is-invalid': isInvalid('first_name') }">
+          <label for="floatingInput"> ชื่อ </label>
+          <div *ngIf="isInvalid('first_name')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+        <div class="form-floating">
+          <input  class="form-control" formControlName="last_name" placeholder="นามสกุล" [ngClass]="{ 'is-invalid': isInvalid('last_name') }">
+          <label for="floatingInput">นามสกุล</label>
+          <div *ngIf="isInvalid('last_name')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+        <div class="form-floating">
+          <input  class="form-control" formControlName="company_name" placeholder="บริษัท(ถ้ามี)">
+          <label for="floatingInput">บริษัท(ถ้ามี)</label>
+        </div>
+        <div class="form-floating">
+          <input  class="form-control" formControlName="address" placeholder="ที่อยู่" [ngClass]="{ 'is-invalid': isInvalid('address') }">
+          <label for="floatingInput">ที่อยู่</label>
+          <div *ngIf="isInvalid('address')" class="validate-label">
+            กรุณาระบุข้อมูลให้ถูกต้อง
+          </div>
+        </div>
+      </form>
+
+      <button class="btn btn-primary" style="margin-top: 20px;" (click)="isDuplicateUser();">
+        สมัครสมาชิก
+      </button>
+  </mat-card>
+
+</div>
