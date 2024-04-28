@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("WebApiDatabase"))
 );
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -25,6 +26,7 @@ builder.Services.AddCors(options =>
                            .AllowAnyMethod();
                       });
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

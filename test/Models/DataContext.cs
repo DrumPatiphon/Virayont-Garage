@@ -21,9 +21,8 @@ namespace test.Models
     {
       options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
 
-      // Add logging to the DbContext options
       options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
-          .EnableSensitiveDataLogging(); // Optional: Enables logging of parameters with values
+          .EnableSensitiveDataLogging(); 
     }
 
     public DbSet<Customer> customer { get; set; }
@@ -37,21 +36,5 @@ namespace test.Models
     public DbSet<Status> status { get; set; }
     public DbSet<Province> province { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-      modelBuilder.Entity<TaskDetail>()
-          .HasKey(t => t.detail_id);
-
-      modelBuilder.Entity<TaskDetail>()
-          .Property(t => t.detail_id)
-          .ValueGeneratedOnAdd();
-
-      modelBuilder.Entity<SparePart>()
-        .HasKey(s => s.spare_id);
-
-      modelBuilder.Entity<SparePart>()
-        .Property(t => t.spare_id)
-        .ValueGeneratedOnAdd();
-    }
   }
 }

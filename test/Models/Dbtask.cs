@@ -24,6 +24,5 @@ namespace test.Models
         public DateTime? appointment_date { get; set; }
         public int? employee_id { get; set; }
         public DateTime? task_date { get; set; }
-        //public IEnumerable<TaskDetail> TaskDetail { get; set; }
     }
 }
