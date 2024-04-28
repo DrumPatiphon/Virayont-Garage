@@ -26,6 +26,7 @@ namespace test.Controllers.TaskController
       public string? EdocNo { get; set; }
       public string? LicenseName { get; set; }
       public string? PhoneNo { get; set; }
+      public int? EmpId { get; set; }
     }
 
     [HttpGet]
@@ -39,6 +40,7 @@ namespace test.Controllers.TaskController
                                 taskNo = dt.task_no,
                                 taskDate = dt.task_date,
                                 cusId = dt.customer_id,
+                                empId = dt.employee_id,
                                 cusName = string.Concat(dt.customer_name, " ", dt.customer_lastname),
                                 taskAmt = dt.task_amt,
                                 status = dt.status,
@@ -75,6 +77,11 @@ namespace test.Controllers.TaskController
       if (request.PhoneNo != null)
       {
         listResult = listResult.Where(o => o.phoneNo == request.PhoneNo).ToList();
+      }
+
+      if (request.EmpId != null)
+      {
+        listResult = listResult.Where(o => o.empId == request.EmpId).ToList();
       }
 
 
