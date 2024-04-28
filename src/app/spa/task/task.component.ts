@@ -79,6 +79,7 @@ export class TaskComponent implements OnInit{
         sDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered()) },
         eDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered())},
         phoneNo: [{ value: null, disabled:  this.isCustomer()}],
+        empId: [{ value: null, disabled:  this.isCustomer()}],
         licenseName: null,
       });
     }
@@ -117,6 +118,7 @@ export class TaskComponent implements OnInit{
         sDocNo: null,
         eDocno: null,
         licenseName: null,
+        empId: null,
       });
       this.searchFunction();
     }

@@ -57,6 +57,7 @@ export class TaskDetailComponent implements OnInit{
       if(!this.user){
         this.router.navigate(['/login']);
       }
+
       const taskIdParam = this.route.snapshot.paramMap.get('taskId');
       this.taskId = taskIdParam ? +taskIdParam : null;
       this.se.getMasterData().subscribe({
@@ -97,14 +98,15 @@ export class TaskDetailComponent implements OnInit{
               this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false }));
             }
 
-            this.dbTaskForm.controls['employee_id'].disable({ onlySelf: true, emitEvent: false });
+            if(!this.isDisbleStatus() && (this.user.userRole == 'Admin' || this.user.userRole == 'CEO')){
+              this.dbTaskForm.controls['employee_id'].disable({ onlySelf: true, emitEvent: false });
+            }
           });
         }
       }else{
         this.dbTask.taskDetail = [];
       }
 
-      this.dbTaskForm.controls['task_amt'].disable();
       this.dbTaskForm.markAsPristine();
     }
     
@@ -142,7 +144,7 @@ export class TaskDetailComponent implements OnInit{
         task_id: null,
         task_no: "AUTO",
         task_date: [{value : this.formattedDate, disabled: this.taskId}],
-        task_amt: 0.00,
+        task_amt: [{value : 0.00, disabled: true}],
         customer_id: null,
         customer_name: [null,[Validators.required]],
         customer_lastname: [null,[Validators.required]],
@@ -213,7 +215,7 @@ export class TaskDetailComponent implements OnInit{
           fg.controls.detail_unit_price.setValue(selectedRow[0].sparePrice);
         }else{
           fg.controls.spare_desc.setValue(null);
-          fg.controls.detail_unit_price.setValue(null);
+          fg.controls.detail_unit_price.setValue(0.00);
         }
       });
 

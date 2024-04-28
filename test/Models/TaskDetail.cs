@@ -4,6 +4,7 @@ namespace test.Models
 {
   public class TaskDetail
   {
+    [Key]
     public int? detail_id { get; set; }
     public int task_id { get; set; }
     public int spare_id { get; set; }
