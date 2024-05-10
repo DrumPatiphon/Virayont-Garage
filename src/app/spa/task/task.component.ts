@@ -32,9 +32,9 @@ export class TaskComponent implements OnInit{
   currentPage = 1;
   itemsPerPage = 10;
   user: UserData = {} as UserData;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; //ใช้ ViewChild เพื่อเข้าถึง Paginator บน HTML
   pagedData: any[] = [];
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();  //เพื่อใช้เป็นข้อมูลที่จะแสดงผลในตาราง.
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageSize: number = 10;
   
@@ -55,16 +55,17 @@ export class TaskComponent implements OnInit{
         this.router.navigate(['/login']);
       }
       console.log(this.user)
+
       this.createForm();
-      this.installEvent();
+      // this.installEvent();
       this.se.getMasterData().subscribe({
         next: (response: any) => {
           this.masterData = response;
           if(this.user.userRole == 'customer'){
             this.masterData.taskNo = (this.masterData.taskNo as any[]).filter(row => row.customerPhone == (this.user.taskPhone || this.user.phoneNumber)) as [];
-          }
+          }  //ใช้task.noจะค้นหาเบอร์ของลูกค้าตามเบอร์ที่ลูกค้ากรอกเข้ามา  
         },
-        error: (error: any) => {
+        error: (error: any) => {  //เมื่อข้อมูลมีปัญหา(หลังบ้าน)
           console.error('Error:', error);
         }
       });
@@ -75,8 +76,6 @@ export class TaskComponent implements OnInit{
       this.searchForm = this.fb.group({
         customerId: { value: null, disabled: this.isCustomer()}, 
         docStatus: null,
-        sDocDate: null,
-        eDocDate: null,
         sDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered()) },
         eDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered())},
         phoneNo: [{ value: null, disabled:  this.isCustomer()}],
@@ -85,9 +84,7 @@ export class TaskComponent implements OnInit{
       });
     }
 
-    installEvent(){
-
-    }
+    // installEvent(){}
 
     rebuildForm(){
       if(this.user){
@@ -102,12 +99,11 @@ export class TaskComponent implements OnInit{
   
     search() {
       const param = this.searchForm.getRawValue();
-      this.se.findSearchList(param)
+      this.se.findSearchList(param) // เอาvalueที่อยู่ในserchformไปserch
       .subscribe(res => {
         this.taskdata = res;
-        this.pagedData = this.taskdata;
         this.pagedData = this.taskdata.slice(0, this.pageSize);
-      });
+      });  //กำหนดค่า pagedData เท่ากับข้อมูล taskdata ที่ถูกตัดเอาเฉพาะส่วนแรกตามขนาดของหน้า (pageSize) เพื่อให้การแสดงผลบนหน้าเว็บมีจำนวนรายการตามหน้าที่กำหนดไว้ก่อนหน้านี้.
     }
 
     clear(){
@@ -145,8 +141,8 @@ export class TaskComponent implements OnInit{
     }
 
     onPageChange(event: any) {
-      const startIndex = event.pageIndex * event.pageSize;
-      const endIndex = startIndex + event.pageSize;
+      const startIndex = event.pageIndex * event.pageSize; //การคำนวนหาดัชนีเริ่มต้นของข้อมูลที่จะไปแสดงบนให้ใหม่ หน้าปัจจุบัน*ขนาดของหน้า
+      const endIndex = startIndex + event.pageSize; //การคำนวนหาดัชนีสิ้นสุดของข้อมูลที่จะไปแสดงบนให้ใหม่ startIndex+ขนาดของหน้า
       this.pagedData = this.taskdata.slice(startIndex, endIndex);
     }
   

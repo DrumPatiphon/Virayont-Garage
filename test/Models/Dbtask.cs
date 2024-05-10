@@ -12,7 +12,7 @@ namespace test.Models
         public int? customer_id { get; set; }
         public string? customer_name { get; set; }
         public string? customer_lastname { get; set; }
-        public string? customer_address { get; set; }
+        public string? customer_address { get; set; }   
         public string? customer_phone { get; set; }
         public decimal? task_amt { get; set; }
         public string? remark { get; set; }
