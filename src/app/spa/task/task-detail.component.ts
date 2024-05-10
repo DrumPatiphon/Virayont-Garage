@@ -172,11 +172,11 @@ export class TaskDetailComponent implements OnInit{
         rowState: 'Add',
       };
       taskDetail.form = this.createTaskDetailForm(taskDetail); //สร้างแถวใหม่
-      this.dbTask.taskDetail = this.dbTask.taskDetail.concat(taskDetail);  //เท่าให้ข้อมูลเท่ากับแถวข้างบน
+      this.dbTask.taskDetail = this.dbTask.taskDetail.concat(taskDetail);  //ทำให้ข้อมูลเท่ากับแถวข้างบน(ต่อ)
       // this.pagedData = this.dbTask.taskDetail;
       this.dbTaskForm.markAsDirty();
     }
-
+    
     createTaskDetailForm(taskDetail: TaskDetail) {
       const fg = this.fb.group({
         task_id: [taskDetail.task_id],
@@ -315,6 +315,14 @@ export class TaskDetailComponent implements OnInit{
     isCustomer():boolean{
       let disable = false;
       if(this.user.userRole == 'customer'){
+        disable = true;
+      }
+      return disable;
+    }
+
+    IsAuto():boolean{
+      let disable = false;
+      if(this.dbTaskForm.controls['task_no'].value == 'AUTO'){
         disable = true;
       }
       return disable;

@@ -31,7 +31,7 @@ export class TaskComponent implements OnInit{
   }
   currentPage = 1;
   itemsPerPage = 10;
-  user: UserData = {} as UserData;
+  user: UserData = {} as UserData;  //เก็บข้อมูลเป็น object 
   @ViewChild(MatPaginator) paginator!: MatPaginator; //ใช้ ViewChild เพื่อเข้าถึง Paginator บน HTML
   pagedData: any[] = [];
   dataSource = new MatTableDataSource<any>();  //เพื่อใช้เป็นข้อมูลที่จะแสดงผลในตาราง.
@@ -54,7 +54,7 @@ export class TaskComponent implements OnInit{
       if(!this.user){
         this.router.navigate(['/login']);
       }
-      console.log(this.user)
+      // console.log(this.user)
 
       this.createForm();
       // this.installEvent();
@@ -76,7 +76,7 @@ export class TaskComponent implements OnInit{
       this.searchForm = this.fb.group({
         customerId: { value: null, disabled: this.isCustomer()}, 
         docStatus: null,
-        sDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered()) },
+        sDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered())},
         eDocNo: { value: null, disabled: (this.isCustomer() && this.isNotRegistered())},
         phoneNo: [{ value: null, disabled:  this.isCustomer()}],
         empId: [{ value: null, disabled:  this.isCustomer()}],

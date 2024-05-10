@@ -60,7 +60,7 @@
             <thead>
               <tr>
                 <th class="text-center" [style.width.px]="70">ลำดับ</th>
-                <th class="text-center" [style.width.px]="70">ID ลูกค้า</th>
+                <!-- <th class="text-center" [style.width.px]="70">ID ลูกค้า</th> -->
                 <th class="text-center" [style.width.px]="200">ชือลูกค้า</th>
                 <th class="text-center" [style.width.px]="70">เบอร์โทรศัพท์</th>
                 <!-- <th class="text-center" [style.width.px]="100">หมายเหตุ</th> -->
@@ -70,11 +70,11 @@
                 <td class="text-center">
                   {{ rowIndex + 1 }}
                 </td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <a [routerLink]="['detail', cus.customerId]" [state]="{ customerId: cus.customerId }">{{ cus.customerId }}</a>
-                </td>
+                </td> -->
                 <td class="text-center">
-                  {{ cus.customerName }}
+                  <a [routerLink]="['detail', cus.customerId]">{{ cus.customerName }}</a>
                 </td>
                 <td class="text-center">
                   {{ cus.phoneNumber }}

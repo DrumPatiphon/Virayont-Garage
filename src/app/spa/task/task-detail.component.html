@@ -20,9 +20,11 @@
           </div>
           <form [formGroup]="dbTaskForm">   
             <div class="row">
-              <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
+              <div class="form-group col-lg-3 col-md-6" >    
+                <div [hidden]="IsAuto()">
+                  <label class="formcontrol-label">{{'เลขที่เอกสาร'}}</label>
                   <input type="text" class="form-control text-center doc-no" formControlName="task_no">
+                </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'วันที่เอกสาร'}}</label>
