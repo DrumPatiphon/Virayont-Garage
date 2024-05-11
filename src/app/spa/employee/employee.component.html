@@ -37,7 +37,7 @@
                     <a [routerLink]="['detail', emp.empId]" [state]="{ empId: emp.empId }">{{ emp.empId }}</a>
                   </td> -->
                   <td class="text-center">
-                    <a [routerLink]="['detail', emp.empId]">{{ emp.empName }}</a>
+                    <a [routerLink]="['detail', emp.empId]" >{{ emp.empName }}</a>
                   </td>
                   <td class="text-center">
                     {{ emp.salary | number : '0.2-2'}}

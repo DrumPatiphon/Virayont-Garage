@@ -93,6 +93,7 @@ namespace test.Controllers.TaskController
     {
       var taskDetails = await _context.Set<TaskDetail>()
           .Where(o => o.task_id == TaskId)
+          .OrderBy(o => o.seq)
           .ToListAsync();
 
       return taskDetails;

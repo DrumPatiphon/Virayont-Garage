@@ -49,7 +49,7 @@ export class CustomerDetailComponent implements OnInit {
       address: [null,[Validators.required]],
       company_name: null,
       customer_id: null,
-      customer_str_id: "AUTO",
+      customer_str_id: [{value : "AUTO", disabled: true}],
       first_name: [null,[Validators.required]],
       last_name: [null,[Validators.required]],
       phone_number: [null,[Validators.required, CustomValidators.phoneNo()]],
@@ -104,6 +104,14 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigate(['/customer']);
       }
     })
+  }
+
+  IsAuto():boolean{
+    let disable = false;
+    if(this.customerForm.controls['customer_str_id'].value == 'AUTO'){
+      disable = true;
+    }
+    return disable;
   }
 
   isFormValid(formGroup: FormGroup): boolean {

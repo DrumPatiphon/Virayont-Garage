@@ -88,18 +88,20 @@ export class TaskDetailComponent implements OnInit{
             const taskDate = this.datePipe.transform(this.dbTask.task_date, 'yyyy-MM-dd')?.toString();
             const startWorkDate = this.datePipe.transform(this.dbTask.start_work_date, 'yyyy-MM-dd')?.toString();
             const appointmentDate = this.datePipe.transform(this.dbTask.appointment_date, 'yyyy-MM-dd')?.toString();
-            this.dbTaskForm.controls['task_date'].setValue(taskDate);
-            this.dbTaskForm.controls['start_work_date'].setValue(startWorkDate);
-            this.dbTaskForm.controls['appointment_date'].setValue(appointmentDate);
-            this.dbTaskForm.controls['statusPhase'].setValue(this.dbTask.status);
+            controls['task_date'].setValue(taskDate);
+            controls['start_work_date'].setValue(startWorkDate);
+            controls['appointment_date'].setValue(appointmentDate);
+            controls['statusPhase'].setValue(this.dbTask.status);
 
             if(this.isDisbleStatus() ||  this.isCustomer()){
               this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });  //ปิดการใช้งานของตัวเองเท่านั้น และ ข้ามการส่งevent : valuechang
               this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false })); //เพราะเป็น[]จึงต้องใช้ forEach
             }
 
+
             if(!this.isDisbleStatus() && (this.user.userRole == 'Admin' || this.user.userRole == 'CEO')){
               this.dbTaskForm.controls['employee_id'].enable({emitEvent: false });
+
             }
           });
         }
