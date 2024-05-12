@@ -30,7 +30,7 @@ namespace test.Controllers.EmpController
                               select new
                               {
                                 empId = e.employee_id,
-                                empName = string.Concat(e.employee_id, ":" ,e.empfirst_name, " ", e.emplast_name),
+                                empName = string.Concat(    e.empfirst_name, " ", e.emplast_name),
                                 salary = e.salary,
                                 position = p.department_name,
                               }).OrderBy(o => o.empId).ToListAsync();

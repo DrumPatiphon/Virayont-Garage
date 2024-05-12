@@ -21,8 +21,11 @@
           <form [formGroup]="empForm">   
             <div class="row">
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'รหัสพนักงาน'}}</label>
-                <input type="text" class="form-control doc-no text-center" formControlName ="employee_str_id">
+                <div [hidden]="IsAuto()"> 
+                  <label class="formcontrol-label">{{'รหัสพนักงาน'}}</label>
+                  <input type="text" class="form-control doc-no text-center" formControlName ="employee_str_id">
+                </div>
+                
               </div>
               <div class="form-group col-lg-3 col-md-6">
                 <label class="formcontrol-label">{{'ชื่อจริง'}}</label> <span class="text-danger">*</span> 
@@ -70,18 +73,12 @@
                 </div>
               </div>
               <div class="form-group col-lg-3 col-md-6">
-                <label class="formcontrol-label">{{'เงินเดือน'}}</label>
+                <label class="formcontrol-label">{{'เงินเดือน'}}</label><span class="text-danger">*</span>
                 <input type="text" class="form-control" formControlName ="salary" 
                   [ngClass]="{ 'is-invalid': isInvalid('salary')}">
                 <div *ngIf="isInvalid('salary')" class="validate-label">
                   กรุณาระบุข้อมูลให้ถูกต้อง
                 </div>
-              </div>
-              <div class="form-group col-lg-3 col-md-6 form-check mt-4 fs-5">
-                <input class="form-check-input" type="checkbox" formControlName ="work_status">
-                <label class="formcontrol-label fs-6" for="flexCheckDefault">
-                  Active
-                </label>
               </div>
             </div>
           </form>

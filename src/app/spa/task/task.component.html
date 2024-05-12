@@ -36,7 +36,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-lg-3 col-md-6">
+              <div class="form-group col-lg-3 col-md-6" *ngIf="user.userRole !== 'customer'">
                 <label class="formcontrol-label">{{ 'ตั้งแต่เลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
@@ -46,7 +46,7 @@
                     formControlName="sDocNo">
                   </ng-select>
               </div>
-              <div class="form-group col-lg-3 col-md-6">
+              <div class="form-group col-lg-3 col-md-6" *ngIf="user.userRole !== 'customer'">
                 <label class="formcontrol-label"> {{ 'ถึงเลขที่เอกสาร'}} </label>
                   <ng-select
                     placeholder="กรุณาเลือก"
@@ -103,16 +103,16 @@
             <table class="table table-striped app-table">
               <thead>
                 <tr>
-                  <th class="text-center" [style.width.px]="70">Seq</th>
-                  <th class="text-center" [style.width.px]="200">Task No</th>
-                  <th class="text-center" [style.width.px]="150">Task Date</th>
-                  <th class="text-center" [style.width.px]="200">Customer Name</th>
-                  <th class="text-center" [style.width.px]="150">Task Amount</th>
-                  <th class="text-center" [style.width.px]="150">Status</th>
+                  <th class="text-center" [style.width.px]="70">ลำดับ</th>
+                  <th class="text-center" [style.width.px]="200">เลขที่เอกสาร</th>
+                  <th class="text-center" [style.width.px]="150">วันที่เอกสาร</th>
+                  <th class="text-center" [style.width.px]="200">ชื่อลูกค้า</th>
+                  <th class="text-center" [style.width.px]="150">ราคารวม</th>
+                  <th class="text-center" [style.width.px]="150">สถานะ</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let task of pagedData; let rowIndex = index">
+                <tr *ngFor="let task of pagedData; let rowIndex = index"> 
                   <td class="text-center">
                     {{ rowIndex + 1 }}
                   </td>

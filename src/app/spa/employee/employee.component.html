@@ -20,10 +20,10 @@
               <thead>
                 <tr>
                   <th class="text-center" [style.width.px]="70">ลำดับ</th>
-                  <th class="text-center" [style.width.px]="150">รหัสพนักงาน</th>
+                  <!-- <th class="text-center" [style.width.px]="150">รหัสพนักงาน</th> -->
                   <th class="text-center" [style.width.px]="200">ชื่อ-นาสกุล</th>
                   <th class="text-center" [style.width.px]="80">เงินเดือน</th>
-                  <th class="text-center" [style.width.px]="100">ตำแหน่ง</th>
+                  <!-- <th class="text-center" [style.width.px]="100">ตำแหน่ง</th> -->
                 </tr>
               </thead>
 
@@ -33,18 +33,18 @@
                     {{ rowIndex + 1 }}
                   </td>
 
-                  <td class="text-center">
+                  <!-- <td class="text-center">
                     <a [routerLink]="['detail', emp.empId]" [state]="{ empId: emp.empId }">{{ emp.empId }}</a>
+                  </td> -->
+                  <td class="text-center">
+                    <a [routerLink]="['detail', emp.empId]" >{{ emp.empName }}</a>
                   </td>
-                  <td>
-                    {{ emp.empName }}
-                  </td>
-                  <td class="text-right">
+                  <td class="text-center">
                     {{ emp.salary | number : '0.2-2'}}
                   </td>
-                  <td class="text-center">
+                  <!-- <td class="text-center">
                     {{ emp.position}}
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>

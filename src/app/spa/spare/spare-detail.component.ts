@@ -59,7 +59,7 @@ export class SpareDetailComponent implements OnInit {
   createForm() {
     this.sparePartForm = this.fb.group({
       spare_id: null,
-      spare_str_id: "AUTO",
+      spare_str_id: [{value : "AUTO", disabled: true}],
       spare_name: [null,[Validators.required]],
       spare_price: [null,[CustomValidators.numberOnly()]],
       quantity: [null,[Validators.required, CustomValidators.numberOnly()]],
@@ -108,6 +108,14 @@ export class SpareDetailComponent implements OnInit {
     }
   }
 
+  IsAuto():boolean{
+    let disable = false;
+    if(this.sparePartForm.controls['spare_str_id'].value == 'AUTO'){
+      disable = true;
+    }
+    return disable;
+  }
+
   delete(action: string){
     const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
     this.sparePartForm.controls['quantity'].setValue(qty);
@@ -144,6 +152,7 @@ export class SpareDetailComponent implements OnInit {
 
     return isValid;
   }
+  
 
   isInvalid(controlName: string){
     const control = this.sparePartForm.get(controlName);

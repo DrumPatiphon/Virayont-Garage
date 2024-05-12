@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit{
 
   isAdmin():boolean{
     let result = false;
-    if(this.user.userRole == 'admin'|| this.user.userRole == 'CEO'){
+    if(this.user.userRole == 'Admin'){
       result = true;
     }
     return result;
@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit{
 
   isEmployee():boolean{
     let result = false;
-    if(!(this.user.userRole == 'admin'|| this.user.userRole == 'CEO' || this.user.userRole == 'customer')){
+    if(!(this.user.userRole == 'Admin'|| this.user.userRole == 'customer')){
       result = true;
     }
     return result;

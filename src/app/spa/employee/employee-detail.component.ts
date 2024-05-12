@@ -69,7 +69,7 @@ export class EmployeeDetailComponent implements OnInit{
   createForm() {
     this.empForm = this.fb.group({
       employee_id: null,
-      employee_str_id: "AUTO",
+      employee_str_id: [{value : "AUTO", disabled: true}],
       empfirst_name: [null,[Validators.required]], 
       emplast_name: [null,[Validators.required]],
       department_id: [null,[Validators.required]],
@@ -119,6 +119,8 @@ export class EmployeeDetailComponent implements OnInit{
     }
   }
 
+
+ 
   delete(action: string){
     this.se.save(this.employee,
                  this.empForm.getRawValue(),
@@ -129,6 +131,14 @@ export class EmployeeDetailComponent implements OnInit{
         this.router.navigate(['/emp']);
       }
     })
+  }
+
+  IsAuto():boolean{
+    let disable = false;
+    if(this.empForm.controls['employee_str_id'].value == 'AUTO'){
+      disable = true;
+    }
+    return disable;
   }
 
   isFormValid(formGroup: FormGroup): boolean {
