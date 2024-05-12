@@ -98,10 +98,8 @@ export class TaskDetailComponent implements OnInit{
               this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false })); //เพราะเป็น[]จึงต้องใช้ forEach
             }
 
-
-            if(!this.isDisbleStatus() && (this.user.userRole == 'Admin' || this.user.userRole == 'CEO')){
+            if(!this.isDisbleStatus() && (this.user.userRole == 'Admin')){
               this.dbTaskForm.controls['employee_id'].enable({emitEvent: false });
-
             }
           });
         }
