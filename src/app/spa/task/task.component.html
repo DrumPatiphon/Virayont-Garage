@@ -133,7 +133,8 @@
                            'status-border-saved': task.status === 'SAVED',
                            'status-border-in-progress': task.status === 'IN_PROGRESS',
                            'status-border-complete': task.status === 'COMPLETED',
-                           'status-border-cancel': task.status === 'CANCELLED'
+                           'status-border-cancel': task.status === 'CANCELLED',
+                           'status-border-confirmed': task.status === 'CONFIRMED_PAYMENT',
                          }">
                       {{ task.statusDesc }}
                     </div>

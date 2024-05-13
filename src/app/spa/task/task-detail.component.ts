@@ -1,6 +1,6 @@
 import { Component ,OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ApiService ,DbTask, TaskDetail, UserData} from './api.service';
+import { ApiService ,DbTask, TaskDetail, UserData, Status} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { finalize, switchMap } from 'rxjs';
@@ -27,7 +27,7 @@ export class TaskDetailComponent implements OnInit{
     user: UserData = {} as UserData; 
     masterData = {  // เป็นอ็อบเจกต์ที่มีโครงสร้างเสมือนฐานข้อมูลย่อย
       customerData: [] = [], 
-      status: [] = [],
+      status: [] = [] as Status[],
       employee: [] = [],
       province: [] = [],
       spareData: []= [],
@@ -63,6 +63,9 @@ export class TaskDetailComponent implements OnInit{
       this.se.getMasterData().subscribe({
         next: (response: any) => {
           this.masterData = response;
+          if (this.user.userRole !== "Admin") {
+            this.masterData.status = (this.masterData.status as any[]).filter(row => !row.isAdmin);
+          }
         },
         error: (error: any) => {
           console.error('Error:', error);
@@ -137,7 +140,7 @@ export class TaskDetailComponent implements OnInit{
     createForm() {
       const dbTaskControls = {
         task_id: null,
-        task_no: "AUTO",
+        task_no: [{value : "AUTO", disabled: true}],
         task_date: [{value : this.formattedDate, disabled: this.taskId}],
         task_amt: [{value : 0.00, disabled: true}],
         customer_id: null,
@@ -306,7 +309,9 @@ export class TaskDetailComponent implements OnInit{
 
     isDisbleStatus():boolean{
       let disable = false;
-      if(this.dbTaskForm.controls['status'].value == 'CANCELLED' || this.dbTaskForm.controls['status'].value == 'COMPLETED'){
+      if(this.dbTaskForm.controls['status'].value == 'CANCELLED' 
+      || this.dbTaskForm.controls['status'].value == 'COMPLETED' 
+      || this.dbTaskForm.controls['status'].value == 'CONFIRMED_PAYMENT'){
         disable = true;
       }
       return disable;

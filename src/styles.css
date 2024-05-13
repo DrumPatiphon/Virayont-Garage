@@ -35,7 +35,7 @@ body {
 }
 
 .status-border-saved, .status-border-in-progress, 
-.status-border-complete, .status-border-cancel {
+.status-border-complete, .status-border-cancel, .status-border-confirmed {
     border: none;
     padding: 5px !important;
     border-radius: 5px !important;
@@ -43,6 +43,9 @@ body {
 }
 .status-border-saved {
     background-color: #cce5ff !important;
+}
+.status-border-confirmed {
+    background-color: #b3eba3 !important;
 }
 .status-border-in-progress {
     background-color: #ffd195 !important;

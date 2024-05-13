@@ -8,5 +8,6 @@ namespace test.Models
         public int status_id { get; set; }
         public string status_phase { get; set; }
         public string status_desc { get; set; }
+        public Boolean is_admin { get; set; }
     }
 }

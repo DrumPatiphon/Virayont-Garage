@@ -9,7 +9,7 @@ namespace test.Controllers.TaskController
   public class Create : Controller
   {
     private readonly DataContext _context;
-    public Create(DataContext context)
+    public Create(DataContext context, Random random)
     {
       _context = context;
     }
@@ -20,15 +20,11 @@ namespace test.Controllers.TaskController
       public new IEnumerable<TaskDetail> TaskDetail { get; set; }
     }
 
-    public class TaskDetailDto : TaskDetail
-    {
-      public string RowState { get; set; }
-    }
-
     [HttpPost]
     public async Task<ActionResult> AddDbtask(Request request)
     {
       DateTime currentDateUtc = DateTime.UtcNow;
+      currentDateUtc = currentDateUtc.AddYears(-543);
       string formattedDate = currentDateUtc.ToString("yyyyMM");
       Random random = new Random();
       int runningDoc = random.Next(100, 1000);

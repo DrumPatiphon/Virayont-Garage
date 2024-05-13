@@ -42,6 +42,12 @@ export interface TaskDetail {
     rowState: string;
 }
 
+export interface Status{
+    value : string
+    text : string
+    isAdmin : boolean
+}
+
 export interface UserData extends User{
 
 }
