@@ -63,7 +63,9 @@ namespace test.Controllers.TaskController
                           select new
                           {
                             Value = s.status_phase,
-                            Text = s.status_desc
+                            Text = s.status_desc,
+                            IsAdmin = s.is_admin,
+
                           }).ToListAsync();
       return status;
     }

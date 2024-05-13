@@ -101,6 +101,9 @@ export class TaskComponent implements OnInit{
       const param = this.searchForm.getRawValue();
       this.se.findSearchList(param) // เอาvalueที่อยู่ในserchformไปserch
       .subscribe(res => {
+        if(this.user.userRole !== "Admin"){
+          res = res.filter(row => row.status !== "CONFIRMED_PAYMENT")
+        }
         this.taskdata = res;
         this.pagedData = this.taskdata.slice(0, this.pageSize);
       });  //กำหนดค่า pagedData เท่ากับข้อมูล taskdata ที่ถูกตัดเอาเฉพาะส่วนแรกตามขนาดของหน้า (pageSize) เพื่อให้การแสดงผลบนหน้าเว็บมีจำนวนรายการตามหน้าที่กำหนดไว้ก่อนหน้านี้.

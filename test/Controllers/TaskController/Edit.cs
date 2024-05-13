@@ -43,10 +43,6 @@ namespace test.Controllers.TaskController
       {
         dbTask.status = "CANCELLED";
       }
-      else if (EditRequest.Action == "Confirm")
-      {
-        dbTask.status = "COMPLETED";
-      }
 
       //for checking date type null
       dbTask.task_date = EditRequest.task_date == null ? null : DateTime.Parse(EditRequest.task_date.ToString()).ToUniversalTime();
@@ -115,8 +111,8 @@ namespace test.Controllers.TaskController
           if (sparePart != null)
           {
             sparePart.quantity += detail.detail_qty;
-            _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             this._context.Set<SparePart>().Attach(sparePart);
+            _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
           }
         }
       }

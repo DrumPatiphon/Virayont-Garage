@@ -53,6 +53,7 @@ export class CustomerDetailComponent implements OnInit {
       first_name: [null,[Validators.required]],
       last_name: [null,[Validators.required]],
       phone_number: [null,[Validators.required, CustomValidators.phoneNo()]],
+      active: null,
     });
   }
 

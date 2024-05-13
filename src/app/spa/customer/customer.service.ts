@@ -14,6 +14,7 @@ export interface Customer {
     first_name?: string;
     last_name?: string;
     phone_number?: string;
+    active?: string;
 }
 
 @Injectable({
