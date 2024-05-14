@@ -90,6 +90,19 @@ namespace test.Controllers.TaskController
         }
       }
 
+      // Update spare qty
+      foreach (TaskDetail detail in EditRequest.TaskDetail)
+      {
+        SparePart sparePart = await GetSparePart(detail.spare_id);
+        if (sparePart != null)
+        {
+          sparePart.quantity -= detail.detail_qty;
+          this._context.Set<SparePart>().Attach(sparePart);
+          _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+      }
+
+
       if (deletedRow.Count > 0)
       {
         foreach (TaskDetail detail in deletedRow)

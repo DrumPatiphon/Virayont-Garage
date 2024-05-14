@@ -1,9 +1,8 @@
 import { Component ,OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ApiService ,DbTask, TaskDetail, UserData, Status} from './api.service';
+import { ApiService ,DbTask, TaskDetail, UserData, Status, Spare} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { finalize, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { faSave,faPlus,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -30,8 +29,9 @@ export class TaskDetailComponent implements OnInit{
       status: [] = [] as Status[],
       employee: [] = [],
       province: [] = [],
-      spareData: []= [],
+      spareData: []= [] as Spare[],
     }
+    initStatus:string = "";
     currentDate:Date = new Date();
     formattedDate?:string;
 
@@ -153,7 +153,7 @@ export class TaskDetailComponent implements OnInit{
         license_desc: [null,[Validators.required]],
         remark: null,
         status: null,
-        statusPhase: [null,[Validators.required]],
+        statusPhase: ["SAVED",[Validators.required]],
         province_id: [null,[Validators.required]],
         start_work_date: [this.formattedDate,[Validators.required]],
         appointment_date: null,
@@ -271,34 +271,41 @@ export class TaskDetailComponent implements OnInit{
     }
 
     save(action: string) {
-      if(action == 'Cancel'){
+      if (action === 'Cancel') {
         this.onSetDetailRowState();
       }
+    
       const forms: FormGroup[] = [
         ...(this.dbTaskForm ? [this.dbTaskForm] : []),
         ...(this.dbTask.taskDetail.map(detail => detail.form).filter(form => !!form) as FormGroup[])
-      ];  //map เพื่อดึงค่า form จากทุกๆ detail ใน this.dbTask.taskDetail เพื่อfiltter เฉพาะค่าที่ไม่ใช่ null
-        if (this.isFormValid(forms)) { 
-          this.se.save(this.dbTask,  //เป็นข้อมูลที่ต้องการนำมาsave
-                       this.dbTaskForm.getRawValue(),
-                       this.taskDetailDelete,
-                       action,
-            )
-            .pipe(
-            switchMap(result => this.se.findDbTaskByKey(result))
+      ];
+    
+      if (this.isFormValid(forms) && this.isDetailValid()) {
+          this.se.save(
+            this.dbTask, 
+            this.dbTaskForm.getRawValue(),
+            this.taskDetailDelete,
+            action
+          ).pipe(
+            switchMap(result => this.se.findDbTaskByKey(result)),
+            catchError(error => {
+              console.log(error)
+              this.ms.error('บันทึกข้อมูลไม่สำเร็จ',error.error);
+              throw error; 
+            })
           ).subscribe((result: any) => {
-            this.dbTask = result;
-            this.taskId = result.dbTask.task_id;
-            this.rebuildForm();
+              this.dbTask = result;
+              this.taskId = result.dbTask.task_id;
+              this.rebuildForm();
+    
+              if (action === 'Save') {
+                this.ms.success('บันทึกสำเร็จ');
+              } else if (action === 'Cancel') {
+                this.ms.success('ยกเลิกข้อมูลสำเร็จ');
+              }
           });
-          if(action == 'Save'){
-            this.ms.success('บันทึกสำเร็จ');
-          }else if(action == 'Cancel'){
-            this.ms.success('ยกเลิกข้อมูลสำเร็จ');
-          }
       }
     }
-
     onSetDetailRowState(){
       this.dbTask.taskDetail.forEach(res => {
         if (res.rowState === 'Normal') {
@@ -365,6 +372,37 @@ export class TaskDetailComponent implements OnInit{
     isInvalid(controlName: string){  //เอาไว้เช็คtastdetail
       const control = this.dbTaskForm.get(controlName);
       return control ? control.touched && control.invalid : false; // สั่งให้เป็น touch และถ้าเป็น invalid ให้ส่ง false ไป
+    }
+
+    isDetailValid():boolean{
+      let isValidate = true
+      const detailAmtValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['detail_amt'].value <= 0);
+
+      if(this.dbTask.taskDetail.length > 0 && detailAmtValid){
+        this.ms.warning('ไม่สามารถบันทึกรายการอะไหล่มูลค่า น้อยกว่าหรือเท่ากับ 0 ได้');
+        return isValidate = false
+      }
+
+      if(this.isSpareBalValid()){
+        this.ms.warning('ไม่สามารถบันทึกอะไหล่ที่มีจำนวนมากกว่าจำนวนคงเหลือที่อยู่ในคลังได้ กรุณาตรวจสอบ');
+        return isValidate = false
+      }
+
+      return isValidate
+    }
+
+    isSpareBalValid():boolean{
+    // if(this.dbTask.taskDetail.length > 0){
+    //   this.dbTask.taskDetail.forEach(items => {
+    //     const spareId = items.form?.controls['spare_id'].value
+    //     const selectedRowIndex = this.masterData.spareData.findIndex((row) => row.value === spareId);
+    //     if(selectedRowIndex !== -1){
+    //       this.masterData.spareData[selectedRowIndex].spareBal = this.masterData.spareData[selectedRowIndex].spareQty - items.form?.controls['detail_qty'].value
+    //     }
+    //   });
+    // }
+    //   return this.masterData.spareData.some(row => row.spareBal < 0);
+    return false
     }
     
 

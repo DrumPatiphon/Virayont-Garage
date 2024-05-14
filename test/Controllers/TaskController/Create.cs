@@ -9,7 +9,7 @@ namespace test.Controllers.TaskController
   public class Create : Controller
   {
     private readonly DataContext _context;
-    public Create(DataContext context, Random random)
+    public Create(DataContext context)
     {
       _context = context;
     }
@@ -62,10 +62,6 @@ namespace test.Controllers.TaskController
         if (sparePart != null)
         {
           sparePart.quantity -= detail.detail_qty;
-          if (sparePart.quantity <= 0)
-          {
-            Exception exception = new BadHttpRequestException("จำนวนอะไหล่มีค่าน้อยกว่าที่กำหนด กรุณาตรวจสอบ");
-          }
           this._context.Set<SparePart>().Attach(sparePart);
           _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
