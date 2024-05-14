@@ -8,6 +8,7 @@ import { faSave,faPlus,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomValidators } from 'src/app/shared/Validators/custom.validators';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
