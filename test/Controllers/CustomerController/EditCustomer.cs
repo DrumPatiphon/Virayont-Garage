@@ -33,7 +33,6 @@ namespace test.Controllers.CustomerController
       }
       else if(EditRequest.Action == "Delete")
       {
-        //customer.active = false;
         //this._context.Set<Customer>().Attach(customer);
         //this._context.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         this._context.Set<Customer>().Remove(customer);

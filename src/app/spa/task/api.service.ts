@@ -34,6 +34,7 @@ export interface TaskDetail {
     seq: number | null;
     spare_id: number | null;
     spare_desc?: string | null;
+    spare_bal?: number | null;
     detail_description?: string | null;
     detail_qty: number | null;
     detail_unit_price: number | null;
@@ -46,6 +47,15 @@ export interface Status{
     value : string
     text : string
     isAdmin : boolean
+}
+
+export interface Spare {
+    value : string
+    text : string
+    spareName : string
+    sparePrice : number
+    spareQty : number
+    spareBal : number
 }
 
 export interface UserData extends User{
@@ -94,12 +104,11 @@ export class ApiService {
            dbTaskFormDTO.appointment_date = dbTaskFormDTO.appointment_date == null ? undefined :  new Date(dbTaskFormDTO.appointment_date);
            dbTaskFormDTO.taskDetail = this.baseService.prepareSaveList(dbTaskFormDTO.taskDetail, taskDetailDelete);
 
-       console.log("dbTaskFormDTO :",dbTaskFormDTO);
-       if (dbTaskFormDTO.task_id) {
-           return this.http.put<any>(this.apiUrl + 'task/Edit', dbTaskFormDTO);
-       } else {
-           return this.http.post<any>(this.apiUrl + 'task/Create', dbTaskFormDTO);
-       }
-   }
+        if (dbTaskFormDTO.task_id) {
+            return this.http.put<any>(this.apiUrl + 'task/Edit', dbTaskFormDTO);
+        } else {
+            return this.http.post<any>(this.apiUrl + 'task/Create', dbTaskFormDTO);
+        }
+    }
 }
 

@@ -1,14 +1,14 @@
 import { Component ,OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ApiService ,DbTask, TaskDetail, UserData, Status} from './api.service';
+import { ApiService ,DbTask, TaskDetail, UserData, Status, Spare} from './api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { finalize, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { faSave,faPlus,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomValidators } from 'src/app/shared/Validators/custom.validators';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
@@ -30,10 +30,12 @@ export class TaskDetailComponent implements OnInit{
       status: [] = [] as Status[],
       employee: [] = [],
       province: [] = [],
-      spareData: []= [],
+      spareData: []= [] as Spare[],
     }
+    initStatus:string = "";
     currentDate:Date = new Date();
     formattedDate?:string;
+    previousDetailQty:number = 0;
 
     // @ViewChild(MatPaginator) paginator!: MatPaginator;
     // pagedData: any[] = [];
@@ -153,7 +155,7 @@ export class TaskDetailComponent implements OnInit{
         license_desc: [null,[Validators.required]],
         remark: null,
         status: null,
-        statusPhase: [null,[Validators.required]],
+        statusPhase: ["SAVED",[Validators.required]],
         province_id: [null,[Validators.required]],
         start_work_date: [this.formattedDate,[Validators.required]],
         appointment_date: null,
@@ -168,6 +170,7 @@ export class TaskDetailComponent implements OnInit{
         seq: this.dbTask.taskDetail.length + 1,
         spare_id: null,
         spare_desc: null,
+        spare_bal: 0.00,
         detail_description: null,
         detail_qty: 0.00,
         detail_unit_price: 0.00,
@@ -187,10 +190,13 @@ export class TaskDetailComponent implements OnInit{
         seq: [taskDetail.seq],
         spare_id: [taskDetail.spare_id, [Validators.required]],
         spare_desc: [taskDetail.spare_desc],
+        spare_bal: [{value: taskDetail.spare_bal, disabled: true}],
         detail_description: [taskDetail.detail_description],
         detail_qty: [taskDetail.detail_qty, [Validators.required, CustomValidators.numberOnly()]],
         detail_unit_price: [taskDetail.detail_unit_price, [Validators.required, CustomValidators.numberOnly()]],
         detail_amt: [taskDetail.detail_amt],
+        spare_qty_bal: 0,
+        previous_detail_qty: 0,
       });
 
       fg.patchValue(taskDetail, { emitEvent: false });  
@@ -210,9 +216,13 @@ export class TaskDetailComponent implements OnInit{
           const selectedRow = (this.masterData.spareData as any[]).filter(row => row.value == selectedValue);  //as any[] คือเอาข้อมูลทั้งหมดของdataนั้นๆ
           fg.controls.spare_desc.setValue(selectedRow[0].spareName);
           fg.controls.detail_unit_price.setValue(selectedRow[0].sparePrice);
+          fg.controls.spare_bal.setValue(selectedRow[0].spareBal);
+          fg.controls.spare_qty_bal.setValue(selectedRow[0].spareBal);
         }else{
           fg.controls.spare_desc.setValue(null);
           fg.controls.detail_unit_price.setValue(0.00);
+          fg.controls.spare_bal.setValue(0.00);
+          fg.controls.spare_qty_bal.setValue(0.00);
         }
       });
 
@@ -271,34 +281,41 @@ export class TaskDetailComponent implements OnInit{
     }
 
     save(action: string) {
-      if(action == 'Cancel'){
+      if (action === 'Cancel') {
         this.onSetDetailRowState();
       }
+    
       const forms: FormGroup[] = [
         ...(this.dbTaskForm ? [this.dbTaskForm] : []),
         ...(this.dbTask.taskDetail.map(detail => detail.form).filter(form => !!form) as FormGroup[])
-      ];  //map เพื่อดึงค่า form จากทุกๆ detail ใน this.dbTask.taskDetail เพื่อfiltter เฉพาะค่าที่ไม่ใช่ null
-        if (this.isFormValid(forms)) { 
-          this.se.save(this.dbTask,  //เป็นข้อมูลที่ต้องการนำมาsave
-                       this.dbTaskForm.getRawValue(),
-                       this.taskDetailDelete,
-                       action,
-            )
-            .pipe(
-            switchMap(result => this.se.findDbTaskByKey(result))
+      ];
+    
+      if (this.isFormValid(forms) && this.isDetailValid()) {
+          this.se.save(
+            this.dbTask, 
+            this.dbTaskForm.getRawValue(),
+            this.taskDetailDelete,
+            action
+          ).pipe(
+            switchMap(result => this.se.findDbTaskByKey(result)),
+            catchError(error => {
+              console.log(error)
+              this.ms.error('บันทึกข้อมูลไม่สำเร็จ',error.error);
+              throw error; 
+            })
           ).subscribe((result: any) => {
-            this.dbTask = result;
-            this.taskId = result.dbTask.task_id;
-            this.rebuildForm();
+              this.dbTask = result;
+              this.taskId = result.dbTask.task_id;
+              this.rebuildForm();
+    
+              if (action === 'Save') {
+                this.ms.success('บันทึกสำเร็จ');
+              } else if (action === 'Cancel') {
+                this.ms.success('ยกเลิกข้อมูลสำเร็จ');
+              }
           });
-          if(action == 'Save'){
-            this.ms.success('บันทึกสำเร็จ');
-          }else if(action == 'Cancel'){
-            this.ms.success('ยกเลิกข้อมูลสำเร็จ');
-          }
       }
     }
-
     onSetDetailRowState(){
       this.dbTask.taskDetail.forEach(res => {
         if (res.rowState === 'Normal') {
@@ -366,7 +383,38 @@ export class TaskDetailComponent implements OnInit{
       const control = this.dbTaskForm.get(controlName);
       return control ? control.touched && control.invalid : false; // สั่งให้เป็น touch และถ้าเป็น invalid ให้ส่ง false ไป
     }
-    
+
+    isDetailValid():boolean{
+      let isValidate = true
+      const detailAmtValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['detail_amt'].value <= 0);
+      const spareBalValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['spare_bal'].value < row.form?.controls['detail_qty'].value);
+
+      if(this.dbTask.taskDetail.length > 0 && detailAmtValid){
+        this.ms.warning('ไม่สามารถบันทึกรายการอะไหล่มูลค่า น้อยกว่าหรือเท่ากับ 0 ได้');
+        return isValidate = false
+      }
+
+      if(this.dbTask.taskDetail.length > 0 && (spareBalValid || this.validateSpareQtyBal())){
+        this.ms.warning('ไม่สามารถบันทึกอะไหล่ที่มีจำนวนมากกว่าจำนวนคงเหลือที่อยู่ในคลังได้ กรุณาตรวจสอบ');
+        return isValidate = false
+      }
+
+      return isValidate
+    }
+
+    validateSpareQtyBal(): boolean {
+      return this.dbTask.taskDetail.some(row => {
+        if (row.form) {
+          const previousDetailQty = row.form.controls['previous_detail_qty'].value;
+          const detailQty = +row.form.controls['detail_qty'].value;
+          const spareQtyBal = row.form.controls['spare_qty_bal'].value; 
+          const SpareQtyBal = previousDetailQty + spareQtyBal;
+  
+          return detailQty > SpareQtyBal;
+        }
+        return false;
+      });
+    }
 
     // onPageChange(event: any) {
     //   const startIndex = event.pageIndex * event.pageSize;

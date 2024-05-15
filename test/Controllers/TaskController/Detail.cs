@@ -23,7 +23,7 @@ namespace test.Controllers.TaskController
     public class DbTaskDto
     {
       public TaskDto DbTask { get; set; }
-      public IEnumerable<TaskDetail> TaskDetail { get; set; }
+      public IEnumerable<TaskDetailDTOs> TaskDetail { get; set; }
     }
 
     public class TaskDto : Dbtask
@@ -31,6 +31,11 @@ namespace test.Controllers.TaskController
       public string customer_company { get; set; }
     }
 
+    public class TaskDetailDTOs : TaskDetail
+    {
+      public decimal? spare_qty_bal { get; set; }
+      public decimal? previous_detail_qty { get; set; }
+    }
     [HttpGet("{taskId}")]
     public async Task<ActionResult<DbTaskDto>> GetDbTaskById(int taskId)
     {
@@ -55,9 +60,6 @@ namespace test.Controllers.TaskController
 
     private async Task<TaskDto> GetTaskById(int TaskId)
     {
-      //var dbTask = await _context.Set<Dbtask>()
-      //    .Where(o => o.task_id == TaskId)
-      //    .SingleOrDefaultAsync();
 
       var dbTask = await (from dt in _context.Set<Dbtask>()
                           join c in _context.Set<Customer>() on dt.customer_id equals c.customer_id into cg
@@ -89,12 +91,34 @@ namespace test.Controllers.TaskController
       return dbTask;
     }
 
-    private async Task<IEnumerable<TaskDetail>> GetTaskDetailById(int TaskId)
+    private async Task<IEnumerable<TaskDetailDTOs>> GetTaskDetailById(int TaskId)
     {
-      var taskDetails = await _context.Set<TaskDetail>()
-          .Where(o => o.task_id == TaskId)
-          .OrderBy(o => o.seq)
-          .ToListAsync();
+      //var taskDetails = await _context.Set<TaskDetail>()
+      //    .Where(o => o.task_id == TaskId)
+      //    .OrderBy(o => o.seq)
+      //    .ToListAsync();
+
+      var taskDetails = await (from td in _context.Set<TaskDetail>()
+                               join s in _context.Set<SparePart>() on td.spare_id equals s.spare_id
+                               where td.task_id == TaskId
+                               select new TaskDetailDTOs
+                               {
+                                 detail_id = td.detail_id,
+                                 task_id = td.task_id,
+                                 seq = td.seq,
+                                 spare_id = td.spare_id,
+                                 spare_desc = td.spare_desc,
+                                 detail_description = td.detail_description,
+                                 detail_qty = td.detail_qty,
+                                 detail_unit_price = td.detail_unit_price,
+                                 detail_amt = td.detail_amt,
+                                 create_by = td.create_by,
+                                 create_date = td.create_date,
+                                 update_date = td.update_date,
+                                 spare_bal = td.spare_bal,
+                                 spare_qty_bal = s.spare_bal,
+                                 previous_detail_qty = td.detail_qty,
+                               }).ToListAsync();
 
       return taskDetails;
     }

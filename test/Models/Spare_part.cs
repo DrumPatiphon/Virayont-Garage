@@ -9,6 +9,7 @@ namespace test.Models
         public string? spare_name { get; set; }
         public int? spare_price { get; set; }
         public decimal? quantity { get; set; }
+        public decimal? spare_bal { get; set; }
         public int? sparetype_id { get; set; }
     }
 }

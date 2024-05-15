@@ -115,6 +115,7 @@ namespace test.Controllers.TaskController
                               SpareName = s.spare_name,
                               SparePrice = s.spare_price,
                               SpareQty = s.quantity,
+                              SpareBal = s.spare_bal,
                             }).ToListAsync();
       return employee;
     }

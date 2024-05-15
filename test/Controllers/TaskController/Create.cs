@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using test.Models;
 
 namespace test.Controllers.TaskController
@@ -9,7 +10,7 @@ namespace test.Controllers.TaskController
   public class Create : Controller
   {
     private readonly DataContext _context;
-    public Create(DataContext context, Random random)
+    public Create(DataContext context)
     {
       _context = context;
     }
@@ -61,11 +62,7 @@ namespace test.Controllers.TaskController
         SparePart sparePart = await GetSparePart(detail.spare_id);
         if (sparePart != null)
         {
-          sparePart.quantity -= detail.detail_qty;
-          if (sparePart.quantity <= 0)
-          {
-            Exception exception = new BadHttpRequestException("จำนวนอะไหล่มีค่าน้อยกว่าที่กำหนด กรุณาตรวจสอบ");
-          }
+          sparePart.quantity = detail.spare_bal - detail.detail_qty;
           this._context.Set<SparePart>().Attach(sparePart);
           _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
