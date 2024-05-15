@@ -35,6 +35,7 @@ export class TaskDetailComponent implements OnInit{
     initStatus:string = "";
     currentDate:Date = new Date();
     formattedDate?:string;
+    previousDetailQty:number = 0;
 
     // @ViewChild(MatPaginator) paginator!: MatPaginator;
     // pagedData: any[] = [];
@@ -169,6 +170,7 @@ export class TaskDetailComponent implements OnInit{
         seq: this.dbTask.taskDetail.length + 1,
         spare_id: null,
         spare_desc: null,
+        spare_bal: 0.00,
         detail_description: null,
         detail_qty: 0.00,
         detail_unit_price: 0.00,
@@ -188,10 +190,13 @@ export class TaskDetailComponent implements OnInit{
         seq: [taskDetail.seq],
         spare_id: [taskDetail.spare_id, [Validators.required]],
         spare_desc: [taskDetail.spare_desc],
+        spare_bal: [{value: taskDetail.spare_bal, disabled: true}],
         detail_description: [taskDetail.detail_description],
         detail_qty: [taskDetail.detail_qty, [Validators.required, CustomValidators.numberOnly()]],
         detail_unit_price: [taskDetail.detail_unit_price, [Validators.required, CustomValidators.numberOnly()]],
         detail_amt: [taskDetail.detail_amt],
+        spare_qty_bal: 0,
+        previous_detail_qty: 0,
       });
 
       fg.patchValue(taskDetail, { emitEvent: false });  
@@ -211,9 +216,13 @@ export class TaskDetailComponent implements OnInit{
           const selectedRow = (this.masterData.spareData as any[]).filter(row => row.value == selectedValue);  //as any[] คือเอาข้อมูลทั้งหมดของdataนั้นๆ
           fg.controls.spare_desc.setValue(selectedRow[0].spareName);
           fg.controls.detail_unit_price.setValue(selectedRow[0].sparePrice);
+          fg.controls.spare_bal.setValue(selectedRow[0].spareBal);
+          fg.controls.spare_qty_bal.setValue(selectedRow[0].spareBal);
         }else{
           fg.controls.spare_desc.setValue(null);
           fg.controls.detail_unit_price.setValue(0.00);
+          fg.controls.spare_bal.setValue(0.00);
+          fg.controls.spare_qty_bal.setValue(0.00);
         }
       });
 
@@ -378,13 +387,14 @@ export class TaskDetailComponent implements OnInit{
     isDetailValid():boolean{
       let isValidate = true
       const detailAmtValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['detail_amt'].value <= 0);
+      const spareBalValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['spare_bal'].value < row.form?.controls['detail_qty'].value);
 
       if(this.dbTask.taskDetail.length > 0 && detailAmtValid){
         this.ms.warning('ไม่สามารถบันทึกรายการอะไหล่มูลค่า น้อยกว่าหรือเท่ากับ 0 ได้');
         return isValidate = false
       }
 
-      if(this.isSpareBalValid()){
+      if(this.dbTask.taskDetail.length > 0 && (spareBalValid || this.validateSpareQtyBal())){
         this.ms.warning('ไม่สามารถบันทึกอะไหล่ที่มีจำนวนมากกว่าจำนวนคงเหลือที่อยู่ในคลังได้ กรุณาตรวจสอบ');
         return isValidate = false
       }
@@ -392,20 +402,19 @@ export class TaskDetailComponent implements OnInit{
       return isValidate
     }
 
-    isSpareBalValid():boolean{
-    // if(this.dbTask.taskDetail.length > 0){
-    //   this.dbTask.taskDetail.forEach(items => {
-    //     const spareId = items.form?.controls['spare_id'].value
-    //     const selectedRowIndex = this.masterData.spareData.findIndex((row) => row.value === spareId);
-    //     if(selectedRowIndex !== -1){
-    //       this.masterData.spareData[selectedRowIndex].spareBal = this.masterData.spareData[selectedRowIndex].spareQty - items.form?.controls['detail_qty'].value
-    //     }
-    //   });
-    // }
-    //   return this.masterData.spareData.some(row => row.spareBal < 0);
-    return false
+    validateSpareQtyBal(): boolean {
+      return this.dbTask.taskDetail.some(row => {
+        if (row.form) {
+          const previousDetailQty = row.form.controls['previous_detail_qty'].value;
+          const detailQty = +row.form.controls['detail_qty'].value;
+          const spareQtyBal = row.form.controls['spare_qty_bal'].value; 
+          const SpareQtyBal = previousDetailQty + spareQtyBal;
+  
+          return detailQty > SpareQtyBal;
+        }
+        return false;
+      });
     }
-    
 
     // onPageChange(event: any) {
     //   const startIndex = event.pageIndex * event.pageSize;

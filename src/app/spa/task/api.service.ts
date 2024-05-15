@@ -34,6 +34,7 @@ export interface TaskDetail {
     seq: number | null;
     spare_id: number | null;
     spare_desc?: string | null;
+    spare_bal?: number | null;
     detail_description?: string | null;
     detail_qty: number | null;
     detail_unit_price: number | null;

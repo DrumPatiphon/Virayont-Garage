@@ -183,6 +183,7 @@
                   <th class="text-center" [style.width.px]="150">รหัสอะไหล่ <span class="text-danger">*</span></th>
                   <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                   <th class="text-center" [style.width.px]="200">รายละเอียดอะไหล่</th>
+                  <th class="text-center" [style.width.px]="70">คงเหลือ</th>
                   <th class="text-center" [style.width.px]="70">จำนวน</th>
                   <th class="text-center" [style.width.px]="80">ราคา <span class="text-danger">*</span></th>
                   <th class="text-center" [style.width.px]="100">ราคารวม <span class="text-danger">*</span></th>
@@ -218,6 +219,14 @@
                   <td class="text-left">
                     <div *ngIf="row.form" [formGroup]="row.form">
                       <input type="text" class="form-control" formControlName="detail_description">
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="row.form" [formGroup]="row.form">
+                      <input type="text" class="form-control text-right" formControlName="spare_bal" [ngClass]="{ 'is-invalid': isInvalid('spare_bal')}">
+                    <div *ngIf="isInvalid('spare_bal')" class="validate-label">
+                      กรุณาระบุข้อมูลให้ถูกต้อง
+                    </div>
                     </div>
                   </td>
                   <td>

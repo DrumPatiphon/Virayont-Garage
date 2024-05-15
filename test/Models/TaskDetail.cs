@@ -17,5 +17,6 @@ namespace test.Models
     public string? spare_desc { get; set; }
     public string? detail_description { get; set; }
     public int? seq { get; set; }
+    public decimal? spare_bal { get; set; }
   }
 }
