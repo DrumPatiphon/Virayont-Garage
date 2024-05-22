@@ -93,6 +93,7 @@ namespace test.Controllers.TaskController
           this._context.task_detail.Add(detail);
         }
       }
+      await this._context.SaveChangesAsync();
 
       // Update spare qty
       foreach (TaskDetail detail in EditRequest.TaskDetail)
