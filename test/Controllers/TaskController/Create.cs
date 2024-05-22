@@ -62,7 +62,7 @@ namespace test.Controllers.TaskController
         SparePart sparePart = await GetSparePart(detail.spare_id);
         if (sparePart != null)
         {
-          sparePart.quantity = detail.spare_bal - detail.detail_qty;
+          sparePart.spare_bal = detail.spare_bal - detail.detail_qty;
           this._context.Set<SparePart>().Attach(sparePart);
           _context.Entry(sparePart).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
