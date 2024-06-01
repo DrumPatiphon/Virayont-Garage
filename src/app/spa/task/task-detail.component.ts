@@ -60,8 +60,9 @@ export class TaskDetailComponent implements OnInit{
         this.router.navigate(['/login']);
       }
 
-      const taskIdParam = this.route.snapshot.paramMap.get('taskId');
+      const taskIdParam = this.route.snapshot.paramMap.get('taskId');  
       this.taskId = taskIdParam ? +taskIdParam : null;  // + คือการเปลี่ยนให้การเป็น number
+      
       this.se.getMasterData().subscribe({
         next: (response: any) => {
           this.masterData = response;
@@ -151,7 +152,7 @@ export class TaskDetailComponent implements OnInit{
         customer_phone: [null,[Validators.required, CustomValidators.phoneNo()]],
         customer_company: null,
         customer_address: [null,[Validators.required]],
-        employee_id: [null,[Validators.required]],
+        employee_id: [{value : null, disabled: true }, [Validators.required]],
         license_desc: [null,[Validators.required]],
         remark: null,
         status: null,
@@ -202,9 +203,9 @@ export class TaskDetailComponent implements OnInit{
       fg.patchValue(taskDetail, { emitEvent: false });  
   
       if (this.dbTaskForm.controls['task_no'].value == 'AUTO') {
-        taskDetail.rowState = 'Add';
+        taskDetail.rowState = ' ';
       }
-  
+
       fg.valueChanges.subscribe((controls) => {  //เป็นการทำไปที่ละตัว
         if (taskDetail.rowState === 'Normal') { // เป็นการเช็ค
           taskDetail.rowState = 'Edit';

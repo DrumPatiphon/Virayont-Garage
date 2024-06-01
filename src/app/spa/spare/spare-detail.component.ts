@@ -64,6 +64,7 @@ export class SpareDetailComponent implements OnInit {
       spare_price: [null,[CustomValidators.numberOnly()]],
       quantity: [null,[Validators.required, CustomValidators.numberOnly()]],
       sparetype_id: [null,[Validators.required]],
+      spare_bal: [{value : null, disabled: true}]  
     });
   }
 
@@ -120,7 +121,7 @@ export class SpareDetailComponent implements OnInit {
     const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
     this.sparePartForm.controls['quantity'].setValue(qty);
     this.se.save(this.sparePart,
-                 this.sparePartForm.getRawValue(),
+                 this.sparePartForm.getRawValue(),  
                  action,
     ).subscribe(res => {
       if(res){
@@ -157,6 +158,26 @@ export class SpareDetailComponent implements OnInit {
   isInvalid(controlName: string){
     const control = this.sparePartForm.get(controlName);
     return control ? control.touched && control.invalid : false;
+  }
+
+  async ValidateSpare(){
+    if(this.isFormValid(this.sparePartForm) ){
+      const param = {
+        spareId : this.sparePartForm.controls['spare_str_id'].value,
+      }
+      try {
+        const res = await this.se.spareCheck(param).toPromise()
+        if(res.length > 0){
+          this.ms.error('ไม่สามารถลบข้อมูลได้');
+        }
+        else{
+          this.delete('Delete');
+        }
+        return res;
+      } catch (error) {
+        this.ms.error('เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ');  
+      }
+    }
   }
 
 

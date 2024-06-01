@@ -13,7 +13,8 @@ export interface Sparepart {
     spare_name?: String,
     spare_price?: Number,
     quantity?: Number,
-    sparetype_id?: Number
+    sparetype_id?: Number,
+    spareBal?: number,
 }
 
 @Injectable({
@@ -44,6 +45,16 @@ export class SparePartService {
     findSpareByKey(spareId : number) {
         return this.http.get<any>(`${this.apiUrl}spare/SpareDetail/${spareId}`);
     } 
+
+    spareCheck(search : any){
+        const filter: { [key: string]: any } = {};
+        for (const key in search) {
+          if (search.hasOwnProperty(key) && search[key] !== null) {
+            filter[key] = search[key];
+          }
+        }
+        return this.http.get<any>(this.apiUrl + 'spare/ValidateSpare', { params: filter });
+    }
 
     save(sparePart: Sparepart, 
         sparePartForm: UntypedFormGroup

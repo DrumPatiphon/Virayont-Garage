@@ -72,6 +72,7 @@
                  <th class="text-center" [style.width.px]="70">รหัสอะไหล่</th>
                  <th class="text-center" [style.width.px]="200">ชื่ออะไหล่</th>
                  <th class="text-center" [style.width.px]="70">จำนวน</th>
+                 <th class="text-center" [style.width.px]="70">จำนวนคงเหลือ</th>
                  <th class="text-center" [style.width.px]="70">ราคา</th>
                </tr>
                <tbody>
@@ -87,6 +88,9 @@
                   </td>
                   <td class="text-right">
                     {{ spare.quantity | number : '0.2-2'}}
+                  </td>
+                  <td class="text-right">
+                    {{ spare.spareBal | number : '0.2-2'}}
                   </td>
                   <td class="text-right">
                     {{ spare.sparePrice | number : '0.2-2'}}

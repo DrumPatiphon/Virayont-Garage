@@ -58,6 +58,7 @@ export class SpareComponent implements OnInit {
       sparePrice: null,
       quantity: null,
       spareTypeId: null,
+      spareBal: null,
     });
   }
 
