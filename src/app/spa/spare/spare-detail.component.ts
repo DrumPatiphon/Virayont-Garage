@@ -26,6 +26,8 @@ export class SpareDetailComponent implements OnInit {
   masterData = {
     spareType:[] = [],
   }
+  bufferSpareQty:number = 0;
+  bufferSparebal:number = 0;
 
   constructor ( 
     private fb : UntypedFormBuilder,
@@ -64,7 +66,8 @@ export class SpareDetailComponent implements OnInit {
       spare_price: [null,[CustomValidators.numberOnly()]],
       quantity: [null,[Validators.required, CustomValidators.numberOnly()]],
       sparetype_id: [null,[Validators.required]],
-      spare_bal: [{value : null, disabled: true}]  
+      spare_bal: [{value : null, disabled: true}],  
+      active: true,  
     });
   }
 
@@ -77,6 +80,8 @@ export class SpareDetailComponent implements OnInit {
           this.sparePart = res
           this.sparePartForm.patchValue(this.sparePart, { emitEvent: false });
           this.sparePartForm.controls['spare_str_id'].setValue(this.sparePart.spare_id?.toString());
+          this.bufferSpareQty = this.sparePartForm.controls['quantity'].value;
+          this.bufferSparebal = this.sparePartForm.controls['spare_bal'].value;
         });
       }
     }else{
@@ -87,11 +92,18 @@ export class SpareDetailComponent implements OnInit {
 
       
   installEvent(){
-
+    this.sparePartForm.controls['quantity'].valueChanges.subscribe(quantity =>{
+      const controls = this.sparePartForm.controls
+      if(this.sparePartForm.controls['quantity'].dirty && quantity){
+        const newQuantity = quantity - this.bufferSpareQty
+        const newBal = this.bufferSparebal + newQuantity
+        controls['spare_bal'].setValue(newBal)
+      }
+    });
   }
 
   save(action: string) { 
-    if(this.isFormValid(this.sparePartForm)){
+    if(this.isFormValid(this.sparePartForm) && this.validateSpareQty()){
       const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
       this.sparePartForm.controls['quantity'].setValue(qty);
       this.se.save(this.sparePart,
@@ -161,14 +173,14 @@ export class SpareDetailComponent implements OnInit {
   }
 
   async ValidateSpare(){
-    if(this.isFormValid(this.sparePartForm) ){
+    if(this.isFormValid(this.sparePartForm) && this.validateSpareQty()){
       const param = {
         spareId : this.sparePartForm.controls['spare_str_id'].value,
       }
       try {
         const res = await this.se.spareCheck(param).toPromise()
-        if(res.length > 0){
-          this.ms.error('ไม่สามารถลบข้อมูลได้');
+        if(res){
+          this.ms.error('ไม่สามารถลบข้อมูลได้ เนื่องจากยังมีการใช้งานอะไหล่นี้อยู่ในระบบ');
         }
         else{
           this.delete('Delete');
@@ -178,6 +190,17 @@ export class SpareDetailComponent implements OnInit {
         this.ms.error('เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ');  
       }
     }
+  }
+
+  validateSpareQty() :boolean{
+      const controls = this.sparePartForm.controls
+      const spareBal = controls['spare_bal'].value
+
+      if (spareBal < 0){
+        this.ms.warning("ไม่สามารถบันทึก เนื่องจากจำนวนคงเหลือเป็นลบ")
+        return false;
+      }
+    return true;
   }
 
 

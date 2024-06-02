@@ -143,3 +143,6 @@ test/obj/project.assets.json
 test/obj/project.nuget.cache
 test/obj/test.csproj.nuget.dgspec.json
 test/obj/test.csproj.nuget.g.props
+.vs/ProjectEvaluation/test.metadata.v8.bin
+.vs/ProjectEvaluation/test.projects.v8.bin
+.vs/ProjectEvaluation/test.strings.v8.bin

@@ -107,6 +107,7 @@ namespace test.Controllers.TaskController
     private async Task<IEnumerable<dynamic>> GetSpareData()
     {
       var employee = await (from s in _context.Set<SparePart>()
+                            where s.active == true
                             orderby s.spare_id
                             select new
                             {
