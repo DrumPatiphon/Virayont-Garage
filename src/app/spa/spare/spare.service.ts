@@ -15,6 +15,7 @@ export interface Sparepart {
     quantity?: Number,
     sparetype_id?: Number,
     spareBal?: number,
+    active?: number,
 }
 
 @Injectable({

@@ -16,21 +16,29 @@ namespace test.Controllers.SpareController
 
     public class SpareRequest
     {
-      public int spare_id { get; set; }
+      public int SpareId { get; set; }
     }
 
     [HttpGet]
-    public async Task<dynamic> ValidateResult([FromQuery] SpareRequest request)
+    public async Task<Boolean> ValidateResult([FromQuery] SpareRequest request)
     {
       var data = await (from dt in _context.Set<Dbtask>()
                         join s in _context.Set<TaskDetail>() on dt.task_id equals s.task_id
-                        where dt.status != "CANCELLED" && s.spare_id== request.spare_id
+                        where dt.status != "CANCELLED"
+                        && s.spare_id== request.SpareId
                         select new
                         {
                           spareId = s.spare_id
                         }).ToListAsync();
 
-      return data;
+      if(data.Count > 0)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
   }
 }

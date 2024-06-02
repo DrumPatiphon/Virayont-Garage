@@ -11,5 +11,6 @@ namespace test.Models
         public decimal? quantity { get; set; }
         public decimal? spare_bal { get; set; }
         public int? sparetype_id { get; set; }
+        public Boolean active { get; set; }
     }
 }
