@@ -101,9 +101,6 @@ export class TaskComponent implements OnInit{
       const param = this.searchForm.getRawValue();
       this.se.findSearchList(param) 
       .subscribe(res => {
-        if(this.user.userRole !== "Admin"){
-          res = res.filter(row => row.status !== "CONFIRMED_PAYMENT")
-        }
         this.taskdata = res;
         this.pagedData = this.taskdata.slice(0, this.pageSize);
       }); 

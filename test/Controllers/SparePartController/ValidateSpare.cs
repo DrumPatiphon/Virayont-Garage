@@ -24,7 +24,11 @@ namespace test.Controllers.SpareController
     {
       var data = await (from dt in _context.Set<Dbtask>()
                         join s in _context.Set<TaskDetail>() on dt.task_id equals s.task_id
+<<<<<<< HEAD
                         where s.spare_id == request.SpareId
+=======
+                        where s.spare_id== request.SpareId
+>>>>>>> develop
                         select new
                         {
                           spareId = s.spare_id
