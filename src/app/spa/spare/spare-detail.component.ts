@@ -92,12 +92,13 @@ export class SpareDetailComponent implements OnInit {
 
       
   installEvent(){
-    this.sparePartForm.controls['quantity'].valueChanges.subscribe(quantity =>{
+    this.sparePartForm.controls['quantity'].valueChanges.subscribe(quantity =>{ 
       const controls = this.sparePartForm.controls
-      if(this.sparePartForm.controls['quantity'].dirty && quantity){
-        const newQuantity = quantity - this.bufferSpareQty
-        const newBal = this.bufferSparebal + newQuantity
-        controls['spare_bal'].setValue(newBal)
+      // item A :: qty: 20 ,bal: 19
+      if(this.sparePartForm.controls['quantity'].dirty && quantity){  
+        const newQuantity = quantity - this.bufferSpareQty  // 30-20=10
+        const newBal = this.bufferSparebal + newQuantity  //19+10
+        controls['spare_bal'].setValue(newBal) //29
       }
     });
   }
@@ -129,19 +130,19 @@ export class SpareDetailComponent implements OnInit {
     return disable;
   }
 
-  delete(action: string){
-    const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
-    this.sparePartForm.controls['quantity'].setValue(qty);
-    this.se.save(this.sparePart,
-                 this.sparePartForm.getRawValue(),  
-                 action,
-    ).subscribe(res => {
-      if(res){
-        this.ms.success('ลบข้อมูลสำเร็จ');
-        this.router.navigate(['/spare']);
-      }
-    })
-  }
+  // delete(action: string){
+  //   const qty = this.sparePartForm.controls['quantity'].value == "" ? null : this.sparePartForm.controls['quantity'].value
+  //   this.sparePartForm.controls['quantity'].setValue(qty);
+  //   this.se.save(this.sparePart,
+  //                this.sparePartForm.getRawValue(),  
+  //                action,
+  //   ).subscribe(res => {
+  //     if(res){
+  //       this.ms.success('ลบข้อมูลสำเร็จ');
+  //       this.router.navigate(['/spare']);
+  //     }
+  //   })
+  // }
 
   isFormValid(formGroup: FormGroup): boolean {
     let isValid = true;
@@ -172,32 +173,32 @@ export class SpareDetailComponent implements OnInit {
     return control ? control.touched && control.invalid : false;
   }
 
-  async ValidateSpare(){
-    if(this.isFormValid(this.sparePartForm) && this.validateSpareQty()){
-      const param = {
-        spareId : this.sparePartForm.controls['spare_str_id'].value,
-      }
-      try {
-        const res = await this.se.spareCheck(param).toPromise()
-        if(res){
-          this.ms.error('ไม่สามารถลบข้อมูลได้ เนื่องจากยังมีการใช้งานอะไหล่นี้อยู่ในระบบ');
-        }
-        else{
-          this.delete('Delete');
-        }
-        return res;
-      } catch (error) {
-        this.ms.error('เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ');  
-      }
-    }
-  }
+  // async ValidateSpare(){
+  //   if(this.isFormValid(this.sparePartForm) && this.validateSpareQty()){
+  //     const param = {
+  //       spareId : this.sparePartForm.controls['spare_str_id'].value,
+  //     }
+  //     try {
+  //       const res = await this.se.spareCheck(param).toPromise()
+  //       if(res){
+  //         this.ms.error('ไม่สามารถลบข้อมูลได้ เนื่องจากยังมีการใช้งานอะไหล่นี้อยู่ในระบบ');
+  //       }
+  //       else{
+  //         this.delete('Delete');
+  //       }
+  //       return res;
+  //     } catch (error) {
+  //       this.ms.error('เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ');  
+  //     }
+  //   }
+  // }
 
   validateSpareQty() :boolean{
       const controls = this.sparePartForm.controls
       const spareBal = controls['spare_bal'].value
 
       if (spareBal < 0){
-        this.ms.warning("ไม่สามารถบันทึก เนื่องจากจำนวนคงเหลือเป็นลบ")
+        this.ms.warning("ไม่สามารถบันทึก เนื่องจากจำนวนอะไหล่คงเหลือไม่เพียงพอ")
         return false;
       }
     return true;

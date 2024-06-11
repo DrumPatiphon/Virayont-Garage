@@ -54,7 +54,7 @@ export class TaskComponent implements OnInit{
       if(!this.user){
         this.router.navigate(['/login']);
       }
-      // console.log(this.user)
+      
 
       this.createForm();
       // this.installEvent();
@@ -63,9 +63,9 @@ export class TaskComponent implements OnInit{
           this.masterData = response;
           if(this.user.userRole == 'customer'){
             this.masterData.taskNo = (this.masterData.taskNo as any[]).filter(row => row.customerPhone == (this.user.taskPhone || this.user.phoneNumber)) as [];
-          }  //ใช้task.noจะค้นหาเบอร์ของลูกค้าตามเบอร์ที่ลูกค้ากรอกเข้ามา  
+          }   
         },
-        error: (error: any) => {  //เมื่อข้อมูลมีปัญหา(หลังบ้าน)
+        error: (error: any) => {  
           console.error('Error:', error);
         }
       });
@@ -99,14 +99,14 @@ export class TaskComponent implements OnInit{
   
     search() {
       const param = this.searchForm.getRawValue();
-      this.se.findSearchList(param) // เอาvalueที่อยู่ในserchformไปserch
+      this.se.findSearchList(param) 
       .subscribe(res => {
         if(this.user.userRole !== "Admin"){
           res = res.filter(row => row.status !== "CONFIRMED_PAYMENT")
         }
         this.taskdata = res;
         this.pagedData = this.taskdata.slice(0, this.pageSize);
-      });  //กำหนดค่า pagedData เท่ากับข้อมูล taskdata ที่ถูกตัดเอาเฉพาะส่วนแรกตามขนาดของหน้า (pageSize) เพื่อให้การแสดงผลบนหน้าเว็บมีจำนวนรายการตามหน้าที่กำหนดไว้ก่อนหน้านี้.
+      }); 
     }
 
     clear(){
@@ -130,7 +130,6 @@ export class TaskComponent implements OnInit{
     setDataCustomer(userData :UserData){
       if(userData.userRole == 'customer'){
         this.searchForm.controls['customerId'].setValue(userData.userId);
-        // const phoneNo = userData.taskPhone == null? : userData.phoneNumber
         this.searchForm.controls['phoneNo'].setValue(userData.taskPhone || userData.phoneNumber);
       }
     }
@@ -144,8 +143,8 @@ export class TaskComponent implements OnInit{
     }
 
     onPageChange(event: any) {
-      const startIndex = event.pageIndex * event.pageSize; //การคำนวนหาดัชนีเริ่มต้นของข้อมูลที่จะไปแสดงบนให้ใหม่ หน้าปัจจุบัน*ขนาดของหน้า
-      const endIndex = startIndex + event.pageSize; //การคำนวนหาดัชนีสิ้นสุดของข้อมูลที่จะไปแสดงบนให้ใหม่ startIndex+ขนาดของหน้า
+      const startIndex = event.pageIndex * event.pageSize; 
+      const endIndex = startIndex + event.pageSize; 
       this.pagedData = this.taskdata.slice(startIndex, endIndex);
     }
   

@@ -23,8 +23,6 @@ export interface DbTask {
     task_date? : Date;
     employee_id : number;
     create_date? : Date;
-    // update_date? : Date;
-    // create_by? : number;
     taskDetail: TaskDetail[],  
 }
 
@@ -88,7 +86,6 @@ export class ApiService {
     }
 
     findDbTaskByKey(taskId : number) {
-        // return this.http.get<DbTask>(`${this.apiUrl}task/Detail`, { params: { taskId: taskId.toString() } });
         return this.http.get<any>(`${this.apiUrl}task/Detail/${taskId}`);
     } 
 

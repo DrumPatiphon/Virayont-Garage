@@ -21,26 +21,20 @@ export class TaskDetailComponent implements OnInit{
   cancelIcon = faXmark
   addIcon = faPlus
 
-    dbTaskForm! : FormGroup;  //่ ! มีไว้เพื่อไม่ให้error เพราะมันไม่สามารถว่างได้ 
-    dbTask : DbTask = {} as DbTask; // คือการสร้างอ็อบเจ็คของ DbTask โดยไม่มีค่าเริ่มต้น
-    taskDetailDelete: TaskDetail[] = [] as TaskDetail[]; // การสร้างอาร์เรย์ของ TaskDetail โดยไม่มีข้อมูลเริ่มต้นใด ๆ
+    dbTaskForm! : FormGroup;  
+    dbTask : DbTask = {} as DbTask; 
+    taskDetailDelete: TaskDetail[] = [] as TaskDetail[]; 
     user: UserData = {} as UserData; 
-    masterData = {  // เป็นอ็อบเจกต์ที่มีโครงสร้างเสมือนฐานข้อมูลย่อย
+    masterData = {  
       customerData: [] = [], 
       status: [] = [] as Status[],
       employee: [] = [],
       province: [] = [],
       spareData: []= [] as Spare[],
     }
-    initStatus:string = "";
     currentDate:Date = new Date();
     formattedDate?:string;
     previousDetailQty:number = 0;
-
-    // @ViewChild(MatPaginator) paginator!: MatPaginator;
-    // pagedData: any[] = [];
-    // pageSizeOptions: number[] = [5, 10, 25, 100];
-    // pageSize: number = 5;
 
     constructor ( 
       private fb : FormBuilder,
@@ -52,7 +46,7 @@ export class TaskDetailComponent implements OnInit{
       private ms: ToastrService,
     ) {}
 
-    taskId: number | null = null;  // กำหนดให้เป็นnumberหรือnull
+    taskId: number | null = null;  
 
     ngOnInit(): void {
       this.user = this.authService.getCurrentUser();
@@ -61,7 +55,7 @@ export class TaskDetailComponent implements OnInit{
       }
 
       const taskIdParam = this.route.snapshot.paramMap.get('taskId');  
-      this.taskId = taskIdParam ? +taskIdParam : null;  // + คือการเปลี่ยนให้การเป็น number
+      this.taskId = taskIdParam ? +taskIdParam : null;  
       
       this.se.getMasterData().subscribe({
         next: (response: any) => {
@@ -81,12 +75,12 @@ export class TaskDetailComponent implements OnInit{
     }
 
     rebuildForm(): void{
-      this.taskDetailDelete = [];  //เพื่อเคลียร์taskDetail ที่ลบออก
+      this.taskDetailDelete = []; 
 
       if(this.taskId){
         const controls = this.dbTaskForm.controls
         if(this.dbTask){
-          this.se.findDbTaskByKey(this.taskId).subscribe(res => {  //findDbTaskByKey(this.taskId) เอาtaskIdไปค้นหา
+          this.se.findDbTaskByKey(this.taskId).subscribe(res => {  
             this.dbTask = res.dbTask;
             this.dbTask.taskDetail = res.taskDetail;
             this.dbTaskForm.patchValue(this.dbTask, { emitEvent: false });
@@ -100,8 +94,8 @@ export class TaskDetailComponent implements OnInit{
             controls['statusPhase'].setValue(this.dbTask.status);
 
             if(this.isDisbleStatus() ||  this.isCustomer()){
-              this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });  //ปิดการใช้งานของตัวเองเท่านั้น และ ข้ามการส่งevent : valuechang
-              this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false })); //เพราะเป็น[]จึงต้องใช้ forEach
+              this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });  
+              this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false })); 
             }
 
             if(!this.isDisbleStatus() && (this.user.userRole == 'Admin')){
@@ -166,7 +160,7 @@ export class TaskDetailComponent implements OnInit{
 
     addTaskDetail() {
       const taskDetail: TaskDetail = {
-        task_id: 0, //เก็บค่าเป็นnumber
+        task_id: 0, 
         detail_id: null,
         seq: this.dbTask.taskDetail.length + 1,
         spare_id: null,
@@ -178,9 +172,8 @@ export class TaskDetailComponent implements OnInit{
         detail_amt: 0.00,
         rowState: 'Add',
       };
-      taskDetail.form = this.createTaskDetailForm(taskDetail); //สร้างแถวใหม่
-      this.dbTask.taskDetail = this.dbTask.taskDetail.concat(taskDetail);  //ทำให้ข้อมูลเท่ากับแถวข้างบน(ต่อ)
-      // this.pagedData = this.dbTask.taskDetail;
+      taskDetail.form = this.createTaskDetailForm(taskDetail);
+      this.dbTask.taskDetail = this.dbTask.taskDetail.concat(taskDetail); 
       this.dbTaskForm.markAsDirty();
     }
     
@@ -203,18 +196,18 @@ export class TaskDetailComponent implements OnInit{
       fg.patchValue(taskDetail, { emitEvent: false });  
   
       if (this.dbTaskForm.controls['task_no'].value == 'AUTO') {
-        taskDetail.rowState = ' ';
+        taskDetail.rowState = 'Add';
       }
 
-      fg.valueChanges.subscribe((controls) => {  //เป็นการทำไปที่ละตัว
-        if (taskDetail.rowState === 'Normal') { // เป็นการเช็ค
+      fg.valueChanges.subscribe((controls) => {  
+        if (taskDetail.rowState === 'Normal') { 
           taskDetail.rowState = 'Edit';
         }
       });
 
       fg.controls.spare_id.valueChanges.subscribe(selectedValue => {
         if(fg.controls.spare_id.dirty && selectedValue){
-          const selectedRow = (this.masterData.spareData as any[]).filter(row => row.value == selectedValue);  //as any[] คือเอาข้อมูลทั้งหมดของdataนั้นๆ
+          const selectedRow = (this.masterData.spareData as any[]).filter(row => row.value == selectedValue);  
           fg.controls.spare_desc.setValue(selectedRow[0].spareName);
           fg.controls.detail_unit_price.setValue(selectedRow[0].sparePrice);
           fg.controls.spare_bal.setValue(selectedRow[0].spareBal);
@@ -276,7 +269,7 @@ export class TaskDetailComponent implements OnInit{
 
     calTaskAmt(){
       const sumtaskdetail = this.dbTask.taskDetail
-      .reduce((total, num) => (total + num.form?.controls['detail_amt'].value || 0), 0);  //reduce การทำลูปเพื่อหาผลรวมของ[]
+      .reduce((total, num) => (total + num.form?.controls['detail_amt'].value || 0), 0);  
 
       this.dbTaskForm.controls['task_amt'].setValue(sumtaskdetail || 0);
     }
@@ -288,7 +281,7 @@ export class TaskDetailComponent implements OnInit{
     
       const forms: FormGroup[] = [
         ...(this.dbTaskForm ? [this.dbTaskForm] : []),
-        ...(this.dbTask.taskDetail.map(detail => detail.form).filter(form => !!form) as FormGroup[])
+        ...(this.dbTask.taskDetail.map(detail => detail.form).filter(form => !!form) as FormGroup[])  
       ];
     
       if (this.isFormValid(forms) && this.isDetailValid()) {
@@ -327,8 +320,7 @@ export class TaskDetailComponent implements OnInit{
 
     isDisbleStatus():boolean{
       let disable = false;
-      if(this.dbTaskForm.controls['status'].value == 'CANCELLED' 
-      || this.dbTaskForm.controls['status'].value == 'COMPLETED' 
+      if(this.dbTaskForm.controls['status'].value == 'CANCELLED'  
       || this.dbTaskForm.controls['status'].value == 'CONFIRMED_PAYMENT'){
         disable = true;
       }
@@ -351,26 +343,26 @@ export class TaskDetailComponent implements OnInit{
       return disable;
     }
 
-    isFormValid(formGroupOrArray: FormGroup | FormGroup[]): boolean {  //***** 
+    isFormValid(formGroupOrArray: FormGroup | FormGroup[]): boolean { 
       let isValid = true;
     
       const checkValidity = (group: FormGroup) => {
         Object.values(group.controls).forEach(control => {
           if (control instanceof FormGroup) {
-            checkValidity(control); // เอาข้อมูลในform มาเช็คว่ามีค่าตรงกันมั้ย
+            checkValidity(control); 
           } else {
             control.markAsTouched();
-            if (control.invalid) { //เช็คว่าถูกต้องมั้ย อีกครั้ง
+            if (control.invalid) { 
               isValid = false;
             }
           }
         });
       };
     
-      if (Array.isArray(formGroupOrArray)) { // เช็คข้อมูลว่าเป็นarrayหรือไม่
-        formGroupOrArray.forEach(formGroup => checkValidity(formGroup)); //ถ้าเป็นจะวนลูปผ่านทุก FormGroup
+      if (Array.isArray(formGroupOrArray)) { 
+        formGroupOrArray.forEach(formGroup => checkValidity(formGroup)); 
       } else {
-        checkValidity(formGroupOrArray); //ถ้าไม่ใช่ Array ก็เรียกใช้ checkValidity โดยตรงกับ FormGroup
+        checkValidity(formGroupOrArray); 
       }
     
       if (!isValid) {
@@ -380,9 +372,9 @@ export class TaskDetailComponent implements OnInit{
       return isValid;
     }
   
-    isInvalid(controlName: string){  //เอาไว้เช็คtastdetail
+    isInvalid(controlName: string){  
       const control = this.dbTaskForm.get(controlName);
-      return control ? control.touched && control.invalid : false; // สั่งให้เป็น touch และถ้าเป็น invalid ให้ส่ง false ไป
+      return control ? control.touched && control.invalid : false; 
     }
 
     isDetailValid():boolean{
@@ -391,7 +383,7 @@ export class TaskDetailComponent implements OnInit{
       const spareBalValid:boolean = this.dbTask.taskDetail.some(row => row.form?.controls['spare_bal'].value < row.form?.controls['detail_qty'].value);
 
       if(this.dbTask.taskDetail.length > 0 && detailAmtValid){
-        this.ms.warning('ไม่สามารถบันทึกรายการอะไหล่มูลค่า น้อยกว่าหรือเท่ากับ 0 ได้');
+        this.ms.warning('ไม่สามารถบันทึกรายการอะไหล่มูลค่าน้อยกว่าหรือเท่ากับ 0 ได้');
         return isValidate = false
       }
 
@@ -406,22 +398,19 @@ export class TaskDetailComponent implements OnInit{
     validateSpareQtyBal(): boolean {
       return this.dbTask.taskDetail.some(row => {
         if (row.form) {
-          const previousDetailQty = row.form.controls['previous_detail_qty'].value;
-          const detailQty = +row.form.controls['detail_qty'].value;
-          const spareQtyBal = row.form.controls['spare_qty_bal'].value; 
-          const SpareQtyBal = previousDetailQty + spareQtyBal;
+        // A item = qty: 20 ,bal: 20
+        // task M = qty: 15 ,A item bal: 20-15 = 5
+        // task L = qty: 5  ,A item bal: 5-5 = 0
+          const previousDetailQty = row.form.controls['previous_detail_qty'].value;  //5
+          const detailQty = +row.form.controls['detail_qty'].value; //8
+          const spareQtyBal = row.form.controls['spare_qty_bal'].value; //0
+          const SpareQtyBal = previousDetailQty + spareQtyBal; //5+0
   
-          return detailQty > SpareQtyBal;
+          return detailQty > SpareQtyBal; // 8>5
         }
         return false;
       });
     }
-
-    // onPageChange(event: any) {
-    //   const startIndex = event.pageIndex * event.pageSize;
-    //   const endIndex = startIndex + event.pageSize;
-    //   this.pagedData = this.dbTask.taskDetail.slice(startIndex, endIndex);
-    // }
 
 // ------------------------------------------------------------------------------------
 
