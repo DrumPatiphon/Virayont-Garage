@@ -36,6 +36,8 @@ export class TaskDetailComponent implements OnInit{
     currentDate:Date = new Date();
     formattedDate?:string;
     previousDetailQty:number = 0;
+    disabledButton:boolean = false;
+    hideCancelButton:boolean = false;
 
     // @ViewChild(MatPaginator) paginator!: MatPaginator;
     // pagedData: any[] = [];
@@ -67,7 +69,7 @@ export class TaskDetailComponent implements OnInit{
         next: (response: any) => {
           this.masterData = response;
           if (this.user.userRole !== "Admin") {
-            this.masterData.status = (this.masterData.status as any[]).filter(row => !row.isAdmin);
+            this.masterData.status = (this.masterData.status as Status[]).filter(row => !row.isAdmin);
           }
         },
         error: (error: any) => {
@@ -99,13 +101,14 @@ export class TaskDetailComponent implements OnInit{
             controls['appointment_date'].setValue(appointmentDate);
             controls['statusPhase'].setValue(this.dbTask.status);
 
-            if(this.isDisbleStatus() ||  this.isCustomer()){
+            if(this.isDisbleStatus() ||  this.isCustomer() || (!this.isCreator() && !this.isAdmin())){
+              this.disabledButton = true
               this.dbTaskForm.disable({ onlySelf: true, emitEvent: false });  //ปิดการใช้งานของตัวเองเท่านั้น และ ข้ามการส่งevent : valuechang
               this.dbTask.taskDetail.forEach(row => row.form?.disable({ onlySelf: true, emitEvent: false })); //เพราะเป็น[]จึงต้องใช้ forEach
             }
 
-            if(!this.isDisbleStatus() && (this.user.userRole == 'Admin')){
-              this.dbTaskForm.controls['employee_id'].enable({emitEvent: false });
+            if(this.isDisbleStatus() && (this.user.userRole == 'Admin')){
+              this.dbTaskForm.controls['statusPhase'].enable({emitEvent: false });
             }
           });
         }
@@ -113,6 +116,13 @@ export class TaskDetailComponent implements OnInit{
         this.dbTask.taskDetail = [];
       }
 
+      if(!this.isDisbleStatus() && (this.user.userRole == 'Admin')){
+        this.dbTaskForm.controls['employee_id'].enable({emitEvent: false });
+      }
+
+      if(this.dbTaskForm.controls['statusPhase'].value !== 'SAVED'){
+        this.hideCancelButton = true;
+      }
       this.dbTaskForm.markAsPristine();
     }
     
@@ -341,6 +351,21 @@ export class TaskDetailComponent implements OnInit{
         disable = true;
       }
       return disable;
+    }
+    isStatusConfirmed():boolean{
+      return this.dbTaskForm.controls['status'].value == 'CONFIRMED_PAYMENT'
+    }
+
+    isCancelledStatus():boolean{
+      return this.dbTaskForm.controls['status'].value == 'CANCELLED'
+    }
+
+    isAdmin():boolean{
+      return this.user.userRole == 'Admin'
+    }
+
+    isCreator():boolean{
+      return this.user.userId == this.dbTaskForm.controls['employee_id'].value
     }
 
     IsAuto():boolean{

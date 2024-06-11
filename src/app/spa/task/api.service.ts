@@ -46,7 +46,9 @@ export interface TaskDetail {
 export interface Status{
     value : string
     text : string
+    statusSeq : number
     isAdmin : boolean
+    disabled : boolean
 }
 
 export interface Spare {

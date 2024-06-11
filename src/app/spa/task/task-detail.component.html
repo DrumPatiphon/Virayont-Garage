@@ -5,11 +5,11 @@
         <div class="card-body">
           <div class="row ">
             <div class="form-group col-lg-12 col-md-12 add-btn">
-              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
+              <button class="btn btn-danger me-2 pe-3" (click)="save('Cancel')" *ngIf="this.taskId" [disabled]="(this.isDisbleStatus() || disabledButton) && this.user.userRole !== 'Admin'" [hidden]="isCustomer() || hideCancelButton">
                 <fa-icon [icon]="cancelIcon"></fa-icon>
                 {{ 'ยกเลิก' }}
               </button>
-              <button class="btn btn-primary" (click)="save('Save')" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
+              <button class="btn btn-primary" (click)="save('Save')" [disabled]="(this.isDisbleStatus() || disabledButton) && this.user.userRole !== 'Admin'" [hidden]="isCustomer()">
                <fa-icon [icon]="saveIcon"></fa-icon>
                 {{ 'บันทึก' }} 
               </button>
@@ -168,7 +168,7 @@
               <h5 class="card-title">{{'อะไหล่ที่ใช้ในการซ่อม'}}</h5>
             </div>
             <div class="form-group col-lg-2 col-md-2 add-btn">
-              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="this.isDisbleStatus()" [hidden]="isCustomer()">
+              <button class="btn btn-primary" (click)="addTaskDetail();" [disabled]="(this.isDisbleStatus() || disabledButton) && this.user.userRole !== 'Admin'" [hidden]="isCustomer()">
                 <fa-icon [icon]="addIcon"></fa-icon>
                  {{ 'เพิ่ม' }}
               </button>

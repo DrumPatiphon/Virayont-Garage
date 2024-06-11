@@ -64,7 +64,9 @@ namespace test.Controllers.TaskController
                           {
                             Value = s.status_phase,
                             Text = s.status_desc,
+                            StatusSeq = s.status_id,
                             IsAdmin = s.is_admin,
+                            disabled = s.status_phase == "CANCELLED",
 
                           }).ToListAsync();
       return status;
